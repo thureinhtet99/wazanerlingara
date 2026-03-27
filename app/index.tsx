@@ -1,22 +1,17 @@
-import { Button } from "@/components/ui/button";
-import { Text, View } from "react-native";
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
+import { Link } from "expo-router";
 
 export default function Index() {
   // const router = useRouter();
 
   return (
-    <View className="flex-1">
-      <View className="mb-6 flex-row items-center justify-between border">
-        <View>
-          <Text className="text-2xl font-bold tracking-wide text-white">
-            WAZANERLINGARA
-          </Text>
-        </View>
+    <ThemedView className="flex-1">
+      <Link href="/test-screen">
+        <ThemedText>TEST</ThemedText>
+      </Link>
 
-        <Button>
-          <Text className="text-lg text-white">⚙</Text>
-        </Button>
-      </View>
-    </View>
+      <ThemedText>Index</ThemedText>
+    </ThemedView>
   );
 }
