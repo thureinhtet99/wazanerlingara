@@ -31,7 +31,9 @@ export default function RootLayout() {
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="test-screen" />
           <Stack.Screen name="index" />
-          <Stack.Screen name="game-start" />
+          <Stack.Screen name="start" />
+          <Stack.Screen name="setting" />
+          <Stack.Screen name="how-to-play" />
         </Stack>
       </MainLayout>
     </ThemeProvider>
