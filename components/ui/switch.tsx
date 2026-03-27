@@ -35,7 +35,7 @@ export default function Switch({
       onPress={() => !disabled && handleChange(!isChecked)}
       disabled={disabled}
       className={cn(
-        "relative h-8 w-16 justify-center rounded-full border border-white/80 bg-neutral-500/40 px-1",
+        "relative h-8 w-[60px] justify-center rounded-full border border-white/80 bg-neutral-500/40 px-0.5",
         isChecked ? "bg-primary-500/80" : "bg-neutral-400/50",
         disabled && "opacity-50",
         className,
@@ -47,7 +47,7 @@ export default function Switch({
       <ThemedText
         type="defaultSemiBold"
         className={cn(
-          "text-[11px] leading-3",
+          "text-[12px] leading-3",
           isChecked ? "self-start pl-1 text-white" : "self-end pr-1 text-white",
         )}
       >

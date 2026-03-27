@@ -1,11 +1,10 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Button } from "@/components/ui/button";
-import { Pressable } from "@/components/ui/pressable";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import { CONFIG } from "@/constants/config";
 import { useRouter } from "expo-router";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 
 export default function Index() {
   const router = useRouter();

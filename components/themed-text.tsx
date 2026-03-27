@@ -46,9 +46,8 @@ const styles = StyleSheet.create({
     fontFamily: "CustomFont",
   },
   title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    lineHeight: 32,
+    fontSize: 36,
+    lineHeight: 40,
     fontFamily: "CustomFont",
   },
   subtitle: {

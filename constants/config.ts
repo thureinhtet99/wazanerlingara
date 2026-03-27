@@ -1,5 +1,6 @@
 export const CONFIG = {
   APP_NAME: "wazanerlingara",
+  VERSION: "0.0.1",
 
   HOME: "/",
   START: "/start",
