@@ -9,7 +9,7 @@ export default function NotFound() {
         alignItems: "center",
       }}
     >
-      <Text>404 not found</Text>
+      <Text className="text-white">404 not found</Text>
     </View>
   );
 }
