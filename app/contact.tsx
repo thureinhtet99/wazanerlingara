@@ -22,6 +22,7 @@ type ContactFormType = z.infer<typeof contactSchema>;
 
 export default function Contact() {
   const router = useRouter();
+  const [pending, sendTransition] = React.useTransition();
   const [notificationState, setNotificationState] = React.useState<{
     visible: boolean;
     variant: "success" | "error";
@@ -48,30 +49,33 @@ export default function Contact() {
     },
   });
 
-  const handleSubmitForm = async () => {
+  const handleSubmitForm = () => {
     const values = getValues();
-    try {
-      // TODO: Mock API call - replace with real endpoint
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      if (true) {
+    sendTransition(async () => {
+      try {
+        // TODO: Mock API call - replace with real endpoint
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
+        if (true) {
+          setNotificationState({
+            visible: true,
+            variant: "success",
+            title: "ပေးပို့မှု အောင်မြင်ပါသည်",
+            message:
+              "သင့်အကြံပြုချက်များကို ကျွန်ုပ်တို့ တန်ဖိုးထားပါသည်။ ကျေးဇူးတင်ပါသည်။",
+          });
+          console.log("Form submitted:", values);
+        }
+      } catch {
         setNotificationState({
           visible: true,
-          variant: "success",
-          title: "ပေးပို့မှု အောင်မြင်ပါသည်",
+          variant: "error",
+          title: "ပေးပို့မှု မအောင်မြင်ပါ",
           message:
-            "သင့်အကြံပြုချက်များကို ကျွန်ုပ်တို့ တန်ဖိုးထားပါသည်။ ကျေးဇူးတင်ပါသည်။",
+            "နည်းပညာဆိုင်ရာ အခက်အခဲတစ်ခုကြောင့် သင့်မက်ဆေ့ချ်ကို ပေးပို့၍ မရသေးပါ။ သင်၏ အင်တာနက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ခဏအကြာတွင် ပြန်လည်ကြိုးစားပေးပါရန် မေတ္တာရပ်ခံအပ်ပါသည်။",
         });
-        console.log("Form submitted:", values);
       }
-    } catch {
-      setNotificationState({
-        visible: true,
-        variant: "error",
-        title: "ပေးပို့မှု မအောင်မြင်ပါ",
-        message:
-          "နည်းပညာဆိုင်ရာ အခက်အခဲတစ်ခုကြောင့် သင့်မက်ဆေ့ချ်ကို ပေးပို့၍ မရသေးပါ။ သင်၏ အင်တာနက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ခဏအကြာတွင် ပြန်လည်ကြိုးစားပေးပါရန် မေတ္တာရပ်ခံအပ်ပါသည်။",
-      });
-    }
+    });
   };
 
   const handleCloseModal = () => {
@@ -172,13 +176,13 @@ export default function Contact() {
 
       <View className="pb-4 pt-2">
         <Button
-          disabled={!isValid}
+          disabled={!isValid || pending}
           onPress={handleSubmit(handleSubmitForm)}
           accessibilityRole="button"
           accessibilityLabel="Send message"
         >
           <ThemedText type="subtitle" className="text-xl text-white">
-            ပေးပို့မယ်
+            {pending ? "ပေးပို့နေသည်..." : "ပေးပို့မယ်"}
           </ThemedText>
         </Button>
       </View>
