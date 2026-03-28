@@ -18,14 +18,16 @@ export const Input = React.forwardRef<
       <TextInput
         ref={ref}
         editable={!disabled}
+        placeholderTextColor={props.placeholderTextColor ?? "#9CA3AF"}
         className={cn(
-          "flex h-16 w-full rounded-full text-gray-300 bg-background-400 border px-5",
+          "flex h-20 w-full rounded-full text-gray-300 bg-background-400 border-2 px-5",
           variant === "default" && "border-neutral-500",
           variant === "success" && "border-green-500",
           variant === "error" && "border-red-500 pr-12",
           disabled && "opacity-50",
           className,
         )}
+        style={{ fontFamily: "CustomFont", fontSize: 18 }}
         {...props}
       />
       {variant === "error" && (

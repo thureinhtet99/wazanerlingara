@@ -33,11 +33,13 @@ export default function RootLayout() {
             headerShown: false,
           }}
         >
-          <Stack.Screen name="test-screen" />
           <Stack.Screen name="index" />
           <Stack.Screen name="start" />
           <Stack.Screen name="setting" />
           <Stack.Screen name="how-to-play" />
+          <Stack.Screen name="privacy" />
+          <Stack.Screen name="contact" />
+          <Stack.Screen name="test-screen" />
         </Stack>
       </MainLayout>
     </ThemeProvider>

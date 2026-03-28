@@ -42,10 +42,7 @@ export default function Index() {
               width={30}
               height={30}
             />
-            <ThemedText
-              type="subtitle"
-              className="font-example text-xl text-white"
-            >
+            <ThemedText type="subtitle" className="text-xl text-white">
               စကစားကြမယ်
             </ThemedText>
           </View>

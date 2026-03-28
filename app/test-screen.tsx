@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Progress from "@/components/ui/progress";
 import Switch from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 import { Link } from "expo-router";
 import { useState } from "react";
 // import { Switch } from "react-native";
@@ -25,6 +26,7 @@ export default function TestScreen() {
       <Input placeholder="Test" variant="success" />
       <Input placeholder="Test" variant="error" />
       <Input placeholder="Test" disabled />
+      <Textarea />
       <Switch checked={checked} onChange={() => setChecked(!checked)} />
       <Progress value={Math.random() * 100} max={100} />
     </ThemedView>

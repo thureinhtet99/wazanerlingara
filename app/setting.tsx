@@ -3,16 +3,25 @@ import { ThemedView } from "@/components/themed-view";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import Switch from "@/components/ui/switch";
 import { CONFIG } from "@/constants/config";
-import { useRouter } from "expo-router";
+import { Href, useRouter } from "expo-router";
 import { useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 
-type SettingItem = {
-  id: string;
-  label: string;
-  icon: number;
-  hasToggle?: boolean;
-};
+type SettingItem =
+  | {
+      id: string;
+      label: string;
+      icon: any;
+      hasToggle: true;
+      route?: never;
+    }
+  | {
+      id: string;
+      label: string;
+      icon: any;
+      hasToggle?: false;
+      route: Href;
+    };
 
 const settingItems: SettingItem[] = [
   {
@@ -31,11 +40,13 @@ const settingItems: SettingItem[] = [
     id: "privacy",
     label: "ဥပဒေရေးရာနှင့် ကိုယ်ရေးလုံခြုံမှု",
     icon: require("@/assets/svg/incognito-icon.svg"),
+    route: "/privacy",
   },
   {
     id: "chat",
     label: "ဆက်သွယ်ရန်",
     icon: require("@/assets/svg/chat-icon.svg"),
+    route: "/contact",
   },
 ];
 
@@ -59,9 +70,9 @@ export default function Setting() {
 
   return (
     <ThemedView className="flex-1">
-      <View className="mb-6 mt-1 flex-row items-center justify-center">
+      <View className="mb-6 mt-1 flex-row items-start justify-center">
         <Pressable
-          className="absolute left-0 h-10 w-10 items-center justify-center rounded-xl border border-white/25 bg-white/5"
+          className="absolute left-1 top-1 h-10 w-10 items-center justify-center rounded-xl"
           onPress={() => router.back()}
           accessibilityRole="button"
           accessibilityLabel="Go back"
@@ -80,6 +91,9 @@ export default function Setting() {
         {settingItems.map((item) => (
           <Pressable
             key={item.id}
+            onPress={() => {
+              if (!item.hasToggle) router.push(item.route);
+            }}
             className="flex-row items-center justify-between rounded-xl border border-white px-4 py-6"
             disabled={item.hasToggle}
           >
