@@ -35,6 +35,7 @@ export default function RootLayout() {
         >
           <Stack.Screen name="index" />
           <Stack.Screen name="start" />
+          <Stack.Screen name="mode" />
           <Stack.Screen name="setting" />
           <Stack.Screen name="how-to-play" />
           <Stack.Screen name="privacy" />

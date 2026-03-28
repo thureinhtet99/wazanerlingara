@@ -1,3 +1,4 @@
+import BackButton from "@/components/back-button";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { SvgAsset } from "@/components/ui/svg-asset";
@@ -71,18 +72,7 @@ export default function Setting() {
   return (
     <ThemedView className="flex-1">
       <View className="mb-6 mt-1 flex-row items-start justify-center">
-        <Pressable
-          className="absolute left-1 top-1 h-10 w-10 items-center justify-center rounded-xl"
-          onPress={() => router.back()}
-          accessibilityRole="button"
-          accessibilityLabel="Go back"
-        >
-          <SvgAsset
-            source={require("@/assets/svg/back-button.svg")}
-            width={40}
-            height={40}
-          />
-        </Pressable>
+        <BackButton />
 
         <ThemedText type="title">Setting</ThemedText>
       </View>
