@@ -2,7 +2,14 @@ import type { ReactNode } from "react";
 
 export type GameType = "word" | "question";
 
-export type SetupPageSettingItemType = {
+export type ModeType = {
+  id: GameType;
+  title: string;
+  desc: string;
+  icon: any;
+};
+
+export type SetupSettingItemType = {
   id: string;
   label: string;
   icon: ReactNode;
@@ -14,7 +21,7 @@ export type PlayerInputType = {
   name: string;
 };
 
-export type GameCategoryType =
+export type CategoryType =
   | "animals"
   | "foods"
   | "locations"
@@ -29,7 +36,7 @@ export type GameCategoryType =
   | "sports";
 
 export type CategoryCardType = {
-  type: GameCategoryType;
+  type: CategoryType;
   title: string;
-  image: string;
+  image: any;
 };

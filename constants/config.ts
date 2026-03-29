@@ -7,7 +7,8 @@ export const CONFIG = {
   MODE: "/mode",
   CATEGORIES: "/categories",
   SETTING: "/setting",
+  GAME_SETTING: "/game-setting",
   ROLE_REVEAL: "/role-reveal",
-  GAME_PLAY: "/game-play",
+  PLAY: "/play",
   HOW_TO_PLAY: "/how-to-play",
 } as const;

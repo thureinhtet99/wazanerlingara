@@ -4,32 +4,11 @@ import { ThemedView } from "@/components/themed-view";
 import { Button } from "@/components/ui/button";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import { CONFIG } from "@/constants/config";
+import { modes } from "@/constants/dummy-data";
 import { GameType } from "@/types/index.types";
 import { router } from "expo-router";
 import { useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
-
-type ModeType = {
-  id: GameType;
-  title: string;
-  desc: string;
-  icon: any;
-};
-
-const modes: ModeType[] = [
-  {
-    id: "word",
-    title: "စကားလုံးဂိမ်း",
-    desc: "လျှို့ဝှက်စကားလုံး မသိတဲ့သူကို ရှာမယ်",
-    icon: require("@/assets/svg/magnify.svg"),
-  },
-  {
-    id: "question",
-    title: "အမေးအဖြေဂိမ်း",
-    desc: "မေးခွန်းမသိဘဲ ဖြေနေတဲ့သူကို ရှာမယ်",
-    icon: require("@/assets/svg/question-mode.svg"),
-  },
-];
 
 export default function Mode() {
   const [mode, setMode] = useState<GameType | undefined>(
@@ -67,7 +46,10 @@ export default function Mode() {
           >
             <View className="flex-row items-center gap-3 pr-3 max-w-xs">
               <SvgAsset source={item.icon} width={80} height={80} />
-              <ThemedText type="subtitle">{item.title}</ThemedText>
+              <View className="flex-col">
+                <ThemedText type="subtitle">{item.title}</ThemedText>
+                <ThemedText>{item.desc}</ThemedText>
+              </View>
             </View>
           </Pressable>
         ))}
