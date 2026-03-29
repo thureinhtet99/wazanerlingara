@@ -66,9 +66,9 @@ export default function Start() {
   };
 
   const handleStartGame = () => {
-    if (!canStartGame) {
-      return;
-    }
+    // if (!canStartGame) {
+    //   return;
+    // }
     // updateGameConfig({
     //   players: validPlayers.map((name) => ({
     //     id: Crypto.randomUUID(),
@@ -84,7 +84,7 @@ export default function Start() {
       <View className="mb-6 mt-1 flex-row items-start justify-center">
         <BackButton />
 
-        <ThemedText type="title"> ဘယ်သူတွေ ကစားမလဲ</ThemedText>
+        <ThemedText type="title">ဘယ်သူတွေ ကစားမလဲ</ThemedText>
       </View>
 
       <ThemedText className="text-center mx-auto max-w-sm">
@@ -158,7 +158,7 @@ export default function Start() {
             </ThemedText>
           )}
 
-          <Button onPress={handleStartGame} disabled={!canStartGame}>
+          <Button onPress={handleStartGame} disabled={canStartGame}>
             <ThemedText type="subtitle">ရှေ့ဆက်မယ်</ThemedText>
           </Button>
         </View>

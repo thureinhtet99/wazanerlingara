@@ -26,7 +26,7 @@ export function ThemedText({
 
   return (
     <Text
-      className={cn(className)}
+      className={cn("px-1", className)}
       style={[
         !hasTextColorClass ? { color } : undefined,
         type === "default" ? styles.default : undefined,

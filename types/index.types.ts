@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
-// Game Setup
+export type GameType = "word" | "question";
+
 export type SetupPageSettingItemType = {
   id: string;
   label: string;

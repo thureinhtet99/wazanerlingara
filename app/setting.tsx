@@ -8,7 +8,7 @@ import { Href, useRouter } from "expo-router";
 import { useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 
-type SettingItem =
+type SettingType =
   | {
       id: string;
       label: string;
@@ -24,7 +24,7 @@ type SettingItem =
       route: Href;
     };
 
-const settingItems: SettingItem[] = [
+const settingItems: SettingType[] = [
   {
     id: "music",
     label: "နောက်ခံသီချင်း",
@@ -84,12 +84,12 @@ export default function Setting() {
             onPress={() => {
               if (!item.hasToggle) router.push(item.route);
             }}
-            className="flex-row items-center justify-between rounded-xl border border-white px-4 py-6"
+            className="flex-row items-center justify-between rounded-2xl border border-white px-4 py-6"
             disabled={item.hasToggle}
           >
             <View className="flex-row items-center gap-3 pr-3 max-w-xs">
               <SvgAsset source={item.icon} width={22} height={22} />
-              <Text className="flex-1 text-base text-white">{item.label}</Text>
+              <ThemedText type="subtitle">{item.label}</ThemedText>
             </View>
 
             {item.hasToggle && (
