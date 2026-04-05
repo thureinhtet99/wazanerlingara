@@ -7,13 +7,22 @@ type SvgAssetProps = {
   source: number;
   width?: number | string;
   height?: number | string;
+  color?: string;
   style?: StyleProp<ViewStyle>;
 };
 
-function SvgAssetBase({ source, width, height, style }: SvgAssetProps) {
+function SvgAssetBase({ source, width, height, color, style }: SvgAssetProps) {
   const uri = Asset.fromModule(source).uri;
 
-  return <SvgUri uri={uri} width={width} height={height} style={style} />;
+  return (
+    <SvgUri
+      uri={uri}
+      width={width}
+      height={height}
+      color={color}
+      style={style}
+    />
+  );
 }
 
 export const SvgAsset = memo(SvgAssetBase);
