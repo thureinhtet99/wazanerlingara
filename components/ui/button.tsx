@@ -55,7 +55,7 @@ export const Button = React.forwardRef<
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}
           className={cn(
-            "px-4 py-4 h-16 min-w-24 w-full border border-white rounded-full text-white flex items-center justify-center",
+            "px-4 py-4 h-20 min-w-24 w-full border border-white rounded-full text-white flex items-center justify-center",
             variant === "default" &&
               "bg-primary-500 active:bg-primary-400 disabled:bg-primary-200",
             variant === "outline" &&

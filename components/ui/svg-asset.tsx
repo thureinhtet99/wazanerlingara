@@ -1,18 +1,23 @@
+import { svg } from "@/constants/icons";
+import { SvgAssetType } from "@/types/index.types";
 import { Asset } from "expo-asset";
-import { memo } from "react";
-import { type StyleProp, type ViewStyle } from "react-native";
+import { memo, useMemo } from "react";
 import { SvgUri } from "react-native-svg";
 
-type SvgAssetProps = {
-  source: number;
-  width?: number | string;
-  height?: number | string;
-  color?: string;
-  style?: StyleProp<ViewStyle>;
-};
+const uriCache = new Map<number, string>();
 
-function SvgAssetBase({ source, width, height, color, style }: SvgAssetProps) {
-  const uri = Asset.fromModule(source).uri;
+function getCachedUri(moduleSource: number) {
+  const cached = uriCache.get(moduleSource);
+  if (cached) return cached;
+
+  const uri = Asset.fromModule(moduleSource).uri;
+  uriCache.set(moduleSource, uri);
+  return uri;
+}
+
+function SvgAssetBase({ source, width, height, color, style }: SvgAssetType) {
+  const moduleSource = typeof source === "number" ? source : svg[source];
+  const uri = useMemo(() => getCachedUri(moduleSource), [moduleSource]);
 
   return (
     <SvgUri
