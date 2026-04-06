@@ -4,6 +4,12 @@ import { type StyleProp, type ViewStyle } from "react-native";
 
 export type GameType = "word" | "question";
 
+export type PlayerType = {
+  id: string;
+  name: string;
+  imageId: string | null;
+};
+
 export type ModeType = {
   id: GameType;
   title: string;

@@ -4,7 +4,7 @@ import { ThemedView } from "@/components/themed-view";
 import { Button } from "@/components/ui/button";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import { CONFIG } from "@/constants/config";
-import { modes } from "@/constants/dummy-data";
+import { MODES } from "@/constants/dummy-data";
 import { GameType } from "@/types/index.types";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -36,7 +36,7 @@ export default function Mode() {
       </View>
 
       <ScrollView className="flex-1" contentContainerClassName="gap-3">
-        {modes.map((item) => (
+        {MODES.map((item) => (
           <Pressable
             key={item.id}
             onPress={() => {

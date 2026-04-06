@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import * as React from "react";
+import { useState, useTransition } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, ScrollView, View } from "react-native";
 import { z } from "zod";
@@ -22,8 +23,8 @@ type ContactFormType = z.infer<typeof contactSchema>;
 
 export default function Contact() {
   const router = useRouter();
-  const [pending, sendTransition] = React.useTransition();
-  const [notificationState, setNotificationState] = React.useState<{
+  const [pending, sendTransition] = useTransition();
+  const [notificationState, setNotificationState] = useState<{
     visible: boolean;
     variant: "success" | "error";
     title?: string;

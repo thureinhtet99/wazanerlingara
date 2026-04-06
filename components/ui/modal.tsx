@@ -1,13 +1,12 @@
+import { ThemedText } from "@/components/themed-text";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/util";
 import * as React from "react";
 import {
   Modal as RNModal,
   View,
   type ModalProps as RNModalProps,
 } from "react-native";
-
-import { ThemedText } from "@/components/themed-text";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/util";
 
 export type AppModalProps = {
   visible: boolean;

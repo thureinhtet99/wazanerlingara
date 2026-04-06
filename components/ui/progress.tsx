@@ -1,29 +1,30 @@
 import { cn } from "@/lib/util";
 import { View } from "react-native";
 
-interface ProgressProps {
-  value: number;
-  max: number;
+export default function Progress({
+  className,
+  progressPercent,
+  isResettingProgressBar,
+}: {
   className?: string;
-}
-
-function Progress({ value, max, className }: ProgressProps) {
-  const safeMax = max > 0 ? max : 1;
-  const percent = Math.max(0, Math.min(100, (value / safeMax) * 100));
-
+  progressPercent: number;
+  isResettingProgressBar: boolean;
+}) {
   return (
     <View
       className={cn(
-        "relative h-6 w-full overflow-hidden rounded-full border border-white bg-background-400",
+        "h-5 w-full overflow-hidden rounded-full border border-white bg-background-400",
         className,
       )}
     >
       <View
-        className="h-full bg-success-500"
-        style={{ width: `${percent}%` }}
+        className={`h-full ${
+          isResettingProgressBar
+            ? ""
+            : "transition-all duration-1000 ease-linear"
+        }  ${progressPercent <= 3 ? "bg-red-500" : "bg-success-500"}`}
+        style={{ width: `${progressPercent}%` }}
       />
     </View>
   );
 }
-
-export default Progress;

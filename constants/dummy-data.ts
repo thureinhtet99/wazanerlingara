@@ -1,6 +1,6 @@
-import { CategoryCardType, ModeType } from "@/types/index.types";
+import { CategoryCardType, ModeType, PlayerType } from "@/types/index.types";
 
-export const modes: ModeType[] = [
+export const MODES: ModeType[] = [
   {
     id: "word",
     title: "စကားလုံးဂိမ်း",
@@ -76,4 +76,11 @@ export const CATEGORIES: CategoryCardType[] = [
     title: "အားကစား",
     image: require("@/assets/svg/sports.svg"),
   },
+];
+
+export const PLAYERS: PlayerType[] = [
+  { id: "1", name: "Shin Thant Kyaw", imageId: null },
+  { id: "2", name: "Wunna Aung", imageId: null },
+  { id: "3", name: "Wai Yann Lin", imageId: null },
+  { id: "4", name: "Thant Htoo Aung", imageId: null },
 ];
