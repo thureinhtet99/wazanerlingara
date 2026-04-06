@@ -1,16 +1,32 @@
 import { ThemedText } from "@/components/themed-text";
+import { View } from "react-native";
 
 export default function InstructionText({ confirmed }: { confirmed: boolean }) {
   return (
-    <ThemedText type="subtitle" className="text-center">
+    <View className="px-2">
       {!confirmed ? (
         <>
-          ကိုယ့် role ကို ကြည့်ဖို့ ကတ် ကို ထိ ပါ။ <br />
-          အချိန် (၁၀) စက္ကန့် သာရပါမယ်။ ပြန်ကြည့် ခွင့် မရှိပါ။
+          <ThemedText
+            type="subtitle"
+            className="text-center text-[20px] leading-8 text-white/95"
+          >
+            ကိုယ့်roleကို ကြည့်ဖို့ ကတ်ကို ထိပါ။
+          </ThemedText>
+          <ThemedText
+            type="subtitle"
+            className="text-center text-[20px] leading-8 text-white/95"
+          >
+            အချိန် (၁၀) စက္ကန့်သာ ရပါမယ်။ ပြန်ကြည့်ခွင့်မရှိပါ။
+          </ThemedText>
         </>
       ) : (
-        <>ပြန်ကြည့် ခွင့် မရှိပါ။</>
+        <ThemedText
+          type="subtitle"
+          className="text-center text-[20px] leading-8 text-white/95"
+        >
+          ပြန်ကြည့် ခွင့် မရှိပါ။
+        </ThemedText>
       )}
-    </ThemedText>
+    </View>
   );
 }

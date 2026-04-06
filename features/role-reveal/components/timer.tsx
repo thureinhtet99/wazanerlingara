@@ -14,7 +14,7 @@ export default function Timer({
   const progressPercent = (timeLeft / 10) * 100;
 
   return (
-    <View className="flex-1">
+    <View className="w-full">
       <View className="mb-6 mt-1 flex-row items-start justify-center">
         <Pressable
           className="absolute left-0 top-0 h-12 w-12 items-center justify-center rounded-xl"
@@ -30,7 +30,7 @@ export default function Timer({
         </Pressable>
         <View className="flex-1 flex-row items-center justify-end">
           <Progress
-            className="w-[350px]"
+            // className="w-auto"
             progressPercent={progressPercent}
             isResettingProgressBar={isResettingProgressBar}
           />

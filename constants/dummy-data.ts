@@ -1,4 +1,11 @@
-import { CategoryCardType, ModeType, PlayerType } from "@/types/index.types";
+import {
+  CategoryCardType,
+  CategoryType,
+  GameConfigType,
+  ModeType,
+  PlayerType,
+} from "@/types/index.types";
+import { svg } from "./icons";
 
 export const MODES: ModeType[] = [
   {
@@ -84,3 +91,38 @@ export const PLAYERS: PlayerType[] = [
   { id: "3", name: "Wai Yann Lin", imageId: null },
   { id: "4", name: "Thant Htoo Aung", imageId: null },
 ];
+
+export const CATEGORY: CategoryType = "animals";
+
+export const GAME_SETTING = {
+  imposterCount: 1,
+  turnTimer: 10,
+  durationTimer: 300,
+  canImposterGetHint: true,
+};
+
+export const WORD = {
+  id: "1",
+  text: "ရေခဲမုန့်",
+  imageId: svg.animalsSvg,
+  hint: "နွေရာသီ",
+};
+
+export const QUESTION = {
+  id: "2",
+  text: " မန်ယူဖန်ဖြစ်ရတာဘယ်လိုနေလဲ?",
+  imageId: svg.animalsSvg,
+  hint: "အရူးလင်လုပ်",
+};
+
+export const GAME_CONFIG: GameConfigType = {
+  id: "1",
+  players: PLAYERS,
+  gameMode: "word",
+  category: CATEGORY,
+  gameSetting: GAME_SETTING,
+  word: WORD,
+  question: QUESTION,
+  roundCount: 3,
+  imposterId: "3",
+};

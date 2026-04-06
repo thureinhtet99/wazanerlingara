@@ -46,7 +46,7 @@ export type CategoryType =
 export type CategoryCardType = {
   type: CategoryType;
   title: string;
-  image: any;
+  image: string;
 };
 
 export type SvgAssetType = {
@@ -55,4 +55,51 @@ export type SvgAssetType = {
   height?: number | string;
   color?: string;
   style?: StyleProp<ViewStyle>;
+};
+
+export type RoleCardType = {
+  currentPlayer: PlayerType;
+  revealContent: string;
+  revealImageId?: string;
+  imposterId: string;
+  imposterCanGetHint: boolean;
+  hint: string;
+  showBlur: boolean;
+  revealed: boolean;
+  confirmed: boolean;
+  timeLeft: number;
+  handleClickCard: () => void;
+  handleReveal: () => void;
+};
+
+export type GameSettingType = {
+  imposterCount: number;
+  turnTimer: number;
+  durationTimer: number;
+  canImposterGetHint: boolean;
+};
+
+export type WordType = {
+  id: string;
+  text: string;
+  imageId: string | null;
+  hint: string;
+};
+export type QuestionType = {
+  id: string;
+  text: string;
+  imageId: string | null;
+  hint: string;
+};
+
+export type GameConfigType = {
+  id: string;
+  players: PlayerType[];
+  gameMode: "word" | "question";
+  category: CategoryType;
+  gameSetting: GameSettingType;
+  word: WordType | null;
+  question: QuestionType | null;
+  roundCount: number;
+  imposterId: string;
 };
