@@ -4,8 +4,10 @@ import { ThemedView } from "../themed-view";
 
 export default function MainLayout({ children }: { children: ReactNode }) {
   return (
-    <SafeAreaView className="flex-1 overflow-x-hidden">
-      <ThemedView className="flex-1 px-3 py-4">{children}</ThemedView>
-    </SafeAreaView>
+    <ThemedView className="flex-1">
+      <SafeAreaView className="flex-1 overflow-x-hidden">
+        <ThemedView className="flex-1 px-3 py-4">{children}</ThemedView>
+      </SafeAreaView>
+    </ThemedView>
   );
 }

@@ -1,12 +1,7 @@
+import { cn } from "@/lib/util";
 import { StyleSheet, Text, type TextProps } from "react-native";
 
-import { useThemeColor } from "@/hooks/use-theme-color";
-import { cn } from "@/lib/util";
-
-const TEXT_COLOR_CLASS_REGEX =
-  /\btext-(?:\[[^\]]+\]|(?:black|white|transparent|current|inherit)|(?:[a-z]+(?:-[a-z]+)*)-\d{2,3})\b/i;
-
-export type ThemedTextProps = TextProps & {
+type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
   type?: "default" | "title" | "defaultSemiBold" | "subtitle" | "link";
@@ -21,14 +16,10 @@ export function ThemedText({
   className,
   ...rest
 }: ThemedTextProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
-  const hasTextColorClass = TEXT_COLOR_CLASS_REGEX.test(className ?? "");
-
   return (
     <Text
-      className={cn("px-1", className)}
+      className={cn("text-white", className)}
       style={[
-        !hasTextColorClass ? { color } : undefined,
         type === "default" ? styles.default : undefined,
         type === "title" ? styles.title : undefined,
         type === "defaultSemiBold" ? styles.defaultSemiBold : undefined,
@@ -44,28 +35,24 @@ export function ThemedText({
 const styles = StyleSheet.create({
   default: {
     fontSize: 16,
-    lineHeight: 24,
-    fontFamily: "CustomFont",
+    fontFamily: "hand-written",
   },
   defaultSemiBold: {
     fontSize: 16,
-    lineHeight: 24,
     fontWeight: "600",
-    fontFamily: "CustomFont",
+    fontFamily: "hand-written",
   },
   title: {
     fontSize: 36,
-    lineHeight: 40,
-    fontFamily: "CustomFont",
+    fontFamily: "hand-written",
   },
   subtitle: {
-    fontSize: 20,
-    fontFamily: "CustomFont",
+    fontSize: 24,
+    fontFamily: "hand-written",
   },
   link: {
-    lineHeight: 30,
     fontSize: 16,
     color: "#0a7ea4",
-    fontFamily: "CustomFont",
+    fontFamily: "hand-written",
   },
 });

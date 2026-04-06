@@ -1,4 +1,5 @@
 import MainLayout from "@/components/layout/main-layout";
+import { svg } from "@/constants/icons";
 import "@/global.css";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import {
@@ -6,27 +7,33 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+import { Asset } from "expo-asset";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 
+SplashScreen.preventAutoHideAsync();
+
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [loaded, error] = useFonts({
-    CustomFont: require("../assets/fonts/handwrittenFont.ttf"),
+  const [fontLoaded, error] = useFonts({
+    "hand-written": require("@/assets/fonts/handwrittenFont.ttf"),
   });
 
   useEffect(() => {
-    if (loaded || error) SplashScreen.hideAsync();
-  }, [loaded, error]);
+    Asset.loadAsync(Object.values(svg)).catch(() => undefined);
+  }, []);
 
-  if (!loaded && !error) return null;
+  useEffect(() => {
+    if (fontLoaded || error) SplashScreen.hideAsync();
+  }, [fontLoaded, error]);
+
+  if (!fontLoaded && !error) return null;
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <StatusBar style="auto" />
       <MainLayout>
         <Stack
           screenOptions={{
@@ -46,6 +53,11 @@ export default function RootLayout() {
           <Stack.Screen name="test-screen" />
         </Stack>
       </MainLayout>
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        style={colorScheme === "dark" ? "light" : "dark"}
+      />
     </ThemeProvider>
   );
 }

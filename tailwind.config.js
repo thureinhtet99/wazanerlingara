@@ -1,5 +1,3 @@
-import type { Config } from "tailwindcss";
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
@@ -81,9 +79,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        primary: ["CustomFont"],
+        primary: ["hand-written"],
       },
     },
   },
   plugins: [],
-} satisfies Config;
+};
