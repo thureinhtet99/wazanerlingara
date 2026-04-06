@@ -38,6 +38,8 @@ export default function RootLayout() {
           <Stack.Screen name="mode" />
           <Stack.Screen name="categories" />
           <Stack.Screen name="setting" />
+          <Stack.Screen name="game-setting" />
+          <Stack.Screen name="role-reveal" />
           <Stack.Screen name="how-to-play" />
           <Stack.Screen name="privacy" />
           <Stack.Screen name="contact" />
