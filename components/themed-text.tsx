@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 38,
+    lineHeight: 50,
     fontFamily: "hand-written",
   },
   legend: {
