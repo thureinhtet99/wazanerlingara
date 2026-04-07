@@ -2,11 +2,6 @@ import MainLayout from "@/components/layout/main-layout";
 import { svg } from "@/constants/icons";
 import "@/global.css";
 import { useColorScheme } from "@/hooks/use-color-scheme";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
 import { Asset } from "expo-asset";
 import { useFonts } from "expo-font";
 import { Stack, useSegments } from "expo-router";
@@ -56,13 +51,13 @@ export default function RootLayout() {
   );
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <>
       {isOnboardingRoute ? routes : <MainLayout>{routes}</MainLayout>}
       <StatusBar
         translucent
         backgroundColor="transparent"
         style={colorScheme === "dark" ? "light" : "dark"}
       />
-    </ThemeProvider>
+    </>
   );
 }
