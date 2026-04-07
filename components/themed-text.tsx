@@ -4,7 +4,13 @@ import { StyleSheet, Text, type TextProps } from "react-native";
 type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
-  type?: "default" | "title" | "defaultSemiBold" | "subtitle" | "link";
+  type?:
+    | "default"
+    | "title"
+    | "legend"
+    | "defaultSemiBold"
+    | "subtitle"
+    | "link";
   className?: string;
 };
 
@@ -22,6 +28,7 @@ export function ThemedText({
       style={[
         type === "default" ? styles.default : undefined,
         type === "title" ? styles.title : undefined,
+        type === "legend" ? styles.legend : undefined,
         type === "defaultSemiBold" ? styles.defaultSemiBold : undefined,
         type === "subtitle" ? styles.subtitle : undefined,
         type === "link" ? styles.link : undefined,
@@ -43,11 +50,16 @@ const styles = StyleSheet.create({
     fontFamily: "hand-written",
   },
   title: {
-    fontSize: 36,
+    fontSize: 38,
+    fontFamily: "hand-written",
+  },
+  legend: {
+    fontSize: 48,
+    lineHeight: 60,
     fontFamily: "hand-written",
   },
   subtitle: {
-    fontSize: 24,
+    fontSize: 26,
     fontFamily: "hand-written",
   },
   link: {

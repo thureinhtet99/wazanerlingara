@@ -6,7 +6,6 @@ import Switch from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "expo-router";
 import { useState } from "react";
-// import { Switch } from "react-native";
 
 export default function TestScreen() {
   const [checked, setChecked] = useState(false);
@@ -28,7 +27,7 @@ export default function TestScreen() {
       <Input placeholder="Test" disabled />
       <Textarea />
       <Switch checked={checked} onChange={() => setChecked(!checked)} />
-      <Progress value={Math.random() * 100} max={100} />
+      <Progress progressPercent={Math.random() * 100} isResettingProgressBar />
     </ThemedView>
   );
 }

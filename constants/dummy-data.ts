@@ -1,3 +1,6 @@
+import onboardingOne from "@/assets/svg/onboarding/onboarding-1.png";
+import onboardingTwo from "@/assets/svg/onboarding/onboarding-2.png";
+import onboardingThree from "@/assets/svg/onboarding/onboarding-3.png";
 import {
   CategoryCardType,
   CategoryType,
@@ -90,6 +93,27 @@ export const PLAYERS: PlayerType[] = [
   { id: "2", name: "Wunna Aung", imageId: null },
   { id: "3", name: "Wai Yann Lin", imageId: null },
   { id: "4", name: "Thant Htoo Aung", imageId: null },
+];
+
+export const ONBOARDING_STEPS = [
+  {
+    title: "စကားလုံးစစ်ပွဲ စတင်ပါပြီ",
+    description:
+      "သူငယ်ချင်းတွေထဲမှာ ဘယ်သူက အမှန်တရားကို ရှာဖွေသူလဲ? ဘယ်သူကတော့ ဟန်ဆောင်ကောင်းတဲ့ Imposterလဲဆိုတာ ဖော်ထုတ်ကြည့်လိုက်ပါ။",
+    image: onboardingOne,
+  },
+  {
+    title: "လူတိုင်းကို သံသယဝင်ပါ",
+    description:
+      "အခြားသူတွေပြောတာကို သေချာနားထောင်ပြီး Imposterကို ဖော်ထုတ်ပါ။ သင်ကောဘယ်သူလဲ? ရိုးသားတဲ့Teammateလား? ဒါမှမဟုတ် အမှောင်ထုထဲမှာ ပုန်းအောင်းနေတဲ့Imposterလား?",
+    image: onboardingTwo,
+  },
+  {
+    title: "အသင့်ဖြစ်ပြီလား",
+    description:
+      "သူငယ်ချင်းများနှင့်အတူ စိတ်လှုပ်ရှားဖွယ် Imposter ဂိမ်းကို အခုပဲ အတူ ကစားပြီး ပျော်ရွှင်လိုက်ပါ။",
+    image: onboardingThree,
+  },
 ];
 
 export const CATEGORY: CategoryType = "animals";

@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "wazanerlingara",
+    "slug": "wazanerlingara",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/svg/wazanerlingara.svg",
-    "scheme": "mobile",
+    "icon": "./assets/svg/logo.svg",
+    "scheme": "wazanerlingara",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -13,10 +13,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/svg/wazanerlingara.svg",
-        "backgroundImage": "./assets/svg/wazanerlingara.svg",
-        "monochromeImage": "./assets/svg/wazanerlingara.svg"
+        "backgroundColor": "#f63b3b",
+        "foregroundImage": "./assets/images/splash-logo.png",
+        "backgroundImage": "./assets/images/splash-logo.png",
+        "monochromeImage": "./assets/images/splash-logo.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
@@ -42,20 +42,12 @@
           "image": "./assets/svg/logo.svg",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff",
+          "backgroundColor": "#f63b3b",
           "dark": {
-            "backgroundColor": "#000000"
+            "backgroundColor": "#f63b3b"
           }
         }
-      ],
-      [
-        "expo-font",
-        {
-          "fonts": [
-            "./assets/fonts/handwrittenFont.ttf",
-          ]
-        }
-      ],
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

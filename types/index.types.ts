@@ -72,6 +72,17 @@ export type RoleCardType = {
   handleReveal: () => void;
 };
 
+export type OnboardingCardType = {
+  title: string;
+  description: string;
+  image: string;
+  step: number;
+  isLast: boolean;
+  onNext: () => void;
+  handlePageChange: (page: number) => void;
+  skip: () => void;
+};
+
 export type GameSettingType = {
   imposterCount: number;
   turnTimer: number;
