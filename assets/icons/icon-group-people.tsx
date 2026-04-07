@@ -1,0 +1,30 @@
+import Svg, { Path } from "react-native-svg";
+
+type Props = {
+  className?: string;
+};
+
+const IconGroupPeople = ({ className, ...props }: Props) => {
+  return (
+    <Svg viewBox="0 0 32 32" className={className} fill="none" {...props}>
+      <Path
+        d="M14 28C14 28 12 28 12 26C12 24 14 18 22 18C30 18 32 24 32 26C32 28 30 28 30 28H14Z"
+        fill="currentColor"
+      />
+      <Path
+        d="M22 16C25.3137 16 28 13.3137 28 10C28 6.68629 25.3137 4 22 4C18.6863 4 16 6.68629 16 10C16 13.3137 18.6863 16 22 16Z"
+        fill="currentColor"
+      />
+      <Path
+        d="M10.4327 28C10.1511 27.4318 10 26.7583 10 26C10 23.2891 11.3581 20.5011 13.8719 18.5599C12.7722 18.2082 11.4902 18 10 18C2 18 0 24 0 26C0 28 2 28 2 28H10.4327Z"
+        fill="currentColor"
+      />
+      <Path
+        d="M9 16C11.7614 16 14 13.7614 14 11C14 8.23858 11.7614 6 9 6C6.23858 6 4 8.23858 4 11C4 13.7614 6.23858 16 9 16Z"
+        fill="currentColor"
+      />
+    </Svg>
+  );
+};
+
+export default IconGroupPeople;

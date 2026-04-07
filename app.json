@@ -1,0 +1,57 @@
+{
+  "expo": {
+    "name": "wazanerlingara",
+    "slug": "wazanerlingara",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/svg/logo.svg",
+    "scheme": "wazanerlingara",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#f63b3b",
+        "foregroundImage": "./assets/images/splash-logo.png",
+        "backgroundImage": "./assets/images/splash-logo.png",
+        "monochromeImage": "./assets/images/splash-logo.png"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/svg/logo.svg",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/handwrittenFont.ttf"
+          ]
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/svg/logo.svg",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#f63b3b",
+          "dark": {
+            "backgroundColor": "#f63b3b"
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
