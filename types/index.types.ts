@@ -97,8 +97,6 @@ export type AudioSettingsContextType = AudioSettingsType & {
   playClickSound: () => void;
 };
 
-// -----------Game config-----------------
-
 export type GameSettingType = {
   imposterCount: number;
   turnTimer: number;
@@ -119,6 +117,7 @@ export type QuestionType = {
   hint: string;
 };
 
+// -----------Game config-----------------
 export type GameConfigType = {
   id: string;
   players: PlayerType[];
@@ -129,4 +128,17 @@ export type GameConfigType = {
   question: QuestionType | null;
   roundCount: number;
   imposterId: string;
+};
+
+export type GameConfigPatchType = Partial<GameConfigType> & {
+  gameSetting?: Partial<GameSettingType>;
+};
+
+export type GameConfigContextType = {
+  config: GameConfigType;
+  loading: boolean;
+  setGameConfig: (config: GameConfigType) => void;
+  updateGameConfig: (patch: GameConfigPatchType) => void;
+  setPlayers: (players: PlayerType[]) => void;
+  resetGameConfig: () => void;
 };

@@ -136,7 +136,7 @@ export default function Contact() {
                 )}
               />
 
-              <ThemedText style={{ color: "#b8b000", fontSize: 20 }}>
+              <ThemedText type="description" style={{ color: "#b8b000" }}>
                 သင့်ထံသို့ ပြန်လည်ဆက်သွယ်ရန်အတွက်သာ အသုံးပြုပါမည်။
               </ThemedText>
             </View>
@@ -156,7 +156,7 @@ export default function Contact() {
                 )}
               />
 
-              <ThemedText style={{ fontSize: 20 }}>
+              <ThemedText type="description">
                 စာကို အရှည်ကြီး မရေးပါနဲ့ ဖတ်ရမှာ ပျင်းလို့ 😔🫶
               </ThemedText>
             </View>
