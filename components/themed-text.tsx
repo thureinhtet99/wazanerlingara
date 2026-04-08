@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 26,
+    lineHeight: 38,
     fontFamily: "hand-written",
   },
   link: {

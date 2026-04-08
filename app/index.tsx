@@ -4,16 +4,16 @@ import { Button } from "@/components/ui/button";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import { CONFIG } from "@/constants/config";
 import { useRouter } from "expo-router";
-import { Pressable, View } from "react-native";
+import { Image, Pressable, View } from "react-native";
 
 export default function Index() {
   const router = useRouter();
 
   return (
-    <ThemedView className="flex-1">
-      <View className="mb-2 flex-row items-center justify-end">
+    <ThemedView className="flex-1 gap-4">
+      <View className="flex-row items-center justify-end">
         <Pressable
-          className="h-12 w-12 items-center justify-center"
+          className="w-14 h-16 flex items-center justify-center"
           onPress={() => router.push(CONFIG.SETTING)}
           accessibilityRole="button"
           accessibilityLabel="Open settings"
@@ -26,11 +26,14 @@ export default function Index() {
         </Pressable>
       </View>
 
-      <View className="relative mb-5 flex-1 items-center justify-end overflow-hidden">
-        <SvgAsset source={require("@/assets/svg/onboarding-1.svg")} />
+      <View className="flex-1 items-center justify-end">
+        <Image
+          source={require("@/assets/images/onboarding.png")}
+          resizeMode="cover"
+        />
       </View>
 
-      <View className="gap-4 pb-3">
+      <View className="gap-4">
         <Button
           onPress={() => router.push(CONFIG.START)}
           accessibilityRole="button"
@@ -42,9 +45,7 @@ export default function Index() {
               width={30}
               height={30}
             />
-            <ThemedText type="subtitle" className="text-xl text-white">
-              စကစားကြမယ်
-            </ThemedText>
+            <ThemedText type="subtitle">စကစားကြမယ်</ThemedText>
           </View>
         </Button>
 
@@ -60,12 +61,7 @@ export default function Index() {
               width={30}
               height={30}
             />
-            <ThemedText
-              type="subtitle"
-              className="font-example text-xl text-white"
-            >
-              ဘယ်လိုကစားရမလဲ
-            </ThemedText>
+            <ThemedText type="subtitle">ဘယ်လိုကစားရမလဲ</ThemedText>
           </View>
         </Button>
       </View>
