@@ -5,8 +5,8 @@ import { SvgAsset } from "@/components/ui/svg-asset";
 import Switch from "@/components/ui/switch";
 import { CONFIG } from "@/constants/config";
 import { Href, useRouter } from "expo-router";
-import { useState } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, View } from "react-native";
+import { useAudioSettings } from "../hooks/use-audio-settings";
 
 type SettingType =
   | {
@@ -24,7 +24,7 @@ type SettingType =
       route: Href;
     };
 
-const settingItems: SettingType[] = [
+const SETTING_ITEMS: SettingType[] = [
   {
     id: "music",
     label: "နောက်ခံသီချင်း",
@@ -53,20 +53,22 @@ const settingItems: SettingType[] = [
 
 export default function Setting() {
   const router = useRouter();
-  const [toggleState, setToggleState] = useState<Record<string, boolean>>(() =>
-    settingItems.reduce<Record<string, boolean>>((acc, item) => {
-      if (item.hasToggle) {
-        acc[item.id] = false;
-      }
-      return acc;
-    }, {}),
-  );
+  const {
+    musicEnabled,
+    soundEnabled,
+    setMusicEnabled,
+    setSoundEnabled,
+    playClickSound,
+  } = useAudioSettings();
 
-  const handleToggle = (id: string) => {
-    setToggleState((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+  const handleToggle = (id: string, nextValue: boolean) => {
+    if (id === "music") {
+      setMusicEnabled(nextValue);
+    }
+
+    if (id === "sound") {
+      setSoundEnabled(nextValue);
+    }
   };
 
   return (
@@ -77,34 +79,37 @@ export default function Setting() {
         <ThemedText type="title">Setting</ThemedText>
       </View>
 
-      <ScrollView className="flex-1" contentContainerClassName="gap-3">
-        {settingItems.map((item) => (
+      <View className="flex-1 gap-4">
+        {SETTING_ITEMS.map((item) => (
           <Pressable
             key={item.id}
             onPress={() => {
-              if (!item.hasToggle) router.push(item.route);
+              if (!item.hasToggle) {
+                playClickSound();
+                router.push(item.route);
+              }
             }}
-            className="flex-row items-center justify-between rounded-2xl border border-white px-4 py-6"
+            className="flex-row items-center justify-between rounded-2xl border border-white px-4 py-8 bg-background-500/80"
             disabled={item.hasToggle}
           >
             <View className="flex-row items-center gap-3 pr-3 max-w-xs">
-              <SvgAsset source={item.icon} width={22} height={22} />
+              <SvgAsset source={item.icon} width={30} height={30} />
               <ThemedText type="subtitle">{item.label}</ThemedText>
             </View>
 
             {item.hasToggle && (
               <Switch
-                checked={Boolean(toggleState[item.id])}
-                onChange={() => handleToggle(item.id)}
+                checked={item.id === "music" ? musicEnabled : soundEnabled}
+                onChange={(nextValue) => handleToggle(item.id, nextValue)}
               />
             )}
           </Pressable>
         ))}
-      </ScrollView>
+      </View>
 
-      <Text className="mt-auto text-center text-base text-white pb-4">
+      <ThemedText type="subtitle" className="mt-auto text-center">
         {`v ${CONFIG.VERSION}`}
-      </Text>
+      </ThemedText>
     </ThemedView>
   );
 }

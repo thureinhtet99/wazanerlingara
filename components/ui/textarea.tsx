@@ -21,7 +21,7 @@ export const Textarea = React.forwardRef<
       disabled,
       multiline,
       resizable = true,
-      minHeight = 120,
+      minHeight = 160,
       onContentSizeChange,
       style,
       ...props
@@ -66,7 +66,7 @@ export const Textarea = React.forwardRef<
           )}
           onContentSizeChange={handleContentSizeChange}
           style={[
-            { fontFamily: "CustomFont", fontSize: 18 },
+            { fontFamily: "hand-written", fontSize: 24 },
             resizable ? { minHeight, height } : { minHeight },
             style,
           ]}

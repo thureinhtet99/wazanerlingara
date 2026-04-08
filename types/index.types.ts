@@ -83,6 +83,22 @@ export type OnboardingCardType = {
   skip: () => void;
 };
 
+export type AudioSettingsType = {
+  musicEnabled: boolean;
+  soundEnabled: boolean;
+};
+
+export type AudioSettingsContextType = AudioSettingsType & {
+  loading: boolean;
+  setMusicEnabled: (enabled: boolean) => void;
+  setSoundEnabled: (enabled: boolean) => void;
+  toggleMusic: () => void;
+  toggleSound: () => void;
+  playClickSound: () => void;
+};
+
+// -----------Game config-----------------
+
 export type GameSettingType = {
   imposterCount: number;
   turnTimer: number;

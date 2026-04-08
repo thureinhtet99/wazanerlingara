@@ -1,28 +1,19 @@
+import BackButton from "@/components/back-button";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { SvgAsset } from "@/components/ui/svg-asset";
-import { useRouter } from "expo-router";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
 
 export default function HowToPlay() {
-  const router = useRouter();
-
   return (
-    <ThemedView className="flex-1">
-      <View className="mb-6 mt-1 flex-row items-start justify-center">
-        <Pressable
-          className="absolute left-1 top-1 h-10 w-10 items-center justify-center rounded-xl border border-white/25 bg-white/5"
-          onPress={() => router.back()}
-          accessibilityRole="button"
-          accessibilityLabel="Go back"
-        >
-          <SvgAsset
-            source={require("@/assets/svg/back-button.svg")}
-            width={40}
-            height={40}
-          />
-        </Pressable>
-
+    <ThemedView className="flex-1 relative">
+      <View className="flex-1 flow-row items-center justify-start absolute h-full w-full">
+        <Image
+          source={require("@/assets/images/imposter.png")}
+          className="opacity-20 self-center h-full w-full"
+        />
+      </View>
+      <View className="mb-6 mt-1 flex-row items-center justify-center">
+        <BackButton />
         <ThemedText type="title">ဘယ်လိုကစားရမလဲ</ThemedText>
       </View>
 

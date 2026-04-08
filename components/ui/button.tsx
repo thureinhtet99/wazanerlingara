@@ -2,6 +2,7 @@ import { cn } from "@/lib/util";
 import React, { useRef } from "react";
 import { Animated, Pressable, View, type PressableProps } from "react-native";
 import Svg, { Circle, Ellipse } from "react-native-svg";
+import { useAudioSettings } from "../../hooks/use-audio-settings";
 import { ThemedText } from "../themed-text";
 
 export interface ButtonProps extends PressableProps {
@@ -20,6 +21,7 @@ export const Button = React.forwardRef<
       variant = "default",
       children,
       disabled,
+      onPress,
       onPressIn,
       onPressOut,
       ...props
@@ -27,6 +29,7 @@ export const Button = React.forwardRef<
     ref,
   ) => {
     const scaleAnim = useRef(new Animated.Value(1)).current;
+    const { playClickSound } = useAudioSettings();
 
     const handlePressIn = (e: any) => {
       Animated.spring(scaleAnim, {
@@ -44,6 +47,11 @@ export const Button = React.forwardRef<
       onPressOut?.(e);
     };
 
+    const handlePress = (e: any) => {
+      playClickSound();
+      onPress?.(e);
+    };
+
     return (
       <Animated.View
         style={{ transform: [{ scale: scaleAnim }] }}
@@ -54,6 +62,7 @@ export const Button = React.forwardRef<
           disabled={disabled}
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}
+          onPress={handlePress}
           className={cn(
             "px-4 py-4 h-20 min-w-24 w-full border border-white rounded-full text-white flex items-center justify-center",
             variant === "default" &&
