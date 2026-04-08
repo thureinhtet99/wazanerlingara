@@ -6,7 +6,7 @@ import { Image, ScrollView, Text, View } from "react-native";
 export default function HowToPlay() {
   return (
     <ThemedView className="flex-1 relative">
-      <View className="flex-1 flow-row items-center justify-center absolute h-full w-full">
+      <View className="flex-1 flow-row items-center justify-start absolute h-full w-full">
         <Image
           source={require("@/assets/images/imposter.png")}
           className="opacity-20 self-center h-full w-full"

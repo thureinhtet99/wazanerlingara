@@ -3,18 +3,23 @@ import { ThemedView } from "@/components/themed-view";
 import { Button } from "@/components/ui/button";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import { CONFIG } from "@/constants/config";
+import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { useRouter } from "expo-router";
 import { Image, Pressable, View } from "react-native";
 
 export default function Index() {
   const router = useRouter();
+  const { playClickSound } = useAudioSettings();
 
   return (
     <ThemedView className="flex-1 gap-4">
       <View className="flex-row items-center justify-end">
         <Pressable
           className="w-14 h-16 flex items-center justify-center"
-          onPress={() => router.push(CONFIG.SETTING)}
+          onPress={() => {
+            playClickSound();
+            router.push(CONFIG.SETTING);
+          }}
           accessibilityRole="button"
           accessibilityLabel="Open settings"
         >

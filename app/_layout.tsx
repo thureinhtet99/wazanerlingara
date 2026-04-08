@@ -8,12 +8,14 @@ import { Stack, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
+import { AudioSettingsProvider } from "../hooks/use-audio-settings";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const segments = useSegments();
+
   const isOnboardingRoute = segments[0] === "onboarding";
   const [fontLoaded, error] = useFonts({
     "hand-written": require("@/assets/fonts/handwrittenFont.ttf"),
@@ -52,7 +54,9 @@ export default function RootLayout() {
 
   return (
     <>
-      {isOnboardingRoute ? routes : <MainLayout>{routes}</MainLayout>}
+      <AudioSettingsProvider>
+        {isOnboardingRoute ? routes : <MainLayout>{routes}</MainLayout>}
+      </AudioSettingsProvider>
       <StatusBar
         translucent
         backgroundColor="transparent"

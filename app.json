@@ -12,6 +12,7 @@
       "supportsTablet": true
     },
     "android": {
+      "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "backgroundColor": "#f63b3b",
         "foregroundImage": "./assets/images/splash-logo.png",
@@ -47,7 +48,8 @@
             "backgroundColor": "#f63b3b"
           }
         }
-      ]
+      ],
+      "expo-audio"
     ],
     "experiments": {
       "typedRoutes": true,

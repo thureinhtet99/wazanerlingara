@@ -1,5 +1,6 @@
 import { cn } from "@/lib/util";
 import { Pressable, View } from "react-native";
+import { useAudioSettings } from "../../hooks/use-audio-settings";
 import { ThemedText } from "../themed-text";
 
 export interface SwitchProps {
@@ -24,8 +25,10 @@ export default function Switch({
   className,
 }: SwitchProps) {
   const isChecked = checked ?? value ?? false;
+  const { playClickSound } = useAudioSettings();
 
   const handleChange = (next: boolean) => {
+    playClickSound();
     onChange?.(next);
     onCheckedChange?.(next);
   };
@@ -35,8 +38,8 @@ export default function Switch({
       onPress={() => !disabled && handleChange(!isChecked)}
       disabled={disabled}
       className={cn(
-        "relative h-8 w-[60px] justify-center rounded-full border border-white/80 bg-neutral-500/40 px-0.5",
-        isChecked ? "bg-primary-500/80" : "bg-neutral-400/50",
+        "relative h-10 w-[70px] items-center justify-center rounded-full border border-white bg-neutral-800 p-1",
+        isChecked ? "bg-primary-500" : "bg-neutral-800",
         disabled && "opacity-50",
         className,
       )}
@@ -47,7 +50,7 @@ export default function Switch({
       <ThemedText
         type="defaultSemiBold"
         className={cn(
-          "text-[12px] leading-3",
+          "text-[12px] leading-4",
           isChecked ? "self-start pl-1 text-white" : "self-end pr-1 text-white",
         )}
       >
@@ -56,7 +59,7 @@ export default function Switch({
 
       <View
         className={cn(
-          "absolute top-0.5 h-6 w-6 rounded-full bg-white",
+          "absolute top-0.5 h-8 w-8 rounded-full bg-white",
           isChecked ? "right-0.5" : "left-0.5",
         )}
       />
