@@ -10,6 +10,7 @@ type ThemedTextProps = TextProps & {
     | "legend"
     | "defaultSemiBold"
     | "subtitle"
+    | "description"
     | "link";
   className?: string;
 };
@@ -30,6 +31,7 @@ export function ThemedText({
         type === "title" ? styles.title : undefined,
         type === "legend" ? styles.legend : undefined,
         type === "defaultSemiBold" ? styles.defaultSemiBold : undefined,
+        type === "description" ? styles.description : undefined,
         type === "subtitle" ? styles.subtitle : undefined,
         type === "link" ? styles.link : undefined,
         style,
@@ -57,6 +59,11 @@ const styles = StyleSheet.create({
   legend: {
     fontSize: 48,
     lineHeight: 60,
+    fontFamily: "hand-written",
+  },
+  description: {
+    fontSize: 20,
+    lineHeight: 32,
     fontFamily: "hand-written",
   },
   subtitle: {

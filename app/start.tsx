@@ -1,3 +1,4 @@
+import Loading from "@/app/loading";
 import BackButton from "@/components/back-button";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
@@ -5,12 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import { CONFIG } from "@/constants/config";
+import { useGameConfig } from "@/hooks/use-game-config";
 import { changeToMMNumber } from "@/lib/change-to-mm-number";
 import { cn } from "@/lib/util";
 import { PlayerInputType } from "@/types/index.types";
 import * as Crypto from "expo-crypto";
 import { useRouter } from "expo-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
@@ -23,11 +25,24 @@ const createPlayerInput = (name = ""): PlayerInputType => ({
 });
 
 export default function Start() {
-  // const { config, updateGameConfig } = useGameConfigStore();
+  const { config, loading, updateGameConfig } = useGameConfig();
   const router = useRouter();
   const [playerInputs, setPlayerInputs] = useState<PlayerInputType[]>([
     createPlayerInput(),
   ]);
+
+  useEffect(() => {
+    if (loading || config.players.length === 0) {
+      return;
+    }
+
+    setPlayerInputs(
+      config.players.map((player) => ({
+        id: player.id,
+        name: player.name,
+      })),
+    );
+  }, [config.players, loading]);
 
   const validPlayers = useMemo(
     () => playerInputs.map((player) => player.name.trim()).filter(Boolean),
@@ -66,18 +81,22 @@ export default function Start() {
   };
 
   const handleStartGame = () => {
-    // if (!canStartGame) {
-    //   return;
-    // }
-    // updateGameConfig({
-    //   players: validPlayers.map((name) => ({
-    //     id: Crypto.randomUUID(),
-    //     name,
-    //     imageId: null,
-    //   })),
-    // });
+    if (!canStartGame) {
+      return;
+    }
+
+    updateGameConfig({
+      players: validPlayers.map((name) => ({
+        id: Crypto.randomUUID(),
+        name,
+        imageId: null,
+      })),
+    });
+
     router.push(CONFIG.MODE);
   };
+
+  if (loading) return <Loading />;
 
   return (
     <ThemedView className="flex-1">
@@ -87,15 +106,15 @@ export default function Start() {
         <ThemedText type="title">ဘယ်သူတွေ ကစားမလဲ</ThemedText>
       </View>
 
-      <ThemedText className="text-center mx-auto max-w-sm">
+      <ThemedText type="description" className="text-center mx-auto max-w-sm">
         ပါဝင်ကစားသွားမှာဖြစ်တဲ့ သူငယ်ချင်းတွေရဲ့ နာမည်တွေကို အောက်မှာ
         ရိုက်ထည့်ပေးပါ။
       </ThemedText>
 
       <View className="mt-5 flex-1 flex-col gap-3">
         <ThemedText
+          type="description"
           className={cn(
-            "text-lg font-semibold",
             playerCount >= 3
               ? "text-success-500"
               : playerCount === 0
@@ -119,7 +138,7 @@ export default function Start() {
               {playerCount >= 1 && (
                 <Pressable
                   onPress={() => handleRemovePlayer(playerInput.id)}
-                  className="absolute right-4 top-1/2 h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border-2 border-neutral-100"
+                  className="absolute right-6 top-1/2 h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border-2 border-neutral-100"
                   accessibilityLabel="Remove player"
                 >
                   <Svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -152,13 +171,13 @@ export default function Start() {
 
         <View className="mt-auto gap-3 pb-1">
           {!canStartGame && (
-            <ThemedText className="text-center text-red-500">
+            <ThemedText type="description" className="text-center text-red-500">
               အနည်းဆုံး {changeToMMNumber(MIN_PLAYERS)} ယောက်ရှိမှ
               ကစားလို့ရပါမယ်
             </ThemedText>
           )}
 
-          <Button onPress={handleStartGame} disabled={canStartGame}>
+          <Button onPress={handleStartGame} disabled={!canStartGame}>
             <ThemedText type="subtitle">ရှေ့ဆက်မယ်</ThemedText>
           </Button>
         </View>

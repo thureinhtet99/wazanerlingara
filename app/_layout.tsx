@@ -2,6 +2,7 @@ import MainLayout from "@/components/layout/main-layout";
 import { svg } from "@/constants/icons";
 import "@/global.css";
 import { useColorScheme } from "@/hooks/use-color-scheme";
+import { GameConfigProvider } from "@/hooks/use-game-config";
 import { Asset } from "expo-asset";
 import { useFonts } from "expo-font";
 import { Stack, useSegments } from "expo-router";
@@ -55,7 +56,9 @@ export default function RootLayout() {
   return (
     <>
       <AudioSettingsProvider>
-        {isOnboardingRoute ? routes : <MainLayout>{routes}</MainLayout>}
+        <GameConfigProvider>
+          {isOnboardingRoute ? routes : <MainLayout>{routes}</MainLayout>}
+        </GameConfigProvider>
       </AudioSettingsProvider>
       <StatusBar
         translucent

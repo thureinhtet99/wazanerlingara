@@ -27,7 +27,7 @@ export const Input = React.forwardRef<
           disabled && "opacity-50",
           className,
         )}
-        style={{ fontFamily: "hand-written", fontSize: 24 }}
+        style={{ fontFamily: "hand-written", fontSize: 20 }}
         {...props}
       />
       {variant === "error" && (
