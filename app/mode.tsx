@@ -9,6 +9,7 @@ import { GameType } from "@/types/index.types";
 import { router } from "expo-router";
 import { useState } from "react";
 import { Image, Pressable, ScrollView, View } from "react-native";
+import Loading from "./loading";
 
 export default function Mode() {
   const { config, loading, updateGameConfig } = useGameConfig();
@@ -25,6 +26,8 @@ export default function Mode() {
       router.push(CONFIG.CATEGORIES);
     }
   };
+
+  if (loading) return <Loading />;
 
   return (
     <ThemedView className="flex-1">
