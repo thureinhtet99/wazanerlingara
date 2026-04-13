@@ -1,6 +1,10 @@
 import type { SvgKey } from "@/constants/icons";
 import type { ReactNode } from "react";
-import { type StyleProp, type ViewStyle } from "react-native";
+import {
+  ImageSourcePropType,
+  type StyleProp,
+  type ViewStyle,
+} from "react-native";
 
 export type GameType = "word" | "question";
 
@@ -46,7 +50,7 @@ export type CategoryType =
 export type CategoryCardType = {
   type: CategoryType;
   title: string;
-  image: string;
+  image: ImageSourcePropType;
 };
 
 export type SvgAssetType = {

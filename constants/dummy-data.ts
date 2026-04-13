@@ -15,13 +15,13 @@ export const MODES: ModeType[] = [
     id: "word",
     title: "စကားလုံးဂိမ်း",
     desc: "လျှို့ဝှက်စကားလုံး မသိတဲ့သူကို ရှာမယ်",
-    icon: require("@/assets/images/word-mode.png"),
+    icon: svg.wordMode,
   },
   {
     id: "question",
     title: "အမေးအဖြေဂိမ်း",
     desc: "မေးခွန်းမသိဘဲ ဖြေနေတဲ့သူကို ရှာမယ်",
-    icon: require("@/assets/images/question-mode.png"),
+    icon: svg.questionMode,
   },
 ];
 
@@ -29,62 +29,62 @@ export const CATEGORIES: CategoryCardType[] = [
   {
     type: "animals",
     title: "တိရစ္ဆာန်များ",
-    image: require("@/assets/svg/animals.svg"),
+    image: svg.animals,
   },
   {
     type: "foods",
     title: "အစားအသောက်",
-    image: require("@/assets/svg/foods.svg"),
+    image: svg.food,
   },
   {
     type: "locations",
     title: "နေရာဒေသ",
-    image: require("@/assets/svg/locations.svg"),
+    image: svg.place,
   },
   {
     type: "countries",
     title: "နိုင်ငံများ",
-    image: require("@/assets/svg/countries.svg"),
+    image: svg.country,
   },
   {
     type: "movies",
     title: "ရုပ်ရှင်",
-    image: require("@/assets/svg/movies.svg"),
+    image: svg.movie,
   },
   {
     type: "jobs",
     title: "အလုပ်အကိုင်",
-    image: require("@/assets/svg/jobs.svg"),
+    image: svg.job,
   },
   {
     type: "technologies",
     title: "နည်းပညာ",
-    image: require("@/assets/svg/technologies.svg"),
+    image: svg.tech,
   },
   {
     type: "imaginations",
     title: "စိတ်ကူးယဉ် အရာများ",
-    image: require("@/assets/svg/imaginations.svg"),
+    image: svg.imagination,
   },
   {
     type: "supes",
     title: "စူပါဟီးရိုးများ",
-    image: require("@/assets/svg/supes.svg"),
+    image: svg.supe,
   },
   {
     type: "nature",
     title: "သဘာဝ",
-    image: require("@/assets/svg/nature.svg"),
+    image: svg.nature,
   },
   {
     type: "histories",
     title: "သမိုင်း",
-    image: require("@/assets/svg/histories.svg"),
+    image: svg.history,
   },
   {
     type: "sports",
     title: "အားကစား",
-    image: require("@/assets/svg/sports.svg"),
+    image: svg.sport,
   },
 ];
 
@@ -128,14 +128,14 @@ export const GAME_SETTING = {
 export const WORD = {
   id: "1",
   text: "ရေခဲမုန့်",
-  imageId: svg.animalsSvg,
+  imageId: svg.animals,
   hint: "နွေရာသီ",
 };
 
 export const QUESTION = {
   id: "2",
   text: " မန်ယူဖန်ဖြစ်ရတာဘယ်လိုနေလဲ?",
-  imageId: svg.animalsSvg,
+  imageId: svg.animals,
   hint: "အရူးလင်လုပ်",
 };
 

@@ -1,6 +1,17 @@
-import questionModeSvg from "@/assets/images/question-mode.png";
-import magnifySvg from "@/assets/images/word-mode.png";
-import animalsSvg from "@/assets/svg/animals.svg";
+import animals from "@/assets/images/animals.png";
+import country from "@/assets/images/countries.png";
+import food from "@/assets/images/foods.png";
+import history from "@/assets/images/histories.png";
+import imagination from "@/assets/images/imaginations.png";
+import job from "@/assets/images/jobs.png";
+import movie from "@/assets/images/movies.png";
+import nature from "@/assets/images/natures.png";
+import place from "@/assets/images/places.png";
+import questionMode from "@/assets/images/question-mode.png";
+import sport from "@/assets/images/sports.png";
+import supe from "@/assets/images/supes.png";
+import tech from "@/assets/images/techs.png";
+import wordMode from "@/assets/images/word-mode.png";
 import avatar1Svg from "@/assets/svg/avatars/Avatar1.svg";
 import avatar10Svg from "@/assets/svg/avatars/Avatar10.svg";
 import avatar11Svg from "@/assets/svg/avatars/Avatar11.svg";
@@ -26,20 +37,11 @@ import avatar7Svg from "@/assets/svg/avatars/Avatar7.svg";
 import avatar8Svg from "@/assets/svg/avatars/Avatar8.svg";
 import avatar9Svg from "@/assets/svg/avatars/Avatar9.svg";
 import backButtonSvg from "@/assets/svg/back-button.svg";
-import countriesSvg from "@/assets/svg/countries.svg";
-import foodsSvg from "@/assets/svg/foods.svg";
-import historiesSvg from "@/assets/svg/histories.svg";
-import homeSvg from "@/assets/svg/home.svg";
-import imaginationsSvg from "@/assets/svg/imaginations.svg";
 import incognitoIconSvg from "@/assets/svg/incognito-icon.svg";
 import infoAlertSvg from "@/assets/svg/info-alert.svg";
-import jobsSvg from "@/assets/svg/jobs.svg";
 import lightBulbSvg from "@/assets/svg/light-bulb.svg";
-import locationsSvg from "@/assets/svg/locations.svg";
 import logoSvg from "@/assets/svg/logo.svg";
-import moviesSvg from "@/assets/svg/movies.svg";
 import musicIconSvg from "@/assets/svg/music-icon.svg";
-import natureSvg from "@/assets/svg/nature.svg";
 import peopleFillSvg from "@/assets/svg/people-fill.svg";
 import playIconSvg from "@/assets/svg/play-icon.svg";
 import plusCircleSvg from "@/assets/svg/plus-circle-icon.svg";
@@ -47,14 +49,11 @@ import profileSvg from "@/assets/svg/profile.svg";
 import questionMarkSvg from "@/assets/svg/question-mark-icon.svg";
 import settingSvg from "@/assets/svg/setting.svg";
 import speakerSvg from "@/assets/svg/speaker-icon.svg";
-import sportSvg from "@/assets/svg/sports.svg";
-import supesSvg from "@/assets/svg/supes.svg";
-import technologySvg from "@/assets/svg/technologies.svg";
 import timerSvg from "@/assets/svg/timer.svg";
 import wazanerlingaraSvg from "@/assets/svg/wazanerlingara.svg";
 
 export const svg = {
-  animalsSvg,
+  animals,
   avatar1Svg,
   avatar2Svg,
   avatar3Svg,
@@ -80,32 +79,31 @@ export const svg = {
   avatar23Svg,
   avatar24Svg,
   backButtonSvg,
-  countriesSvg,
-  foodsSvg,
-  historiesSvg,
-  homeSvg,
-  imaginationsSvg,
+  country,
+  food,
+  history,
+  imagination,
   incognitoIconSvg,
   infoAlertSvg,
-  jobsSvg,
+  job,
   lightBulbSvg,
-  locationsSvg,
+  place,
   logoSvg,
-  magnifySvg,
-  moviesSvg,
+  wordMode,
+  movie,
   musicIconSvg,
-  natureSvg,
+  nature,
   peopleFillSvg,
   playIconSvg,
   plusCircleSvg,
   profileSvg,
   questionMarkSvg,
-  questionModeSvg,
+  questionMode,
   settingSvg,
   speakerSvg,
-  sportSvg,
-  supesSvg,
-  technologySvg,
+  sport,
+  supe,
+  tech,
   timerSvg,
   wazanerlingaraSvg,
 } as const;
