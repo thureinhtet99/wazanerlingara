@@ -16,9 +16,9 @@ import {
 } from "react";
 
 const GAME_CONFIG_KEY = CONFIG.APP_NAME;
-
 const DEFAULT_GAME_CONFIG: GameConfigType = {
-  id: "local-game-config",
+  id: `${CONFIG.APP_NAME}-game-config`,
+  // id: "local-game-config",
   players: [],
   gameMode: "word",
   category: "animals",
@@ -115,6 +115,8 @@ export function GameConfigProvider({ children }: { children: ReactNode }) {
 
   const resetGameConfig = () => {
     setConfig(DEFAULT_GAME_CONFIG);
+
+    void AsyncStorage.removeItem(GAME_CONFIG_KEY);
   };
 
   const value = useMemo(

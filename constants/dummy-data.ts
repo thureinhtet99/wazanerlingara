@@ -15,13 +15,13 @@ export const MODES: ModeType[] = [
     id: "word",
     title: "စကားလုံးဂိမ်း",
     desc: "လျှို့ဝှက်စကားလုံး မသိတဲ့သူကို ရှာမယ်",
-    icon: require("@/assets/svg/magnify.svg"),
+    icon: require("@/assets/images/word-mode.png"),
   },
   {
     id: "question",
     title: "အမေးအဖြေဂိမ်း",
     desc: "မေးခွန်းမသိဘဲ ဖြေနေတဲ့သူကို ရှာမယ်",
-    icon: require("@/assets/svg/question-mode.svg"),
+    icon: require("@/assets/images/question-mode.png"),
   },
 ];
 
