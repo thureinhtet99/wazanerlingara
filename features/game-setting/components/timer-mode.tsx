@@ -1,14 +1,19 @@
 import { ThemedText } from "@/components/themed-text";
 import { SvgAsset } from "@/components/ui/svg-asset";
+import { useGameConfig } from "@/hooks/use-game-config";
 import { useState } from "react";
 import { Pressable, View } from "react-native";
 
 export default function TimerMode() {
+  const { config, updateGameConfig } = useGameConfig();
   const [timerMode, setTimerMode] = useState<"turn" | "duration">("duration");
-  const [turnTimer, setTurnTimer] = useState(5);
-  const [durationTimer, setDurationTimer] = useState(120);
+  const [pressedButton, setPressedButton] = useState<
+    "increase" | "decrease" | null
+  >(null);
 
   const isTurn = timerMode === "turn";
+  const turnTimer = config?.gameSetting.turnTimer || 5;
+  const durationTimer = config?.gameSetting.durationTimer || 120;
 
   const timerValue = isTurn ? turnTimer : durationTimer;
   const min = isTurn ? 5 : 60;
@@ -18,14 +23,27 @@ export default function TimerMode() {
 
   const setTimer = (value: number) => {
     const nextValue = Math.min(max, Math.max(min, value));
+    if (!config) return;
 
     if (isTurn) {
-      setTurnTimer(nextValue);
+      updateGameConfig({
+        gameSetting: {
+          ...config.gameSetting,
+          turnTimer: nextValue,
+        },
+      });
       return;
     }
 
-    setDurationTimer(nextValue);
+    updateGameConfig({
+      gameSetting: {
+        ...config.gameSetting,
+        durationTimer: nextValue,
+      },
+    });
   };
+
+  const isPressed = (type: "increase" | "decrease") => pressedButton === type;
 
   const increaseTimer = () => {
     if (timerValue < max) setTimer(timerValue + step);
@@ -48,25 +66,25 @@ export default function TimerMode() {
       <View className="mb-6 flex-row items-center gap-2">
         <SvgAsset
           source={require("@/assets/svg/timer.svg")}
-          width={24}
-          height={24}
+          width={30}
+          height={30}
         />
-        <ThemedText type="subtitle">Timing Modeကို ရွေးချယ်ပါ</ThemedText>
+        <ThemedText type="description">Timing Modeကို ရွေးချယ်ပါ</ThemedText>
       </View>
 
-      <View className="mb-4 flex-row items-center rounded-2xl border border-white p-4">
+      <View className="mb-6 flex-row items-center gap-1 rounded-2xl border border-white p-1">
         <Pressable
           onPress={() => setTimerMode("turn")}
-          className={`h-11 p-4 flex-row items-center justify-center gap-1 rounded-xl ${isTurn ? "bg-white" : "bg-transparent"}`}
+          className={`flex-1 px-3 py-4 flex-row items-center justify-center gap-1 rounded-2xl ${isTurn ? "bg-white" : "bg-transparent"}`}
         >
           <SvgAsset
             source={require("@/assets/svg/profile.svg")}
-            width={18}
-            height={18}
-            color={isTurn ? "#111111" : "#FFFFFF"}
+            width={22}
+            height={22}
+            color={isTurn ? "#000000" : "#FFFFFF"}
           />
           <ThemedText
-            type="subtitle"
+            type="description"
             className={isTurn ? "text-black" : "text-white"}
           >
             Turn Timer
@@ -75,16 +93,16 @@ export default function TimerMode() {
 
         <Pressable
           onPress={() => setTimerMode("duration")}
-          className={`h-11 p-4 flex-row items-center justify-center gap-1 rounded-xl ${!isTurn ? "bg-white" : "bg-transparent"}`}
+          className={`flex-1 px-3 py-4 flex-row items-center justify-center gap-1 rounded-2xl ${!isTurn ? "bg-white" : "bg-transparent"}`}
         >
           <SvgAsset
             source={require("@/assets/svg/people-fill.svg")}
-            width={18}
-            height={18}
+            width={22}
+            height={22}
             color={!isTurn ? "#111111" : "#FFFFFF"}
           />
           <ThemedText
-            type="subtitle"
+            type="description"
             className={!isTurn ? "text-black" : "text-white"}
           >
             Duration Timer
@@ -93,22 +111,22 @@ export default function TimerMode() {
       </View>
 
       <View className="items-center">
-        <ThemedText type="title" className="text-white">
-          {formatTimerValue()}
-        </ThemedText>
-        <ThemedText type="default" className="text-white">
+        <ThemedText type="title">{formatTimerValue()}</ThemedText>
+        <ThemedText type="description" className="mb-6">
           {isTurn ? "seconds per turn" : "seconds per round"}
         </ThemedText>
 
         <View className="mb-6 w-full flex-row items-center gap-2">
           <Pressable
             onPress={decreaseTimer}
-            className="h-6 w-6 items-center justify-center rounded-full bg-white active:opacity-70"
+            onPressIn={() => setPressedButton("decrease")}
+            onPressOut={() => setPressedButton(null)}
+            className={`rounded-full w-8 h-8 flex items-center justify-center ${isPressed("decrease") ? "bg-red-500" : "bg-white"}`}
           >
             <ThemedText
               type="defaultSemiBold"
               className="text-black"
-              style={{ fontSize: 18, lineHeight: 22 }}
+              style={{ fontSize: 30, lineHeight: 28 }}
             >
               −
             </ThemedText>
@@ -139,12 +157,14 @@ export default function TimerMode() {
 
           <Pressable
             onPress={increaseTimer}
-            className="h-6 w-6 items-center justify-center rounded-full bg-white active:opacity-70"
+            onPressIn={() => setPressedButton("increase")}
+            onPressOut={() => setPressedButton(null)}
+            className={`rounded-full w-8 h-8 flex items-center justify-center ${isPressed("increase") ? "bg-red-500" : "bg-white"}`}
           >
             <ThemedText
               type="defaultSemiBold"
               className="text-black"
-              style={{ fontSize: 18, lineHeight: 22 }}
+              style={{ fontSize: 30, lineHeight: 28 }}
             >
               +
             </ThemedText>

@@ -1,11 +1,22 @@
 import { ThemedText } from "@/components/themed-text";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import Switch from "@/components/ui/switch";
-import { useState } from "react";
+import { useGameConfig } from "@/hooks/use-game-config";
 import { View } from "react-native";
 
 export default function ToggleImposterHint() {
-  const [showImposterHint, setShowImposterHint] = useState(false);
+  const { config, updateGameConfig } = useGameConfig();
+  const showImposterHint = config?.gameSetting.canImposterGetHint || false;
+
+  const handleToggle = (value: boolean) => {
+    if (!config) return;
+    updateGameConfig({
+      gameSetting: {
+        ...config.gameSetting,
+        canImposterGetHint: value,
+      },
+    });
+  };
 
   return (
     <View className="flex-row items-center justify-between rounded-2xl border border-white px-4 py-6">
@@ -19,7 +30,7 @@ export default function ToggleImposterHint() {
       </View>
       <Switch
         checked={showImposterHint}
-        onChange={setShowImposterHint}
+        onChange={handleToggle}
         onLabel="On"
         offLabel="Off"
       />

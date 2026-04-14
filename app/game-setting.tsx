@@ -19,14 +19,18 @@ export default function GameSetting() {
         <ThemedText type="title">ဂိမ်းဆက်တင်</ThemedText>
       </View>
 
-      <ScrollView className="flex-1" contentContainerClassName="gap-4 pb-4">
-        <View className="flex-col gap-4">
-          <ImposterCounter />
-          <TimerMode />
-          <ToggleImposterHint />
+      <ScrollView
+        className="flex-1 border border-white"
+        contentContainerClassName="pb-10 gap-4"
+        showsVerticalScrollIndicator={false}
+      >
+        {/* <View className="flex-col gap-4"> */}
+        <ImposterCounter />
+        <TimerMode />
+        <ToggleImposterHint />
 
-          <GameInfo />
-        </View>
+        <GameInfo />
+        {/* </View> */}
       </ScrollView>
 
       <View className="mt-auto pb-1">

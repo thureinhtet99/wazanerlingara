@@ -1,56 +1,62 @@
 import { ThemedText } from "@/components/themed-text";
 import { SvgAsset } from "@/components/ui/svg-asset";
+import { useGameConfig } from "@/hooks/use-game-config";
 import { changeToMMNumber } from "@/lib/change-to-mm-number";
+import { useState } from "react";
 import { Pressable, View } from "react-native";
 
 const ImposterCounter = () => {
-  //   const { config, updateGameConfig } = useGameConfigStore();
-  //   const imposterCount = config?.gameSetting.imposterCount || 0;
-  const imposterCount = 1;
+  const { config, updateGameConfig } = useGameConfig();
+  const [pressedButton, setPressedButton] = useState<
+    "increase" | "decrease" | null
+  >(null);
+  const imposterCount = config?.gameSetting.imposterCount || 1;
 
   const handleImposterCounter = (type: "increase" | "decrease") => {
-    console.log("type", type);
-
-    // if (!config) return;
-    // if (type === "increase") {
-    //   updateGameConfig({
-    //     gameSetting: {
-    //       ...config?.gameSetting,
-    //       imposterCount: Math.min(
-    //         config?.players.length - 1,
-    //         imposterCount + 1,
-    //       ),
-    //     },
-    //   });
-    // } else {
-    //   updateGameConfig({
-    //     gameSetting: {
-    //       ...config?.gameSetting,
-    //       imposterCount: Math.max(1, imposterCount - 1),
-    //     },
-    //   });
-    // }
+    if (!config) return;
+    if (type === "increase") {
+      updateGameConfig({
+        gameSetting: {
+          ...config?.gameSetting,
+          imposterCount: Math.min(
+            config?.players.length - 1,
+            imposterCount + 1,
+          ),
+        },
+      });
+    } else {
+      updateGameConfig({
+        gameSetting: {
+          ...config?.gameSetting,
+          imposterCount: Math.max(1, imposterCount - 1),
+        },
+      });
+    }
   };
 
+  const isPressed = (type: "increase" | "decrease") => pressedButton === type;
+
   return (
-    <View className="flex-row items-center justify-between rounded-2xl border border-white px-4 py-6">
+    <View className="flex-row items-center justify-between rounded-2xl border border-white px-4 py-8">
       <View className="flex-row items-center gap-2">
         <SvgAsset
           source={require("@/assets/svg/people-fill.svg")}
           width={30}
           height={30}
         />
-        <ThemedText type="subtitle">Imposter အရေအတွက်</ThemedText>
+        <ThemedText type="description">Imposter အရေအတွက်</ThemedText>
       </View>
-      <View className="flex-1 flex-row items-center justify-end gap-2">
+      <View className="flex-1 flex-row items-center justify-end gap-6">
         <Pressable
           onPress={() => handleImposterCounter("decrease")}
-          className="bg-white rounded-full w-6 h-6 flex items-center justify-center active:opacity-70"
+          onPressIn={() => setPressedButton("decrease")}
+          onPressOut={() => setPressedButton(null)}
+          className={`rounded-full w-8 h-8 flex items-center justify-center ${isPressed("decrease") ? "bg-red-500" : "bg-white"}`}
         >
           <ThemedText
             type="defaultSemiBold"
-            className="text-black"
-            style={{ fontSize: 18, lineHeight: 22 }}
+            className={isPressed("decrease") ? "text-white" : "text-black"}
+            style={{ fontSize: 30, lineHeight: 28 }}
           >
             -
           </ThemedText>
@@ -60,12 +66,14 @@ const ImposterCounter = () => {
         </ThemedText>
         <Pressable
           onPress={() => handleImposterCounter("increase")}
-          className="bg-white rounded-full w-6 h-6 flex items-center justify-center active:opacity-70"
+          onPressIn={() => setPressedButton("increase")}
+          onPressOut={() => setPressedButton(null)}
+          className={`rounded-full w-8 h-8 flex items-center justify-center ${isPressed("increase") ? "bg-red-500" : "bg-white"}`}
         >
           <ThemedText
             type="defaultSemiBold"
-            className="text-black"
-            style={{ fontSize: 18, lineHeight: 22 }}
+            className={isPressed("increase") ? "text-white" : "text-black"}
+            style={{ fontSize: 30, lineHeight: 28 }}
           >
             +
           </ThemedText>

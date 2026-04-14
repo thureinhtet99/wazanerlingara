@@ -23,8 +23,8 @@ const DEFAULT_GAME_CONFIG: GameConfigType = {
   category: "animals",
   gameSetting: {
     imposterCount: 1,
-    turnTimer: 10,
-    durationTimer: 300,
+    turnTimer: 5,
+    durationTimer: 120,
     canImposterGetHint: false,
   },
   word: null,
