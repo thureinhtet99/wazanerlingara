@@ -32,12 +32,7 @@ export default function Modal({
   modalProps,
 }: AppModalProps) {
   const isSuccess = variant === "success";
-  const titleColor = isSuccess ? "#22C55E" : "#FF6B6B";
-  const borderColor = isSuccess ? "border-green-300" : "border-red-300";
-  //   const icon = isSuccess ? <SuccessIcon /> : <ErrorIcon />;
-  const primaryButtonVariant = isSuccess
-    ? ("success" as const)
-    : ("danger" as const);
+  const borderColor = isSuccess ? "border-green-500" : "border-red-500";
 
   return (
     <RNModal
@@ -56,48 +51,17 @@ export default function Modal({
             "border",
           )}
         >
-          <View className="mb-5 flex-row items-center justify-center gap-3">
-            {/* {icon} */}
-            <ThemedText
-              style={{
-                color: titleColor,
-                fontSize: 30,
-                lineHeight: 40,
-                fontFamily: "CustomFont",
-              }}
-            >
-              {title}
-            </ThemedText>
+          <View className="mb-6 flex-col items-center justify-center gap-3">
+            <ThemedText type="title">{title}</ThemedText>
+            <ThemedText type="description">{message}</ThemedText>
           </View>
 
-          <ThemedText
-            style={{
-              color: "#E2E8F0",
-              fontSize: 22,
-              lineHeight: 40,
-              textAlign: "center",
-              marginBottom: 24,
-              fontFamily: "CustomFont",
-            }}
-          >
-            {message}
-          </ThemedText>
-
           <View className="gap-4">
-            <Button
-              variant={
-                primaryButtonVariant === "success" ? "outline" : "default"
-              }
-              onPress={onPrimaryPress ?? (() => {})}
-            >
+            <Button variant="default" onPress={onPrimaryPress ?? (() => {})}>
               <ThemedText type="subtitle">{primaryButtonText}</ThemedText>
             </Button>
             {!isSuccess && onSecondaryPress && secondaryButtonText && (
-              <Button
-                variant="default"
-                className="bg-zinc-950 border-zinc-300"
-                onPress={onSecondaryPress}
-              >
+              <Button variant="outline" onPress={onSecondaryPress}>
                 <ThemedText type="subtitle">{secondaryButtonText}</ThemedText>
               </Button>
             )}

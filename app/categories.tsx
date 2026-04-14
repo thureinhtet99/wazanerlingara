@@ -63,7 +63,7 @@ export default function ChooseCategories() {
         </View>
       </ScrollView>
 
-      <View className="mt-auto pb-1">
+      <View className="mt-auto pt-6">
         <Button onPress={handleGameForward} disabled={!category}>
           <ThemedText type="subtitle">ရှေ့ဆက်မယ်</ThemedText>
         </Button>

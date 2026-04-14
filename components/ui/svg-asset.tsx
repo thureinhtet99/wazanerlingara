@@ -24,7 +24,7 @@ function SvgAssetBase({ source, width, height, color, style }: SvgAssetType) {
       uri={uri}
       width={width}
       height={height}
-      color={color}
+      color={color || "#FFFFFF"}
       style={style}
     />
   );

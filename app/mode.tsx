@@ -4,6 +4,7 @@ import { ThemedView } from "@/components/themed-view";
 import { Button } from "@/components/ui/button";
 import { CONFIG } from "@/constants/config";
 import { MODES } from "@/constants/dummy-data";
+import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { useGameConfig } from "@/hooks/use-game-config";
 import { GameType } from "@/types/index.types";
 import { router } from "expo-router";
@@ -15,6 +16,7 @@ export default function Mode() {
   const { config, loading, updateGameConfig } = useGameConfig();
 
   const [mode, setMode] = useState<GameType | undefined>(config?.gameMode);
+  const { playClickSound } = useAudioSettings();
 
   const handleGameForward = () => {
     if (!mode) return;
@@ -43,6 +45,7 @@ export default function Mode() {
             key={item.id}
             onPress={() => {
               setMode(item.id as GameType);
+              playClickSound();
             }}
             className={`flex-row items-center justify-between rounded-2xl border border-white p-4 ${item.id === mode && "border-4 border-white"}`}
           >
@@ -57,7 +60,7 @@ export default function Mode() {
         ))}
       </ScrollView>
 
-      <View className="mt-auto pb-1">
+      <View className="mt-auto pt-6">
         <Button onPress={handleGameForward} disabled={!mode}>
           <ThemedText type="subtitle">ရှေ့ဆက်မယ်</ThemedText>
         </Button>
