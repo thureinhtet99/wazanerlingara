@@ -62,7 +62,7 @@ export default function TimerMode() {
   };
 
   return (
-    <View className="rounded-3xl border border-white px-3 py-4">
+    <View className="rounded-3xl border border-white p-4 bg-neutral-500/10">
       <View className="mb-6 flex-row items-center gap-2">
         <SvgAsset
           source={require("@/assets/svg/timer.svg")}
@@ -116,7 +116,7 @@ export default function TimerMode() {
           {isTurn ? "seconds per turn" : "seconds per round"}
         </ThemedText>
 
-        <View className="mb-6 w-full flex-row items-center gap-2">
+        <View className="mb-6 w-full flex-row items-start gap-4">
           <Pressable
             onPress={decreaseTimer}
             onPressIn={() => setPressedButton("decrease")}
@@ -134,22 +134,22 @@ export default function TimerMode() {
 
           <View className="flex-1">
             <View className="relative h-4 justify-center">
-              <View className="h-1 w-full rounded-full bg-[#9E9E9E]" />
+              <View className="h-1.5 w-full rounded-full bg-[#9E9E9E] border-b border-white" />
               <View
                 className="absolute left-0 h-1 rounded-full bg-[#E15256]"
                 style={{ width: `${progressPercent}%` }}
               />
               <View
-                className="absolute h-4 w-4 rounded-full bg-white"
+                className="absolute h-6 w-6 rounded-full bg-white"
                 style={{ left: `${progressPercent}%`, marginLeft: -8 }}
               />
             </View>
 
             <View className="mt-1 flex-row justify-between">
-              <ThemedText type="default" className="text-white">
+              <ThemedText type="default">
                 {isTurn ? `${min}s` : `${Math.floor(min / 60)}min`}
               </ThemedText>
-              <ThemedText type="default" className="text-white">
+              <ThemedText type="default">
                 {isTurn ? `${max}s` : `${Math.floor(max / 60)}mins`}
               </ThemedText>
             </View>
@@ -171,11 +171,11 @@ export default function TimerMode() {
           </Pressable>
         </View>
 
-        <View className="flex-row items-start my-6 gap-2">
+        <View className="flex-row items-start my-4 gap-2">
           <SvgAsset
             source={require("@/assets/svg/info-alert.svg")}
-            width={18}
-            height={18}
+            width={24}
+            height={24}
           />
           <ThemedText type="default" className="flex-1 text-white">
             {isTurn

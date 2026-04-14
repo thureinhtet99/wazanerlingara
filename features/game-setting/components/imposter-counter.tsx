@@ -37,7 +37,7 @@ const ImposterCounter = () => {
   const isPressed = (type: "increase" | "decrease") => pressedButton === type;
 
   return (
-    <View className="flex-row items-center justify-between rounded-2xl border border-white px-4 py-8">
+    <View className="flex-row items-center justify-between rounded-2xl border border-white px-4 py-8 bg-neutral-500/10">
       <View className="flex-row items-center gap-2">
         <SvgAsset
           source={require("@/assets/svg/people-fill.svg")}

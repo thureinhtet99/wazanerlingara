@@ -19,14 +19,16 @@ export default function ToggleImposterHint() {
   };
 
   return (
-    <View className="flex-row items-center justify-between rounded-2xl border border-white px-4 py-6">
+    <View className="flex-row items-center justify-between rounded-2xl border border-white px-4 py-6 bg-neutral-500/10">
       <View className="flex-row items-center gap-2">
         <SvgAsset
           source={require("@/assets/svg/light-bulb.svg")}
-          width={20}
-          height={20}
+          width={30}
+          height={30}
         />
-        <ThemedText type="subtitle">Imposterကို အကူအညီပေးမလား</ThemedText>
+        <ThemedText type="description">
+          Imposterကို အရိပ်အမြွက်ပေးမလား
+        </ThemedText>
       </View>
       <Switch
         checked={showImposterHint}

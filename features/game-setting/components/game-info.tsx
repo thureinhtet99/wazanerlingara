@@ -44,20 +44,22 @@ export default function GameInfo() {
   const category = config?.category || "animals";
 
   return (
-    <View className="rounded-2xl border border-white px-4 py-6">
+    <View className="rounded-2xl px-4 py-6">
       <View className="mb-3 flex-row items-center justify-between">
-        <ThemedText>ပါဝင်ကစားမည့်သူ အရေအတွက်</ThemedText>
-        <ThemedText>({transformNumber(playerCount)})ယောက်</ThemedText>
+        <ThemedText type="description">ပါဝင်ကစားမည့်သူ အရေအတွက်</ThemedText>
+        <ThemedText type="description">
+          ({transformNumber(playerCount)})ယောက်
+        </ThemedText>
       </View>
 
       <View className="mb-3 flex-row items-center justify-between">
-        <ThemedText>ဂိမ်းအမျိုးအစား:</ThemedText>
-        <ThemedText>{getGameModeTitle(gameMode)}</ThemedText>
+        <ThemedText type="description">ဂိမ်းအမျိုးအစား:</ThemedText>
+        <ThemedText type="description">{getGameModeTitle(gameMode)}</ThemedText>
       </View>
 
       <View className="flex-row items-center justify-between">
-        <ThemedText>အမျိုးအစား:</ThemedText>
-        <ThemedText>{getCategoryTitle(category)}</ThemedText>
+        <ThemedText type="description">အမျိုးအစား:</ThemedText>
+        <ThemedText type="description">{getCategoryTitle(category)}</ThemedText>
       </View>
     </View>
   );

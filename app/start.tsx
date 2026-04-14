@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import { CONFIG } from "@/constants/config";
+import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { useGameConfig } from "@/hooks/use-game-config";
 import { changeToMMNumber } from "@/lib/change-to-mm-number";
 import { cn } from "@/lib/util";
@@ -27,6 +28,8 @@ const createPlayerInput = (name = ""): PlayerInputType => ({
 export default function Start() {
   const { config, loading, updateGameConfig } = useGameConfig();
   const router = useRouter();
+  const { playClickSound } = useAudioSettings();
+
   const [playerInputs, setPlayerInputs] = useState<PlayerInputType[]>([
     createPlayerInput(),
   ]);
@@ -75,6 +78,8 @@ export default function Start() {
       if (previousInputs.length === 1) {
         return [createPlayerInput()];
       }
+
+      playClickSound();
 
       return previousInputs.filter((input) => input.id !== id);
     });
@@ -169,7 +174,7 @@ export default function Start() {
           </Button>
         </ScrollView>
 
-        <View className="mt-auto gap-3 pb-1">
+        <View className="mt-auto gap-3 pt-6">
           {!canStartGame && (
             <ThemedText type="description" className="text-center text-red-500">
               အနည်းဆုံး {changeToMMNumber(MIN_PLAYERS)} ယောက်ရှိမှ
