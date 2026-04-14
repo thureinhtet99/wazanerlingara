@@ -2,7 +2,7 @@ import { ThemedText } from "@/components/themed-text";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import { svg } from "@/constants/icons";
 import { RoleCardType } from "@/types/index.types";
-import { Pressable, View } from "react-native";
+import { Image, Pressable, View } from "react-native";
 
 export default function RoleCard({
   currentPlayer,
@@ -46,11 +46,11 @@ export default function RoleCard({
           </Pressable>
         ) : (
           <View className="flex-1 flex-col gap-16 items-center justify-center rounded-3xl bg-black px-4">
-            <SvgAsset
+            <Image
               source={
                 currentPlayer.id === imposterId
                   ? require("@/assets/svg/avatars/ImposterPic.svg")
-                  : currentPlayer.imageId || revealImageId || svg.avatar1Svg
+                  : currentPlayer.imageId || revealImageId || svg.avatar1
               }
               width={250}
               height={300}

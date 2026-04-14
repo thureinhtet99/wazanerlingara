@@ -16,6 +16,7 @@ import {
 } from "react";
 
 const GAME_CONFIG_KEY = CONFIG.APP_NAME;
+
 const DEFAULT_GAME_CONFIG: GameConfigType = {
   id: `${CONFIG.APP_NAME}-game-config`,
   players: [],

@@ -1,14 +1,29 @@
 import onboardingOne from "@/assets/svg/onboarding/onboarding-1.png";
 import onboardingTwo from "@/assets/svg/onboarding/onboarding-2.png";
 import onboardingThree from "@/assets/svg/onboarding/onboarding-3.png";
-import {
-  CategoryCardType,
-  CategoryType,
-  GameConfigType,
-  ModeType,
-  PlayerType,
-} from "@/types/index.types";
+import { CategoryCardType, CategoryType, ModeType } from "@/types/index.types";
 import { svg } from "./icons";
+
+export const ONBOARDING_STEPS = [
+  {
+    title: "စကားလုံးစစ်ပွဲ စတင်ပါပြီ",
+    description:
+      "သူငယ်ချင်းတွေထဲမှာ ဘယ်သူက အမှန်တရားကို ရှာဖွေသူလဲ? ဘယ်သူကတော့ ဟန်ဆောင်ကောင်းတဲ့ Imposterလဲဆိုတာ ဖော်ထုတ်ကြည့်လိုက်ပါ။",
+    image: onboardingOne,
+  },
+  {
+    title: "လူတိုင်းကို သံသယဝင်ပါ",
+    description:
+      "အခြားသူတွေပြောတာကို သေချာနားထောင်ပြီး Imposterကို ဖော်ထုတ်ပါ။ သင်ကောဘယ်သူလဲ? ရိုးသားတဲ့Teammateလား? ဒါမှမဟုတ် အမှောင်ထုထဲမှာ ပုန်းအောင်းနေတဲ့Imposterလား?",
+    image: onboardingTwo,
+  },
+  {
+    title: "အသင့်ဖြစ်ပြီလား",
+    description:
+      "သူငယ်ချင်းများနှင့်အတူ စိတ်လှုပ်ရှားဖွယ် Imposter ဂိမ်းကို အခုပဲ အတူ ကစားပြီး ပျော်ရွှင်လိုက်ပါ။",
+    image: onboardingThree,
+  },
+];
 
 export const MODES: ModeType[] = [
   {
@@ -88,65 +103,38 @@ export const CATEGORIES: CategoryCardType[] = [
   },
 ];
 
-export const PLAYERS: PlayerType[] = [
-  { id: "1", name: "Shin Thant Kyaw", imageId: null },
-  { id: "2", name: "Wunna Aung", imageId: null },
-  { id: "3", name: "Wai Yann Lin", imageId: null },
-  { id: "4", name: "Thant Htoo Aung", imageId: null },
-];
-
-export const ONBOARDING_STEPS = [
-  {
-    title: "စကားလုံးစစ်ပွဲ စတင်ပါပြီ",
-    description:
-      "သူငယ်ချင်းတွေထဲမှာ ဘယ်သူက အမှန်တရားကို ရှာဖွေသူလဲ? ဘယ်သူကတော့ ဟန်ဆောင်ကောင်းတဲ့ Imposterလဲဆိုတာ ဖော်ထုတ်ကြည့်လိုက်ပါ။",
-    image: onboardingOne,
-  },
-  {
-    title: "လူတိုင်းကို သံသယဝင်ပါ",
-    description:
-      "အခြားသူတွေပြောတာကို သေချာနားထောင်ပြီး Imposterကို ဖော်ထုတ်ပါ။ သင်ကောဘယ်သူလဲ? ရိုးသားတဲ့Teammateလား? ဒါမှမဟုတ် အမှောင်ထုထဲမှာ ပုန်းအောင်းနေတဲ့Imposterလား?",
-    image: onboardingTwo,
-  },
-  {
-    title: "အသင့်ဖြစ်ပြီလား",
-    description:
-      "သူငယ်ချင်းများနှင့်အတူ စိတ်လှုပ်ရှားဖွယ် Imposter ဂိမ်းကို အခုပဲ အတူ ကစားပြီး ပျော်ရွှင်လိုက်ပါ။",
-    image: onboardingThree,
-  },
-];
-
+// ----------------- Delete --------------------
 export const CATEGORY: CategoryType = "animals";
 
 export const GAME_SETTING = {
   imposterCount: 1,
-  turnTimer: 10,
-  durationTimer: 300,
-  canImposterGetHint: true,
+  turnTimer: 5,
+  durationTimer: 120,
+  canImposterGetHint: false,
 };
 
 export const WORD = {
   id: "1",
   text: "ရေခဲမုန့်",
-  imageId: svg.animals,
+  imageId: svg.food,
   hint: "နွေရာသီ",
 };
 
 export const QUESTION = {
   id: "2",
   text: " မန်ယူဖန်ဖြစ်ရတာဘယ်လိုနေလဲ?",
-  imageId: svg.animals,
+  imageId: svg.imagination,
   hint: "အရူးလင်လုပ်",
 };
 
-export const GAME_CONFIG: GameConfigType = {
-  id: "1",
-  players: PLAYERS,
-  gameMode: "word",
-  category: CATEGORY,
-  gameSetting: GAME_SETTING,
-  word: WORD,
-  question: QUESTION,
-  roundCount: 3,
-  imposterId: "3",
-};
+// export const GAME_CONFIG: GameConfigType = {
+//   id: "1",
+//   players: [],
+//   gameMode: "word",
+//   category: CATEGORY,
+//   gameSetting: GAME_SETTING,
+//   word: WORD,
+//   question: QUESTION,
+//   roundCount: 3,
+//   imposterId: "3",
+// };

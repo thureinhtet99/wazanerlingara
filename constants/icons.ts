@@ -1,4 +1,24 @@
 import animals from "@/assets/images/animals.png";
+import avatar1 from "@/assets/images/avatar/avatar-1.png";
+import avatar10 from "@/assets/images/avatar/avatar-10.png";
+import avatar11 from "@/assets/images/avatar/avatar-11.png";
+import avatar12 from "@/assets/images/avatar/avatar-12.png";
+import avatar13 from "@/assets/images/avatar/avatar-13.png";
+import avatar14 from "@/assets/images/avatar/avatar-14.png";
+import avatar15 from "@/assets/images/avatar/avatar-15.png";
+import avatar16 from "@/assets/images/avatar/avatar-16.png";
+import avatar17 from "@/assets/images/avatar/avatar-17.png";
+import avatar18 from "@/assets/images/avatar/avatar-18.png";
+import avatar19 from "@/assets/images/avatar/avatar-19.png";
+import avatar2 from "@/assets/images/avatar/avatar-2.png";
+import avatar20 from "@/assets/images/avatar/avatar-20.png";
+import avatar3 from "@/assets/images/avatar/avatar-3.png";
+import avatar4 from "@/assets/images/avatar/avatar-4.png";
+import avatar5 from "@/assets/images/avatar/avatar-5.png";
+import avatar6 from "@/assets/images/avatar/avatar-6.png";
+import avatar7 from "@/assets/images/avatar/avatar-7.png";
+import avatar8 from "@/assets/images/avatar/avatar-8.png";
+import avatar9 from "@/assets/images/avatar/avatar-9.png";
 import country from "@/assets/images/countries.png";
 import food from "@/assets/images/foods.png";
 import history from "@/assets/images/histories.png";
@@ -12,30 +32,6 @@ import sport from "@/assets/images/sports.png";
 import supe from "@/assets/images/supes.png";
 import tech from "@/assets/images/techs.png";
 import wordMode from "@/assets/images/word-mode.png";
-import avatar1Svg from "@/assets/svg/avatars/Avatar1.svg";
-import avatar10Svg from "@/assets/svg/avatars/Avatar10.svg";
-import avatar11Svg from "@/assets/svg/avatars/Avatar11.svg";
-import avatar12Svg from "@/assets/svg/avatars/Avatar12.svg";
-import avatar13Svg from "@/assets/svg/avatars/Avatar13.svg";
-import avatar14Svg from "@/assets/svg/avatars/Avatar14.svg";
-import avatar15Svg from "@/assets/svg/avatars/Avatar15.svg";
-import avatar16Svg from "@/assets/svg/avatars/Avatar16.svg";
-import avatar17Svg from "@/assets/svg/avatars/Avatar17.svg";
-import avatar18Svg from "@/assets/svg/avatars/Avatar18.svg";
-import avatar19Svg from "@/assets/svg/avatars/Avatar19.svg";
-import avatar2Svg from "@/assets/svg/avatars/Avatar2.svg";
-import avatar20Svg from "@/assets/svg/avatars/Avatar20.svg";
-import avatar21Svg from "@/assets/svg/avatars/Avatar21.svg";
-import avatar22Svg from "@/assets/svg/avatars/Avatar22.svg";
-import avatar23Svg from "@/assets/svg/avatars/Avatar23.svg";
-import avatar24Svg from "@/assets/svg/avatars/Avatar24.svg";
-import avatar3Svg from "@/assets/svg/avatars/Avatar3.svg";
-import avatar4Svg from "@/assets/svg/avatars/Avatar4.svg";
-import avatar5Svg from "@/assets/svg/avatars/Avatar5.svg";
-import avatar6Svg from "@/assets/svg/avatars/Avatar6.svg";
-import avatar7Svg from "@/assets/svg/avatars/Avatar7.svg";
-import avatar8Svg from "@/assets/svg/avatars/Avatar8.svg";
-import avatar9Svg from "@/assets/svg/avatars/Avatar9.svg";
 import backButtonSvg from "@/assets/svg/back-button.svg";
 import incognitoIconSvg from "@/assets/svg/incognito-icon.svg";
 import infoAlertSvg from "@/assets/svg/info-alert.svg";
@@ -54,30 +50,26 @@ import wazanerlingaraSvg from "@/assets/svg/wazanerlingara.svg";
 
 export const svg = {
   animals,
-  avatar1Svg,
-  avatar2Svg,
-  avatar3Svg,
-  avatar4Svg,
-  avatar5Svg,
-  avatar6Svg,
-  avatar7Svg,
-  avatar8Svg,
-  avatar9Svg,
-  avatar10Svg,
-  avatar11Svg,
-  avatar12Svg,
-  avatar13Svg,
-  avatar14Svg,
-  avatar15Svg,
-  avatar16Svg,
-  avatar17Svg,
-  avatar18Svg,
-  avatar19Svg,
-  avatar20Svg,
-  avatar21Svg,
-  avatar22Svg,
-  avatar23Svg,
-  avatar24Svg,
+  avatar1,
+  avatar2,
+  avatar3,
+  avatar4,
+  avatar5,
+  avatar6,
+  avatar7,
+  avatar8,
+  avatar9,
+  avatar10,
+  avatar11,
+  avatar12,
+  avatar13,
+  avatar14,
+  avatar15,
+  avatar16,
+  avatar17,
+  avatar18,
+  avatar19,
+  avatar20,
   backButtonSvg,
   country,
   food,
