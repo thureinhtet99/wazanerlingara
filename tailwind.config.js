@@ -1,3 +1,24 @@
+const { themeTokens } = require("./constants/theme-tokens");
+
+const fontSize = Object.fromEntries(
+  Object.entries(themeTokens.fontSize).map(([name, size]) => [
+    name,
+    [
+      `${size}px`,
+      {
+        lineHeight: `${themeTokens.lineHeight[name]}px`,
+      },
+    ],
+  ]),
+);
+
+const lineHeight = Object.fromEntries(
+  Object.entries(themeTokens.lineHeight).map(([name, size]) => [
+    name,
+    `${size}px`,
+  ]),
+);
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -8,83 +29,12 @@ module.exports = {
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
-      colors: {
-        primary: {
-          50: "#feebeb",
-          100: "#fcc2c2",
-          200: "#fba5a5",
-          300: "#f97c7c",
-          400: "#f86262",
-          500: "#f63b3b",
-          600: "#e03636",
-          700: "#af2a2a",
-          800: "#872020",
-          900: "#671919",
-        },
-        neutral: {
-          50: "#ffffff",
-          100: "#ffffff",
-          200: "#ffffff",
-          300: "#ffffff",
-          400: "#ffffff",
-          500: "#ffffff",
-          600: "#e8e8e8",
-          700: "#b5b5b5",
-          800: "#8c8c8c",
-          900: "#6b6b6b",
-        },
-        success: {
-          50: "#ebf8e6",
-          100: "#c2e8b0",
-          200: "#a4dd8a",
-          300: "#7bce54",
-          400: "#61c533",
-          500: "#3ab600",
-          600: "#35a600",
-          700: "#298100",
-          800: "#206400",
-          900: "#184c00",
-        },
-        info: {
-          50: "#e6eaf8",
-          100: "#b0bde8",
-          200: "#8a9ddd",
-          300: "#5470ce",
-          400: "#3355c5",
-          500: "#002ab6",
-          600: "#0026a6",
-          700: "#001e81",
-          800: "#001764",
-          900: "#00124c",
-        },
-        warning: {
-          50: "#f8f7e6",
-          100: "#e8e7b0",
-          200: "#dddb8a",
-          300: "#ceca54",
-          400: "#c5c033",
-          500: "#b6b000",
-          600: "#a6a000",
-          700: "#817d00",
-          800: "#646100",
-          900: "#4c4a00",
-        },
-        background: {
-          50: "#e8e8e8",
-          100: "#b7b7b7",
-          200: "#959595",
-          300: "#646464",
-          400: "#464646",
-          500: "#181818",
-          600: "#161616",
-          700: "#111111",
-          800: "#0d0d0d",
-          900: "#0a0a0a",
-        },
-      },
+      colors: themeTokens.palette,
       fontFamily: {
-        primary: ["hand-written"],
+        primary: [themeTokens.fontFamily.primary],
       },
+      fontSize,
+      lineHeight,
     },
   },
   plugins: [],

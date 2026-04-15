@@ -7,6 +7,7 @@ import {
 
 import { ThemedText } from "@/components/themed-text";
 import { Button } from "@/components/ui/button";
+import { ThemeTokens } from "@/constants/theme";
 import { cn } from "@/lib/util";
 
 export type AppModalProps = {
@@ -47,10 +48,11 @@ export default function Modal({
       <View className="flex-1 items-center justify-center bg-black/60 px-3">
         <View
           className={cn(
-            "w-full max-w-[470px] rounded-2xl bg-[#05070D] p-6",
+            "w-full max-w-[470px] rounded-2xl p-6",
             borderColor,
             "border",
           )}
+          style={{ backgroundColor: ThemeTokens.ui.modalBackground }}
         >
           <View className="mb-6 flex-col items-center justify-center gap-3">
             <ThemedText type="title">{title}</ThemedText>

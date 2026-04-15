@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import NotificationModal from "@/components/ui/modal";
 import { Textarea } from "@/components/ui/textarea";
+import { ThemeTokens } from "@/constants/theme";
 
 const contactSchema = z.object({
   name: z.string().trim(),
@@ -137,7 +138,10 @@ export default function Contact() {
                 )}
               />
 
-              <ThemedText type="description" style={{ color: "#b8b000" }}>
+              <ThemedText
+                type="description"
+                style={{ color: ThemeTokens.ui.infoText }}
+              >
                 သင့်ထံသို့ ပြန်လည်ဆက်သွယ်ရန်အတွက်သာ အသုံးပြုပါမည်။
               </ThemedText>
             </View>

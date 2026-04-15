@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import { CONFIG } from "@/constants/config";
+import { ThemeTokens } from "@/constants/theme";
 import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { useGameConfig } from "@/hooks/use-game-config";
 import { changeToMMNumber } from "@/lib/change-to-mm-number";
@@ -150,7 +151,7 @@ export default function Start() {
                   <Svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                     <Path
                       d="M3 3L11 11M11 3L3 11"
-                      stroke="#E5E7EB"
+                      stroke={ThemeTokens.ui.iconStroke}
                       strokeWidth="2"
                       strokeLinecap="round"
                     />

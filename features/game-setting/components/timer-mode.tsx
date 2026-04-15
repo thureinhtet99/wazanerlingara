@@ -3,6 +3,7 @@ import { Pressable, View } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
 import { SvgAsset } from "@/components/ui/svg-asset";
+import { ThemeTokens } from "@/constants/theme";
 import { useGameConfig } from "@/hooks/use-game-config";
 
 export default function TimerMode() {
@@ -82,7 +83,7 @@ export default function TimerMode() {
             source={require("@/assets/svg/profile.svg")}
             width={22}
             height={22}
-            color={isTurn ? "#000000" : "#FFFFFF"}
+            color={isTurn ? ThemeTokens.ui.black : ThemeTokens.ui.white}
           />
           <ThemedText
             type="description"
@@ -100,7 +101,7 @@ export default function TimerMode() {
             source={require("@/assets/svg/people-fill.svg")}
             width={22}
             height={22}
-            color={!isTurn ? "#111111" : "#FFFFFF"}
+            color={!isTurn ? ThemeTokens.ui.black : ThemeTokens.ui.white}
           />
           <ThemedText
             type="description"
@@ -135,10 +136,16 @@ export default function TimerMode() {
 
           <View className="flex-1">
             <View className="relative h-4 justify-center">
-              <View className="h-1.5 w-full rounded-full bg-[#9E9E9E] border-b border-white" />
               <View
-                className="absolute left-0 h-1 rounded-full bg-[#E15256]"
-                style={{ width: `${progressPercent}%` }}
+                className="h-1.5 w-full rounded-full border-b border-white"
+                style={{ backgroundColor: ThemeTokens.ui.timerTrack }}
+              />
+              <View
+                className="absolute left-0 h-1 rounded-full"
+                style={{
+                  backgroundColor: ThemeTokens.ui.timerProgress,
+                  width: `${progressPercent}%`,
+                }}
               />
               <View
                 className="absolute h-6 w-6 rounded-full bg-white"

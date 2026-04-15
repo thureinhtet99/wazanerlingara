@@ -1,6 +1,7 @@
 import * as React from "react";
 import { TextInput, type TextInputProps, View } from "react-native";
 
+import { ThemeTokens } from "@/constants/theme";
 import { cn } from "@/lib/util";
 
 export interface TextAreaProps extends Omit<TextInputProps, "editable"> {
@@ -58,7 +59,9 @@ export const Textarea = React.forwardRef<
           editable={!disabled}
           multiline={multiline ?? true}
           textAlignVertical="top"
-          placeholderTextColor={props.placeholderTextColor ?? "#9CA3AF"}
+          placeholderTextColor={
+            props.placeholderTextColor ?? ThemeTokens.ui.placeholder
+          }
           className={cn(
             "flex min-h-[120px] w-full rounded-3xl border-2 border-white bg-background-300 p-3 pr-8 text-gray-300",
             variant === "error" && "pr-12",
@@ -67,7 +70,11 @@ export const Textarea = React.forwardRef<
           )}
           onContentSizeChange={handleContentSizeChange}
           style={[
-            { fontFamily: "hand-written", fontSize: 24 },
+            {
+              fontFamily: ThemeTokens.fontFamily.primary,
+              fontSize: ThemeTokens.fontSize.input,
+              lineHeight: ThemeTokens.lineHeight.input,
+            },
             resizable ? { minHeight, height } : { minHeight },
             style,
           ]}

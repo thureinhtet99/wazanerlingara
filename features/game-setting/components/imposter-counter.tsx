@@ -3,6 +3,7 @@ import { Pressable, View } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
 import { SvgAsset } from "@/components/ui/svg-asset";
+import { ThemeTokens } from "@/constants/theme";
 import { useGameConfig } from "@/hooks/use-game-config";
 import { changeToMMNumber } from "@/lib/change-to-mm-number";
 
@@ -57,7 +58,10 @@ const ImposterCounter = () => {
           <ThemedText
             type="defaultSemiBold"
             className={isPressed("decrease") ? "text-white" : "text-black"}
-            style={{ fontSize: 30, lineHeight: 28 }}
+            style={{
+              fontSize: ThemeTokens.fontSize.counter,
+              lineHeight: ThemeTokens.lineHeight.counter,
+            }}
           >
             -
           </ThemedText>
@@ -74,7 +78,10 @@ const ImposterCounter = () => {
           <ThemedText
             type="defaultSemiBold"
             className={isPressed("increase") ? "text-white" : "text-black"}
-            style={{ fontSize: 30, lineHeight: 28 }}
+            style={{
+              fontSize: ThemeTokens.fontSize.counter,
+              lineHeight: ThemeTokens.lineHeight.counter,
+            }}
           >
             +
           </ThemedText>
