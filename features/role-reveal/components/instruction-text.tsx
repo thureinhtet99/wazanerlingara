@@ -1,5 +1,6 @@
-import { ThemedText } from "@/components/themed-text";
 import { View } from "react-native";
+
+import { ThemedText } from "@/components/themed-text";
 
 export default function InstructionText({ confirmed }: { confirmed: boolean }) {
   return (

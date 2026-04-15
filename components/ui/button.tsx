@@ -1,20 +1,20 @@
-import { cn } from "@/lib/util";
-import React, { useRef } from "react";
+import React, { ComponentRef, forwardRef, ReactNode, useRef } from "react";
 import { Animated, Pressable, View, type PressableProps } from "react-native";
 import Svg, { Circle, Ellipse } from "react-native-svg";
+
+import { ThemeTokens } from "@/constants/theme";
+import { cn } from "@/lib/util";
+
 import { useAudioSettings } from "../../hooks/use-audio-settings";
 import { ThemedText } from "../themed-text";
 
 export interface ButtonProps extends PressableProps {
   variant?: "default" | "outline";
   className?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
-export const Button = React.forwardRef<
-  React.ComponentRef<typeof Pressable>,
-  ButtonProps
->(
+export const Button = forwardRef<ComponentRef<typeof Pressable>, ButtonProps>(
   (
     {
       className,
@@ -88,7 +88,7 @@ export const Button = React.forwardRef<
                 cy="18.6084"
                 r="3.516"
                 transform="rotate(50.5883 3.51616 18.6084)"
-                fill="#E8E8E8"
+                fill={ThemeTokens.palette.neutral[600]}
               />
             </Svg>
           </View>

@@ -1,3 +1,7 @@
+import { router } from "expo-router";
+import { useState } from "react";
+import { Image, Pressable, ScrollView, View } from "react-native";
+
 import BackButton from "@/components/back-button";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
@@ -7,9 +11,7 @@ import { MODES } from "@/constants/dummy-data";
 import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { useGameConfig } from "@/hooks/use-game-config";
 import { GameType } from "@/types/index.types";
-import { router } from "expo-router";
-import { useState } from "react";
-import { Image, Pressable, ScrollView, View } from "react-native";
+
 import Loading from "./loading";
 
 export default function Mode() {

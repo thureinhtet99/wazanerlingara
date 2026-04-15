@@ -1,14 +1,16 @@
-import MainLayout from "@/components/layout/main-layout";
-import { svg } from "@/constants/icons";
-import "@/global.css";
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { GameConfigProvider } from "@/hooks/use-game-config";
 import { Asset } from "expo-asset";
 import { useFonts } from "expo-font";
 import { Stack, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
+
+import MainLayout from "@/components/layout/main-layout";
+import { svg } from "@/constants/icons";
+import "@/global.css";
+import { useColorScheme } from "@/hooks/use-color-scheme";
+import { GameConfigProvider } from "@/hooks/use-game-config";
+
 import { AudioSettingsProvider } from "../hooks/use-audio-settings";
 
 SplashScreen.preventAutoHideAsync();

@@ -1,5 +1,6 @@
-import { cn } from "@/lib/util";
 import { View } from "react-native";
+
+import { cn } from "@/lib/util";
 
 export default function Progress({
   className,

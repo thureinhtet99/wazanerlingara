@@ -1,5 +1,7 @@
+import { StyleSheet, Text, useColorScheme, type TextProps } from "react-native";
+
+import { Colors, ThemeTokens, Typography } from "@/constants/theme";
 import { cn } from "@/lib/util";
-import { StyleSheet, Text, type TextProps } from "react-native";
 
 type ThemedTextProps = TextProps & {
   lightColor?: string;
@@ -23,10 +25,18 @@ export function ThemedText({
   className,
   ...rest
 }: ThemedTextProps) {
+  const colorScheme = useColorScheme() ?? "light";
+  const resolvedColor = colorScheme === "dark" ? darkColor : lightColor;
+
   return (
     <Text
       className={cn("text-white", className)}
       style={[
+        {
+          color:
+            resolvedColor ??
+            (type === "link" ? Colors.light.tint : ThemeTokens.ui.white),
+        },
         type === "default" ? styles.default : undefined,
         type === "title" ? styles.title : undefined,
         type === "legend" ? styles.legend : undefined,
@@ -43,37 +53,40 @@ export function ThemedText({
 
 const styles = StyleSheet.create({
   default: {
-    fontSize: 16,
-    fontFamily: "hand-written",
+    fontSize: Typography.fontSize.default,
+    lineHeight: Typography.lineHeight.default,
+    fontFamily: Typography.fontFamily.primary,
   },
   defaultSemiBold: {
-    fontSize: 16,
+    fontSize: Typography.fontSize.defaultSemiBold,
+    lineHeight: Typography.lineHeight.defaultSemiBold,
     fontWeight: "600",
-    fontFamily: "hand-written",
+    fontFamily: Typography.fontFamily.primary,
   },
   title: {
-    fontSize: 38,
-    lineHeight: 50,
-    fontFamily: "hand-written",
+    fontSize: Typography.fontSize.title,
+    lineHeight: Typography.lineHeight.title,
+    fontFamily: Typography.fontFamily.primary,
   },
   legend: {
-    fontSize: 48,
-    lineHeight: 60,
-    fontFamily: "hand-written",
+    fontSize: Typography.fontSize.legend,
+    lineHeight: Typography.lineHeight.legend,
+    fontFamily: Typography.fontFamily.primary,
   },
   description: {
-    fontSize: 20,
-    lineHeight: 32,
-    fontFamily: "hand-written",
+    fontSize: Typography.fontSize.description,
+    lineHeight: Typography.lineHeight.description,
+    fontFamily: Typography.fontFamily.primary,
   },
   subtitle: {
-    fontSize: 26,
-    lineHeight: 38,
-    fontFamily: "hand-written",
+    fontSize: Typography.fontSize.subtitle,
+    lineHeight: Typography.lineHeight.subtitle,
+    fontFamily: Typography.fontFamily.primary,
   },
   link: {
-    fontSize: 16,
-    color: "#0a7ea4",
-    fontFamily: "hand-written",
+    fontSize: Typography.fontSize.default,
+    lineHeight: Typography.lineHeight.default,
+    color: Colors.light.tint,
+    fontFamily: Typography.fontFamily.primary,
   },
 });

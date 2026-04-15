@@ -1,3 +1,8 @@
+import { router } from "expo-router";
+import { useEffect, useState } from "react";
+import { Image, Pressable, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Button } from "@/components/ui/button";
@@ -5,10 +10,6 @@ import { CONFIG } from "@/constants/config";
 import { ONBOARDING_STEPS } from "@/constants/dummy-data";
 import { IntroScreen } from "@/features/onboarding/components/intro";
 import { useOnboarding } from "@/features/onboarding/hooks/use-onboarding";
-import { router } from "expo-router";
-import { useEffect, useState } from "react";
-import { Image, Pressable, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const STEPS = [1, 2, 3];
 

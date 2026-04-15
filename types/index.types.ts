@@ -1,10 +1,12 @@
-import type { SvgKey } from "@/constants/icons";
-import type { ReactNode } from "react";
 import {
   ImageSourcePropType,
   type StyleProp,
   type ViewStyle,
 } from "react-native";
+
+import type { SvgKey } from "@/constants/icons";
+
+import type { ReactNode } from "react";
 
 export type GameType = "word" | "question";
 

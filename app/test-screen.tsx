@@ -1,11 +1,12 @@
+import { Link } from "expo-router";
+import { useState } from "react";
+
 import { ThemedView } from "@/components/themed-view";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Progress from "@/components/ui/progress";
 import Switch from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { Link } from "expo-router";
-import { useState } from "react";
 
 export default function TestScreen() {
   const [checked, setChecked] = useState(false);
