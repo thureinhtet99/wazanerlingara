@@ -1,3 +1,9 @@
+import * as Crypto from "expo-crypto";
+import { useRouter } from "expo-router";
+import { useEffect, useMemo, useState } from "react";
+import { Pressable, ScrollView, View } from "react-native";
+import Svg, { Path } from "react-native-svg";
+
 import Loading from "@/app/loading";
 import BackButton from "@/components/back-button";
 import { ThemedText } from "@/components/themed-text";
@@ -11,11 +17,6 @@ import { useGameConfig } from "@/hooks/use-game-config";
 import { changeToMMNumber } from "@/lib/change-to-mm-number";
 import { cn } from "@/lib/util";
 import { PlayerInputType } from "@/types/index.types";
-import * as Crypto from "expo-crypto";
-import { useRouter } from "expo-router";
-import { useEffect, useMemo, useState } from "react";
-import { Pressable, ScrollView, View } from "react-native";
-import Svg, { Path } from "react-native-svg";
 
 const MIN_PLAYERS = 3;
 const MAX_PLAYERS = 10;

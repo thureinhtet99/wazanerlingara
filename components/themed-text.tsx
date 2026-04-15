@@ -1,5 +1,6 @@
-import { cn } from "@/lib/util";
 import { StyleSheet, Text, type TextProps } from "react-native";
+
+import { cn } from "@/lib/util";
 
 type ThemedTextProps = TextProps & {
   lightColor?: string;

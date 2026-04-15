@@ -1,7 +1,8 @@
+import { View } from "react-native";
+
 import { ThemedText } from "@/components/themed-text";
 import { Button } from "@/components/ui/button";
 import InstructionText from "@/features/role-reveal/components/instruction-text";
-import { View } from "react-native";
 
 interface Props {
   currentPlayerIndex: number;

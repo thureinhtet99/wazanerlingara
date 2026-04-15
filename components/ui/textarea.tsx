@@ -1,6 +1,7 @@
-import { cn } from "@/lib/util";
 import * as React from "react";
 import { TextInput, type TextInputProps, View } from "react-native";
+
+import { cn } from "@/lib/util";
 
 export interface TextAreaProps extends Omit<TextInputProps, "editable"> {
   variant?: "default" | "success" | "error";

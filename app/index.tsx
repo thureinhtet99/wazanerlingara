@@ -1,11 +1,12 @@
+import { useRouter } from "expo-router";
+import { Image, Pressable, View } from "react-native";
+
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Button } from "@/components/ui/button";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import { CONFIG } from "@/constants/config";
 import { useAudioSettings } from "@/hooks/use-audio-settings";
-import { useRouter } from "expo-router";
-import { Image, Pressable, View } from "react-native";
 
 export default function Index() {
   const router = useRouter();

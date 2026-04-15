@@ -1,8 +1,9 @@
+import { useState } from "react";
+import { Pressable, View } from "react-native";
+
 import { ThemedText } from "@/components/themed-text";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import { useGameConfig } from "@/hooks/use-game-config";
-import { useState } from "react";
-import { Pressable, View } from "react-native";
 
 export default function TimerMode() {
   const { config, updateGameConfig } = useGameConfig();

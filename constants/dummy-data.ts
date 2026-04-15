@@ -8,6 +8,7 @@ import {
   ModeType,
   PlayerType,
 } from "@/types/index.types";
+
 import { svg } from "./icons";
 
 export const MODES: ModeType[] = [

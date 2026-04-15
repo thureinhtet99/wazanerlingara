@@ -1,3 +1,7 @@
+import { router } from "expo-router";
+import { useState } from "react";
+import { ScrollView, View } from "react-native";
+
 import BackButton from "@/components/back-button";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
@@ -8,9 +12,6 @@ import GameInfo from "@/features/game-setting/components/game-info";
 import ImposterCounter from "@/features/game-setting/components/imposter-counter";
 import TimerMode from "@/features/game-setting/components/timer-mode";
 import ToggleImposterHint from "@/features/game-setting/components/toggle-imposter-hint";
-import { router } from "expo-router";
-import { useState } from "react";
-import { ScrollView, View } from "react-native";
 
 export default function GameSetting() {
   const [showConfirmModal, setShowConfirmModal] = useState(false);

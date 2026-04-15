@@ -1,3 +1,6 @@
+import { router } from "expo-router";
+import { useEffect, useState } from "react";
+
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import NotificationModal from "@/components/ui/modal";
@@ -9,8 +12,7 @@ import Timer from "@/features/role-reveal/components/timer";
 import { useRoleReveal } from "@/features/role-reveal/hooks/use-role-reveal";
 import { shuffleArray } from "@/features/role-reveal/lib/shuffle";
 import { PlayerType } from "@/types/index.types";
-import { router } from "expo-router";
-import { useEffect, useState } from "react";
+
 import RoleCard from "../features/role-reveal/components/role-card";
 
 const CATEGORY = "အစားအသောက်";

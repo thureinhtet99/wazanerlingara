@@ -1,6 +1,7 @@
+import { View } from "react-native";
+
 import { ThemedText } from "@/components/themed-text";
 import { useGameConfig } from "@/hooks/use-game-config";
-import { View } from "react-native";
 
 const getCategoryTitle = (categoryType: string): string => {
   const categoryMap: Record<string, string> = {

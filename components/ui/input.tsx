@@ -1,7 +1,8 @@
-import IconInfoCircle from "@/assets/icons/icon-info-circle";
-import { cn } from "@/lib/util";
 import * as React from "react";
 import { TextInput, View, type TextInputProps } from "react-native";
+
+import IconInfoCircle from "@/assets/icons/icon-info-circle";
+import { cn } from "@/lib/util";
 
 export interface InputProps extends Omit<TextInputProps, "editable"> {
   variant?: "default" | "success" | "error";

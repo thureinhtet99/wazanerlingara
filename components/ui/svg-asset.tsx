@@ -1,8 +1,9 @@
-import { svg } from "@/constants/icons";
-import { SvgAssetType } from "@/types/index.types";
 import { Asset } from "expo-asset";
 import { memo, useMemo } from "react";
 import { SvgUri } from "react-native-svg";
+
+import { svg } from "@/constants/icons";
+import { SvgAssetType } from "@/types/index.types";
 
 const uriCache = new Map<number, string>();
 

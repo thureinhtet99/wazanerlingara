@@ -1,11 +1,13 @@
+import { Href, useRouter } from "expo-router";
+import { Pressable, View } from "react-native";
+
 import BackButton from "@/components/back-button";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import Switch from "@/components/ui/switch";
 import { CONFIG } from "@/constants/config";
-import { Href, useRouter } from "expo-router";
-import { Pressable, View } from "react-native";
+
 import { useAudioSettings } from "../hooks/use-audio-settings";
 
 type SettingType =
