@@ -50,7 +50,7 @@ export default function RoleCard({
             <Image
               source={
                 currentPlayer.id === imposterId
-                  ? require("@/assets/svg/avatars/ImposterPic.svg")
+                  ? require("@/assets/images/avatar/imposter.png")
                   : currentPlayer.imageId || revealImageId || svg.avatar1
               }
               width={250}

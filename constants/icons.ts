@@ -12,6 +12,10 @@ import avatar18 from "@/assets/images/avatar/avatar-18.png";
 import avatar19 from "@/assets/images/avatar/avatar-19.png";
 import avatar2 from "@/assets/images/avatar/avatar-2.png";
 import avatar20 from "@/assets/images/avatar/avatar-20.png";
+import avatar21 from "@/assets/images/avatar/avatar-21.png";
+import avatar22 from "@/assets/images/avatar/avatar-22.png";
+import avatar23 from "@/assets/images/avatar/avatar-23.png";
+import avatar24 from "@/assets/images/avatar/avatar-24.png";
 import avatar3 from "@/assets/images/avatar/avatar-3.png";
 import avatar4 from "@/assets/images/avatar/avatar-4.png";
 import avatar5 from "@/assets/images/avatar/avatar-5.png";
@@ -70,6 +74,10 @@ export const svg = {
   avatar18,
   avatar19,
   avatar20,
+  avatar21,
+  avatar22,
+  avatar23,
+  avatar24,
   backButtonSvg,
   country,
   food,
