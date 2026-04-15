@@ -1,10 +1,3 @@
-import { CONFIG } from "@/constants/config";
-import {
-  GameConfigContextType,
-  GameConfigPatchType,
-  GameConfigType,
-  PlayerType,
-} from "@/types/index.types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   createContext,
@@ -14,6 +7,14 @@ import {
   useMemo,
   useState,
 } from "react";
+
+import { CONFIG } from "@/constants/config";
+import {
+  GameConfigContextType,
+  GameConfigPatchType,
+  GameConfigType,
+  PlayerType,
+} from "@/types/index.types";
 
 const GAME_CONFIG_KEY = CONFIG.APP_NAME;
 

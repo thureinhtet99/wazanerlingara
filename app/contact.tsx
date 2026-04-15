@@ -1,3 +1,10 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as React from "react";
+import { useState, useTransition } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
+import { z } from "zod";
+
 import BackButton from "@/components/back-button";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
@@ -5,12 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import NotificationModal from "@/components/ui/modal";
 import { Textarea } from "@/components/ui/textarea";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as React from "react";
-import { useState, useTransition } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
-import { z } from "zod";
+import { ThemeTokens } from "@/constants/theme";
 
 const contactSchema = z.object({
   name: z.string().trim(),
@@ -136,7 +138,10 @@ export default function Contact() {
                 )}
               />
 
-              <ThemedText type="description" style={{ color: "#b8b000" }}>
+              <ThemedText
+                type="description"
+                style={{ color: ThemeTokens.ui.infoText }}
+              >
                 သင့်ထံသို့ ပြန်လည်ဆက်သွယ်ရန်အတွက်သာ အသုံးပြုပါမည်။
               </ThemedText>
             </View>

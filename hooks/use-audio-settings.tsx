@@ -1,7 +1,3 @@
-import {
-  AudioSettingsContextType,
-  AudioSettingsType,
-} from "@/types/index.types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setAudioModeAsync, useAudioPlayer } from "expo-audio";
 import {
@@ -12,9 +8,14 @@ import {
   useState,
 } from "react";
 
+import {
+  AudioSettingsContextType,
+  AudioSettingsType,
+} from "@/types/index.types";
+
 const AUDIO_SETTINGS_KEY = "audio-settings";
-const BACKGROUND_MUSIC = require("@/assets/audio/cotton-toys.mp3");
 const CLICK_SOUND = require("@/assets/audio/click.mp3");
+const BACKGROUND_MUSIC = require("@/assets/audio/cotton-toys.mp3");
 
 const defaultAudioSettings: AudioSettingsType = {
   musicEnabled: true,

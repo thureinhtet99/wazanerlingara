@@ -1,6 +1,7 @@
+import { Pressable, View } from "react-native";
+
 import Progress from "@/components/ui/progress";
 import { SvgAsset } from "@/components/ui/svg-asset";
-import { Pressable, View } from "react-native";
 
 export default function Timer({
   timeLeft,

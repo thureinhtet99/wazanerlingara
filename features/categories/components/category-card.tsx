@@ -1,7 +1,8 @@
+import { Image, Pressable } from "react-native";
+
 import { ThemedText } from "@/components/themed-text";
 import { cn } from "@/lib/util";
 import type { CategoryCardType, CategoryType } from "@/types/index.types";
-import { Image, Pressable } from "react-native";
 
 export default function CategoryCard({
   category,

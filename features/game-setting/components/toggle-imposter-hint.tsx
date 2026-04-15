@@ -1,8 +1,9 @@
+import { View } from "react-native";
+
 import { ThemedText } from "@/components/themed-text";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import Switch from "@/components/ui/switch";
 import { useGameConfig } from "@/hooks/use-game-config";
-import { View } from "react-native";
 
 export default function ToggleImposterHint() {
   const { config, updateGameConfig } = useGameConfig();

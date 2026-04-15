@@ -1,5 +1,6 @@
-import { PlayerType } from "@/types/index.types";
 import { useEffect, useRef, useState } from "react";
+
+import { PlayerType } from "@/types/index.types";
 // import { animate } from "animejs";
 // import type { Player } from "@/types/game.type";
 

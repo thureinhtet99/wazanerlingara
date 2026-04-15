@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { ThemedView } from "../themed-view";
 
 export default function MainLayout({ children }: { children: ReactNode }) {
