@@ -1,10 +1,9 @@
-import { Pressable, View } from "react-native";
+import { Image, Pressable, View } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import { svg } from "@/constants/icons";
 import { RoleCardType } from "@/types/index.types";
-import { Image } from "react-native";
 
 export default function RoleCard({
   currentPlayer,
