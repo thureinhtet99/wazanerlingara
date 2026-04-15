@@ -3,7 +3,8 @@ import { View } from "react-native";
 import { ThemedText } from "@/components/themed-text";
 import { useGameConfig } from "@/hooks/use-game-config";
 import { changeToMMNumber } from "@/lib/change-to-mm-number";
-import { getCategory } from "../lib/get-category";
+
+import { getCategory } from "../../../lib/get-category";
 import { getGameMode } from "../lib/get-game-mode";
 
 export default function GameInfo() {

@@ -2,6 +2,7 @@ import onboardingOne from "@/assets/svg/onboarding/onboarding-1.png";
 import onboardingTwo from "@/assets/svg/onboarding/onboarding-2.png";
 import onboardingThree from "@/assets/svg/onboarding/onboarding-3.png";
 import { CategoryCardType, CategoryType, ModeType } from "@/types/index.types";
+
 import { svg } from "./icons";
 
 export const ONBOARDING_STEPS = [

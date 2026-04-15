@@ -29,13 +29,14 @@ export default function Timer({
             height={37}
           />
         </Pressable>
-        <View className="flex-1 flex-row items-center justify-end">
-          <Progress
-            // className="w-auto"
-            progressPercent={progressPercent}
-            isResettingProgressBar={isResettingProgressBar}
-          />
-        </View>
+      </View>
+
+      <View className="flex-1 flex-row items-center justify-end">
+        <Progress
+          className="w-[380px]"
+          progressPercent={progressPercent}
+          isResettingProgressBar={isResettingProgressBar}
+        />
       </View>
     </View>
   );

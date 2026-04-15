@@ -26,9 +26,9 @@ export default function RoleCard({
     <View
       key={currentPlayer.id}
       style={{ elevation: 24 }}
-      className={`flex-1 rounded-3xl p-3 ${shouldDimCard ? "opacity-55" : ""}`}
+      className={`flex-1 items-center justify-center ${shouldDimCard ? "opacity-55" : ""}`}
     >
-      <View className="flex-1 rounded-3xl border border-white p-4">
+      <View className="flex-1 rounded-3xl border border-white p-4 w-[340px] ">
         {!revealed ? (
           <Pressable
             tabIndex={0}
@@ -37,7 +37,7 @@ export default function RoleCard({
               handleClickCard();
               handleReveal();
             }}
-            className={`flex-1 items-center justify-center bg-white/20 ${showBlur ? "opacity-95" : "opacity-100"}`}
+            className={`flex-1 items-center rounded-3xl justify-center bg-white/20 ${showBlur ? "opacity-95" : "opacity-100"}`}
           >
             <SvgAsset
               source={require("@/assets/svg/view-eye.svg")}

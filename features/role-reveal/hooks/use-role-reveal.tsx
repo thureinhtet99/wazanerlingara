@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 
+import { useGameConfig } from "@/hooks/use-game-config";
 import { PlayerType } from "@/types/index.types";
 // import { animate } from "animejs";
-// import type { Player } from "@/types/game.type";
 
 export function useRoleReveal(players: PlayerType[]) {
+  const { config } = useGameConfig();
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
 
   const [revealed, setRevealed] = useState(false);

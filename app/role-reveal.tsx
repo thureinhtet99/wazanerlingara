@@ -1,31 +1,31 @@
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import NotificationModal from "@/components/ui/modal";
 import { CONFIG } from "@/constants/config";
-import { GAME_SETTING } from "@/constants/dummy-data";
-import { svg } from "@/constants/icons";
+import { CATEGORIES, GAME_SETTING } from "@/constants/dummy-data";
 import NextSection from "@/features/role-reveal/components/next-section";
 import Timer from "@/features/role-reveal/components/timer";
 import { useRoleReveal } from "@/features/role-reveal/hooks/use-role-reveal";
-import { shuffleArray } from "@/features/role-reveal/lib/shuffle";
+import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { useGameConfig } from "@/hooks/use-game-config";
-import { PlayerType } from "@/types/index.types";
 
 import RoleCard from "../features/role-reveal/components/role-card";
 
 export default function RoleRevel() {
   const { config } = useGameConfig();
   const players = config?.players || [];
+  const { playClickSound } = useAudioSettings();
 
-  const [currentPlayers, setCurrentPlayers] = useState<PlayerType[]>(players);
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const playerCount = config?.players.length || 0;
   const gameMode = config?.gameMode || "";
   const category = config?.category || "";
+  const categoryTitle =
+    CATEGORIES.find((item) => item.type === category)?.title || category;
   const imposterId = config?.imposterId || "";
   const revealImageId = "";
 
@@ -44,55 +44,26 @@ export default function RoleRevel() {
     goToNextPlayer,
   } = useRoleReveal(players);
 
-  useEffect(() => {
-    const avatarImages = [
-      svg.avatar1,
-      svg.avatar2,
-      svg.avatar3,
-      svg.avatar4,
-      svg.avatar5,
-      svg.avatar6,
-      svg.avatar7,
-      svg.avatar8,
-      svg.avatar9,
-      svg.avatar10,
-      svg.avatar11,
-      svg.avatar12,
-      svg.avatar13,
-      svg.avatar14,
-      svg.avatar15,
-      svg.avatar16,
-      svg.avatar17,
-      svg.avatar18,
-      svg.avatar19,
-      svg.avatar20,
-    ];
-
-    const shuffledImages = shuffleArray(avatarImages);
-
-    setCurrentPlayers((prev) =>
-      prev.map((p, i) => ({
-        ...p,
-        imageId: shuffledImages[i % shuffledImages.length],
-      })),
-    );
-  }, []);
-
   const handleSuccessAcknowledge = () => {
     setShowModal(false);
     router.push(CONFIG.GAME_SETTING);
   };
 
+  const handleClickBack = () => {
+    setShowModal(true);
+    playClickSound();
+  };
+
   return (
-    <ThemedView className="flex-1 flex-col gap-8">
+    <ThemedView className="flex-1 flex-col gap-16">
       <Timer
         timeLeft={timeLeft}
         isResettingProgressBar={isResettingProgressBar}
-        handleClickBack={() => setShowModal(true)}
+        handleClickBack={handleClickBack}
       />
 
       <ThemedText type="subtitle" className="text-center">
-        အမျိုးအစား: {category}
+        အမျိုးအစား: {categoryTitle}
       </ThemedText>
 
       <RoleCard
@@ -107,7 +78,7 @@ export default function RoleRevel() {
         revealImageId={revealImageId ?? ""}
         imposterId={imposterId!}
         imposterCanGetHint={GAME_SETTING.canImposterGetHint}
-        hint={category}
+        hint={categoryTitle}
       />
 
       <NextSection
