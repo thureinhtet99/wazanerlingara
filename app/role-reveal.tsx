@@ -5,7 +5,7 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import NotificationModal from "@/components/ui/modal";
 import { CONFIG } from "@/constants/config";
-import { CATEGORIES, GAME_SETTING } from "@/constants/dummy-data";
+import { CATEGORIES } from "@/constants/dummy-data";
 import NextSection from "@/features/role-reveal/components/next-section";
 import Timer from "@/features/role-reveal/components/timer";
 import { useRoleReveal } from "@/features/role-reveal/hooks/use-role-reveal";
@@ -16,18 +16,29 @@ import RoleCard from "../features/role-reveal/components/role-card";
 
 export default function RoleRevel() {
   const { config } = useGameConfig();
-  const players = config?.players || [];
+  const players = config.players;
   const { playClickSound } = useAudioSettings();
 
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const playerCount = config?.players.length || 0;
-  const gameMode = config?.gameMode || "";
-  const category = config?.category || "";
+  const playerCount = config.players.length;
+  const gameMode = config.gameMode;
+  const category = config.category;
   const categoryTitle =
     CATEGORIES.find((item) => item.type === category)?.title || category;
-  const imposterId = config?.imposterId || "";
-  const revealImageId = "";
+  const imposterId = config.imposterId;
+  const revealContent =
+    gameMode === "word"
+      ? (config.word?.text ?? "")
+      : (config.question?.text ?? "");
+  const revealImageId =
+    gameMode === "word"
+      ? (config.word?.imageId ?? undefined)
+      : (config.question?.imageId ?? undefined);
+  const hint =
+    gameMode === "word"
+      ? (config.word?.hint ?? "")
+      : (config.question?.hint ?? "");
 
   const {
     currentPlayer,
@@ -37,12 +48,14 @@ export default function RoleRevel() {
     confirmed,
     showBlur,
     timeLeft,
+    maxTime,
     isResettingProgressBar,
     handleClickCard,
     handleReveal,
-    handleConfirm,
     goToNextPlayer,
   } = useRoleReveal(players);
+
+  const canProceedNext = timeLeft <= 0 && confirmed;
 
   const handleSuccessAcknowledge = () => {
     setShowModal(false);
@@ -54,10 +67,21 @@ export default function RoleRevel() {
     playClickSound();
   };
 
+  if (!currentPlayer) {
+    return (
+      <ThemedView className="flex-1 items-center justify-center px-6">
+        <ThemedText type="subtitle" className="text-center">
+          ကစားသမား မရှိသေးပါ။ Start screen မှာ player တွေထည့်ပြီး ပြန်ဝင်ပါ။
+        </ThemedText>
+      </ThemedView>
+    );
+  }
+
   return (
     <ThemedView className="flex-1 flex-col gap-16">
       <Timer
         timeLeft={timeLeft}
+        maxTime={maxTime}
         isResettingProgressBar={isResettingProgressBar}
         handleClickBack={handleClickBack}
       />
@@ -74,21 +98,19 @@ export default function RoleRevel() {
         timeLeft={timeLeft}
         handleClickCard={handleClickCard}
         handleReveal={handleReveal}
-        revealContent={gameMode}
-        revealImageId={revealImageId ?? ""}
+        revealContent={revealContent}
+        revealImageId={revealImageId}
         imposterId={imposterId!}
-        imposterCanGetHint={GAME_SETTING.canImposterGetHint}
-        hint={categoryTitle}
+        imposterCanGetHint={config.gameSetting.canImposterGetHint}
+        hint={hint}
       />
 
       <NextSection
         currentPlayerIndex={currentPlayerIndex}
         playersLength={playerCount}
         nextPlayerName={nextPlayer?.name || ""}
-        confirmed={confirmed}
-        revealed={revealed}
+        canProceedNext={canProceedNext}
         timeLeft={timeLeft}
-        handleConfirm={handleConfirm}
         handleClickNext={goToNextPlayer}
       />
 

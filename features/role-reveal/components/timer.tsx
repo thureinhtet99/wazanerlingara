@@ -5,14 +5,16 @@ import { SvgAsset } from "@/components/ui/svg-asset";
 
 export default function Timer({
   timeLeft,
+  maxTime,
   isResettingProgressBar,
   handleClickBack,
 }: {
   timeLeft: number;
+  maxTime: number;
   isResettingProgressBar: boolean;
   handleClickBack: () => void;
 }) {
-  const progressPercent = (timeLeft / 10) * 100;
+  const progressPercent = maxTime > 0 ? (timeLeft / maxTime) * 100 : 0;
 
   return (
     <View className="w-full">

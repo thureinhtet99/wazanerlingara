@@ -12,14 +12,41 @@ import GameInfo from "@/features/game-setting/components/game-info";
 import ImposterCounter from "@/features/game-setting/components/imposter-counter";
 import TimerMode from "@/features/game-setting/components/timer-mode";
 import ToggleImposterHint from "@/features/game-setting/components/toggle-imposter-hint";
+import { AVATAR_IDS } from "@/features/role-reveal/lib/avatar";
+import { shuffleArray } from "@/features/role-reveal/lib/shuffle";
+import { useGameConfig } from "@/hooks/use-game-config";
 
 export default function GameSetting() {
+  const { config, updateGameConfig } = useGameConfig();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const openConfirmModal = () => setShowConfirmModal(true);
   const closeConfirmModal = () => setShowConfirmModal(false);
 
   const handleStartGame = () => {
+    if (!config.players.length) {
+      closeConfirmModal();
+      return;
+    }
+
+    const shuffledAvatarIds = shuffleArray([...AVATAR_IDS]);
+    const playersWithAvatars = config.players.map((player, index) => ({
+      ...player,
+      imageId: shuffledAvatarIds[index % shuffledAvatarIds.length],
+    }));
+
+    const currentImposterIsValid = playersWithAvatars.some(
+      (player) => player.id === config.imposterId,
+    );
+    const randomImposterId =
+      playersWithAvatars[Math.floor(Math.random() * playersWithAvatars.length)]
+        ?.id ?? "";
+
+    updateGameConfig({
+      players: playersWithAvatars,
+      imposterId: currentImposterIsValid ? config.imposterId : randomImposterId,
+    });
+
     closeConfirmModal();
     router.push(CONFIG.ROLE_REVEAL);
   };

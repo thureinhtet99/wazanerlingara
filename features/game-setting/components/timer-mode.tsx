@@ -8,11 +8,11 @@ import { useGameConfig } from "@/hooks/use-game-config";
 
 export default function TimerMode() {
   const { config, updateGameConfig } = useGameConfig();
-  const [timerMode, setTimerMode] = useState<"turn" | "duration">("duration");
   const [pressedButton, setPressedButton] = useState<
     "increase" | "decrease" | null
   >(null);
 
+  const timerMode = config?.gameSetting.timerMode ?? "turn";
   const isTurn = timerMode === "turn";
   const turnTimer = config?.gameSetting.turnTimer || 5;
   const durationTimer = config?.gameSetting.durationTimer || 120;
@@ -76,7 +76,13 @@ export default function TimerMode() {
 
       <View className="mb-6 flex-row items-center gap-1 rounded-2xl border border-white p-1">
         <Pressable
-          onPress={() => setTimerMode("turn")}
+          onPress={() =>
+            updateGameConfig({
+              gameSetting: {
+                timerMode: "turn",
+              },
+            })
+          }
           className={`flex-1 px-3 py-4 flex-row items-center justify-center gap-1 rounded-2xl ${isTurn ? "bg-white" : "bg-transparent"}`}
         >
           <SvgAsset
@@ -96,7 +102,13 @@ export default function TimerMode() {
         </Pressable>
 
         <Pressable
-          onPress={() => setTimerMode("duration")}
+          onPress={() =>
+            updateGameConfig({
+              gameSetting: {
+                timerMode: "duration",
+              },
+            })
+          }
           className={`flex-1 px-3 py-4 flex-row items-center justify-center gap-1 rounded-2xl ${!isTurn ? "bg-white" : "bg-transparent"}`}
         >
           <SvgAsset

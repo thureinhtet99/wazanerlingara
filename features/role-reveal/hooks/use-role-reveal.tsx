@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useGameConfig } from "@/hooks/use-game-config";
 import { PlayerType } from "@/types/index.types";
@@ -11,22 +11,43 @@ export function useRoleReveal(players: PlayerType[]) {
   const [revealed, setRevealed] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [showBlur, setShowBlur] = useState(false);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  const [timeLeft, setTimeLeft] = useState(10);
+  const maxTime = useMemo(() => {
+    const mode = config.gameSetting.timerMode;
+    return mode === "duration"
+      ? config.gameSetting.durationTimer
+      : config.gameSetting.turnTimer;
+  }, [
+    config.gameSetting.durationTimer,
+    config.gameSetting.timerMode,
+    config.gameSetting.turnTimer,
+  ]);
+
+  const [timeLeft, setTimeLeft] = useState(maxTime);
   const [isResettingProgressBar, setIsResettingProgressBar] = useState(false);
-
-  const cardRef = useRef<HTMLDivElement | null>(null);
 
   const currentPlayer = players[currentPlayerIndex];
   const nextPlayer = players[currentPlayerIndex + 1];
 
   useEffect(() => {
+    setTimeLeft(maxTime);
+  }, [maxTime, currentPlayerIndex]);
+
+  useEffect(() => {
+    if (!isTimerRunning) {
+      return;
+    }
+
     if (timeLeft <= 0) {
+      setIsTimerRunning(false);
+
       if (!confirmed) {
         setConfirmed(true);
         setRevealed(false);
         setShowBlur(false);
       }
+
       return;
     }
 
@@ -35,41 +56,45 @@ export function useRoleReveal(players: PlayerType[]) {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft, confirmed]);
+  }, [timeLeft, confirmed, isTimerRunning]);
 
   const handleClickCard = () => {
-    if (timeLeft <= 0 || revealed || showBlur || confirmed) return;
+    if (timeLeft <= 0 || revealed || showBlur || confirmed) {
+      return;
+    }
+
     setShowBlur(true);
   };
 
   const handleReveal = () => {
+    if (!showBlur || revealed || confirmed) {
+      return;
+    }
+
     setShowBlur(false);
     setRevealed(true);
 
-    if (cardRef.current) {
-      //   animate(cardRef.current, {
-      //     rotateY: [90, 0],
-      //     opacity: [0, 1],
-      //     duration: 400,
-      //   });
-    }
-  };
-
-  const handleConfirm = () => {
-    setConfirmed(true);
-    setRevealed(false);
-    setShowBlur(false);
+    setIsTimerRunning(true);
   };
 
   const goToNextPlayer = () => {
+    if (timeLeft > 0 || !confirmed) {
+      return;
+    }
+
+    if (currentPlayerIndex >= players.length - 1) {
+      return;
+    }
+
     setIsResettingProgressBar(true);
 
     setCurrentPlayerIndex((i) => i + 1);
 
-    setTimeLeft(10);
+    setTimeLeft(maxTime);
     setRevealed(false);
     setShowBlur(false);
     setConfirmed(false);
+    setIsTimerRunning(false);
 
     setTimeout(() => setIsResettingProgressBar(false), 50);
   };
@@ -82,12 +107,11 @@ export function useRoleReveal(players: PlayerType[]) {
     confirmed,
     showBlur,
     timeLeft,
+    maxTime,
     isResettingProgressBar,
-    cardRef,
 
     handleClickCard,
     handleReveal,
-    handleConfirm,
     goToNextPlayer,
   };
 }

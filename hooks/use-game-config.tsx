@@ -25,6 +25,7 @@ const DEFAULT_GAME_CONFIG: GameConfigType = {
   category: "animals",
   gameSetting: {
     imposterCount: 1,
+    timerMode: "turn",
     turnTimer: 5,
     durationTimer: 120,
     canImposterGetHint: false,

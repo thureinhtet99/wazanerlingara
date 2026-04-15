@@ -9,6 +9,7 @@ import type { SvgKey } from "@/constants/icons";
 import type { ReactNode } from "react";
 
 export type GameType = "word" | "question";
+export type TimerModeType = "turn" | "duration";
 
 export type PlayerType = {
   id: string;
@@ -105,6 +106,7 @@ export type AudioSettingsContextType = AudioSettingsType & {
 
 export type GameSettingType = {
   imposterCount: number;
+  timerMode: TimerModeType;
   turnTimer: number;
   durationTimer: number;
   canImposterGetHint: boolean;
@@ -136,7 +138,10 @@ export type GameConfigType = {
   imposterId: string;
 };
 
-export type GameConfigPatchType = Partial<GameConfigType> & {
+export type GameConfigPatchType = Omit<
+  Partial<GameConfigType>,
+  "gameSetting"
+> & {
   gameSetting?: Partial<GameSettingType>;
 };
 
