@@ -17,19 +17,19 @@ export default function GameInfo() {
   return (
     <View className="rounded-2xl px-4 py-6">
       <View className="mb-3 flex-row items-center justify-between">
-        <ThemedText type="description">ပါဝင်ကစားမည့်သူ အရေအတွက်</ThemedText>
+        <ThemedText type="subtitle">ပါဝင်ကစားမည့်သူ အရေအတွက်</ThemedText>
         <ThemedText type="description">
-          ({changeToMMNumber(playerCount)})ယောက်
+          ({changeToMMNumber(playerCount)}) ယောက်
         </ThemedText>
       </View>
 
       <View className="mb-3 flex-row items-center justify-between">
-        <ThemedText type="description">ဂိမ်းအမျိုးအစား:</ThemedText>
+        <ThemedText type="subtitle">ဂိမ်းအမျိုးအစား</ThemedText>
         <ThemedText type="description">{getGameMode(gameMode)}</ThemedText>
       </View>
 
       <View className="flex-row items-center justify-between">
-        <ThemedText type="description">အမျိုးအစား:</ThemedText>
+        <ThemedText type="subtitle">အမျိုးအစား:</ThemedText>
         <ThemedText type="description">{getCategory(category)}</ThemedText>
       </View>
     </View>

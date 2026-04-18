@@ -26,7 +26,7 @@ const DEFAULT_GAME_CONFIG: GameConfigType = {
   gameSetting: {
     imposterCount: 1,
     timerMode: "turn",
-    turnTimer: 5,
+    turnTimer: 10,
     durationTimer: 120,
     canImposterGetHint: false,
   },

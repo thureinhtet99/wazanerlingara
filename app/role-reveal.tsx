@@ -1,5 +1,7 @@
-import { router } from "expo-router";
-import { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { Link, router } from "expo-router";
+import { useCallback, useState } from "react";
+import { BackHandler } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
@@ -14,8 +16,10 @@ import { useGameConfig } from "@/hooks/use-game-config";
 
 import RoleCard from "../features/role-reveal/components/role-card";
 
+import Loading from "./loading";
+
 export default function RoleRevel() {
-  const { config } = useGameConfig();
+  const { config, loading } = useGameConfig();
   const players = config.players;
   const { playClickSound } = useAudioSettings();
 
@@ -24,6 +28,7 @@ export default function RoleRevel() {
   const playerCount = config.players.length;
   const gameMode = config.gameMode;
   const category = config.category;
+
   const categoryTitle =
     CATEGORIES.find((item) => item.type === category)?.title || category;
   const imposterId = config.imposterId;
@@ -48,7 +53,6 @@ export default function RoleRevel() {
     confirmed,
     showBlur,
     timeLeft,
-    maxTime,
     isResettingProgressBar,
     handleClickCard,
     handleReveal,
@@ -57,21 +61,46 @@ export default function RoleRevel() {
 
   const canProceedNext = timeLeft <= 0 && confirmed;
 
-  const handleSuccessAcknowledge = () => {
+  const handleSuccess = () => {
     setShowModal(false);
-    router.push(CONFIG.GAME_SETTING);
+    router.replace(CONFIG.GAME_SETTING);
   };
 
-  const handleClickBack = () => {
+  const handleBack = useCallback(() => {
     setShowModal(true);
     playClickSound();
-  };
+  }, [playClickSound]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const subscription = BackHandler.addEventListener(
+        "hardwareBackPress",
+        () => {
+          if (showModal) {
+            setShowModal(false);
+            return true;
+          }
+
+          handleBack();
+          return true;
+        },
+      );
+
+      return () => subscription.remove();
+    }, [showModal, handleBack]),
+  );
+
+  if (loading) return <Loading />;
 
   if (!currentPlayer) {
     return (
       <ThemedView className="flex-1 items-center justify-center px-6">
         <ThemedText type="subtitle" className="text-center">
-          ကစားသမား မရှိသေးပါ။ Start screen မှာ player တွေထည့်ပြီး ပြန်ဝင်ပါ။
+          ကစားသမား မရှိသေးပါ။{" "}
+          <Link href={CONFIG.HOME} className="underline active:text-red-500">
+            Start screen
+          </Link>{" "}
+          မှာ player တွေထည့်ပြီး ပြန်ဝင်ပါ။
         </ThemedText>
       </ThemedView>
     );
@@ -81,9 +110,8 @@ export default function RoleRevel() {
     <ThemedView className="flex-1 flex-col gap-16">
       <Timer
         timeLeft={timeLeft}
-        maxTime={maxTime}
         isResettingProgressBar={isResettingProgressBar}
-        handleClickBack={handleClickBack}
+        handleBack={handleBack}
       />
 
       <ThemedText type="subtitle" className="text-center">
@@ -110,7 +138,6 @@ export default function RoleRevel() {
         playersLength={playerCount}
         nextPlayerName={nextPlayer?.name || ""}
         canProceedNext={canProceedNext}
-        timeLeft={timeLeft}
         handleClickNext={goToNextPlayer}
       />
 
@@ -121,7 +148,7 @@ export default function RoleRevel() {
         message="အခုထွက်လိုက်ရင် ကစားလက်စပွဲစဉ် ပျက်သွားပါလိမ့်မယ်"
         primaryButtonText="ထွက်မယ်"
         secondaryButtonText="ဆက်ကစားမယ်"
-        onPrimaryPress={handleSuccessAcknowledge}
+        onPrimaryPress={handleSuccess}
         onSecondaryPress={() => setShowModal(false)}
       />
     </ThemedView>

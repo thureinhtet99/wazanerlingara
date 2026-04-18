@@ -1,38 +1,21 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { useGameConfig } from "@/hooks/use-game-config";
 import { PlayerType } from "@/types/index.types";
-// import { animate } from "animejs";
+
+const ROLE_REVEAL_TIME = 10;
 
 export function useRoleReveal(players: PlayerType[]) {
-  const { config } = useGameConfig();
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
-
   const [revealed, setRevealed] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [showBlur, setShowBlur] = useState(false);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  const maxTime = useMemo(() => {
-    const mode = config.gameSetting.timerMode;
-    return mode === "duration"
-      ? config.gameSetting.durationTimer
-      : config.gameSetting.turnTimer;
-  }, [
-    config.gameSetting.durationTimer,
-    config.gameSetting.timerMode,
-    config.gameSetting.turnTimer,
-  ]);
-
-  const [timeLeft, setTimeLeft] = useState(maxTime);
+  const [timeLeft, setTimeLeft] = useState(ROLE_REVEAL_TIME);
   const [isResettingProgressBar, setIsResettingProgressBar] = useState(false);
 
   const currentPlayer = players[currentPlayerIndex];
   const nextPlayer = players[currentPlayerIndex + 1];
-
-  useEffect(() => {
-    setTimeLeft(maxTime);
-  }, [maxTime, currentPlayerIndex]);
 
   useEffect(() => {
     if (!isTimerRunning) {
@@ -90,7 +73,7 @@ export function useRoleReveal(players: PlayerType[]) {
 
     setCurrentPlayerIndex((i) => i + 1);
 
-    setTimeLeft(maxTime);
+    setTimeLeft(ROLE_REVEAL_TIME);
     setRevealed(false);
     setShowBlur(false);
     setConfirmed(false);
@@ -107,7 +90,6 @@ export function useRoleReveal(players: PlayerType[]) {
     confirmed,
     showBlur,
     timeLeft,
-    maxTime,
     isResettingProgressBar,
 
     handleClickCard,

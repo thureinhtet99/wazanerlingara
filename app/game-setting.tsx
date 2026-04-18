@@ -16,8 +16,10 @@ import { AVATAR_IDS } from "@/features/role-reveal/lib/avatar";
 import { shuffleArray } from "@/features/role-reveal/lib/shuffle";
 import { useGameConfig } from "@/hooks/use-game-config";
 
+import Loading from "./loading";
+
 export default function GameSetting() {
-  const { config, updateGameConfig } = useGameConfig();
+  const { config, loading, updateGameConfig } = useGameConfig();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const openConfirmModal = () => setShowConfirmModal(true);
@@ -35,21 +37,20 @@ export default function GameSetting() {
       imageId: shuffledAvatarIds[index % shuffledAvatarIds.length],
     }));
 
-    const currentImposterIsValid = playersWithAvatars.some(
-      (player) => player.id === config.imposterId,
-    );
     const randomImposterId =
       playersWithAvatars[Math.floor(Math.random() * playersWithAvatars.length)]
         ?.id ?? "";
 
     updateGameConfig({
       players: playersWithAvatars,
-      imposterId: currentImposterIsValid ? config.imposterId : randomImposterId,
+      imposterId: randomImposterId,
     });
 
     closeConfirmModal();
-    router.push(CONFIG.ROLE_REVEAL);
+    router.replace(CONFIG.ROLE_REVEAL);
   };
+
+  if (loading) return <Loading />;
 
   return (
     <ThemedView className="flex-1">

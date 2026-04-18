@@ -4,21 +4,19 @@ import { ThemedText } from "@/components/themed-text";
 import { Button } from "@/components/ui/button";
 import InstructionText from "@/features/role-reveal/components/instruction-text";
 
-interface Props {
+type Props = {
   currentPlayerIndex: number;
   playersLength: number;
   nextPlayerName: string;
   canProceedNext: boolean;
-  timeLeft: number;
   handleClickNext: () => void;
-}
+};
 
 export default function NextSection({
   currentPlayerIndex,
   playersLength,
   nextPlayerName,
   canProceedNext,
-  timeLeft,
   handleClickNext,
 }: Props) {
   const isLastPlayer = currentPlayerIndex >= playersLength - 1;
@@ -26,7 +24,7 @@ export default function NextSection({
 
   return (
     <View className="mx-auto gap-8 w-full">
-      <InstructionText canProceedNext={canProceedNext} timeLeft={timeLeft} />
+      <InstructionText canProceedNext={canProceedNext} />
 
       {!isLastPlayer && canProceedNext ? (
         <ThemedText type="subtitle" className="text-center">

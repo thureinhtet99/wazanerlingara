@@ -3,25 +3,30 @@ import { Pressable, View } from "react-native";
 import Progress from "@/components/ui/progress";
 import { SvgAsset } from "@/components/ui/svg-asset";
 
+const ROLE_REVEAL_TIME_SECONDS = 10;
+
 export default function Timer({
   timeLeft,
-  maxTime,
   isResettingProgressBar,
-  handleClickBack,
+  handleBack,
 }: {
   timeLeft: number;
-  maxTime: number;
   isResettingProgressBar: boolean;
-  handleClickBack: () => void;
+  handleBack: () => void;
 }) {
-  const progressPercent = maxTime > 0 ? (timeLeft / maxTime) * 100 : 0;
+  const progressPercent = Math.max(
+    0,
+    Math.min(100, (timeLeft / ROLE_REVEAL_TIME_SECONDS) * 100),
+  );
+
+  console.log("progressPercent", progressPercent);
 
   return (
     <View className="w-full">
       <View className="mb-6 mt-1 flex-row items-start justify-center">
         <Pressable
           className="absolute left-0 top-0 h-12 w-12 items-center justify-center rounded-xl"
-          onPress={handleClickBack}
+          onPress={handleBack}
           accessibilityRole="button"
           accessibilityLabel="Go back"
         >

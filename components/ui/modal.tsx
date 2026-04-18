@@ -40,18 +40,14 @@ export default function Modal({
     <RNModal
       visible={visible}
       transparent
-      animationType="fade"
+      animationType="slide"
       statusBarTranslucent
       onRequestClose={onSecondaryPress || onPrimaryPress}
       {...modalProps}
     >
-      <View className="flex-1 items-center justify-center bg-black/60 px-3">
+      <View className="flex-1 items-center justify-center bg-black/80 px-3">
         <View
-          className={cn(
-            "w-full max-w-[470px] rounded-2xl p-6",
-            borderColor,
-            "border",
-          )}
+          className={cn("w-full rounded-3xl p-6", "border", borderColor)}
           style={{ backgroundColor: ThemeTokens.ui.modalBackground }}
         >
           <View className="mb-6 flex-col items-center justify-center gap-3">
@@ -59,8 +55,8 @@ export default function Modal({
             <ThemedText type="description">{message}</ThemedText>
           </View>
 
-          <View className="gap-4">
-            <Button variant="default" onPress={onPrimaryPress ?? (() => {})}>
+          <View className="gap-6">
+            <Button variant="default" onPress={onPrimaryPress}>
               <ThemedText type="subtitle">{primaryButtonText}</ThemedText>
             </Button>
             {!isSuccess && onSecondaryPress && secondaryButtonText && (
