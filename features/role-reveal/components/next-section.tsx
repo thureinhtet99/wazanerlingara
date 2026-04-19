@@ -1,7 +1,9 @@
+import { router } from "expo-router";
 import { View } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
 import { Button } from "@/components/ui/button";
+import { CONFIG } from "@/constants/config";
 import InstructionText from "@/features/role-reveal/components/instruction-text";
 
 type Props = {
@@ -22,6 +24,20 @@ export default function NextSection({
   const isLastPlayer = currentPlayerIndex >= playersLength - 1;
   const buttonLabel = !isLastPlayer ? "နောက်တစ်ယောက်" : "ဂိမ်းစဆော့မယ်";
 
+  const handleNavigateSpinner = () => {
+    router.push({
+      pathname: CONFIG.SPINNER_SCREEN,
+      params: { mode: "next-player", nextPlayerName },
+    });
+  };
+
+  const handleGamePlay = () => {
+    router.push({
+      pathname: CONFIG.SPINNER_SCREEN,
+      params: { mode: "game-play" },
+    });
+  };
+
   return (
     <View className="mx-auto gap-8 w-full">
       <InstructionText canProceedNext={canProceedNext} />
@@ -34,7 +50,7 @@ export default function NextSection({
 
       <Button
         disabled={!canProceedNext}
-        onPress={!isLastPlayer ? handleClickNext : undefined}
+        onPress={!isLastPlayer ? handleNavigateSpinner : handleGamePlay}
       >
         <ThemedText type="subtitle">{buttonLabel}</ThemedText>
       </Button>

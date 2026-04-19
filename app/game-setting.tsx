@@ -35,6 +35,7 @@ export default function GameSetting() {
       return;
     }
 
+    // Start game config (shuffle players and avatars, configure imposter and shuffle words and questions by category)
     const shuffledAvatarIds = shuffleArray([...AVATAR_IDS]);
     const playersWithAvatars = config.players.map((player, index) => ({
       ...player,
@@ -48,7 +49,7 @@ export default function GameSetting() {
     const randomWord = getRandomWordByCategory(config.category);
     const randomQuestion = getRandomQuestionByCategory(config.category);
 
-    if (config.gameMode === "word" && randomWord) {
+    if (config.gameMode === "word" && !randomWord) {
       closeConfirmModal();
       return;
     }

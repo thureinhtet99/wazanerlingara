@@ -42,15 +42,17 @@ export default function RootLayout() {
     >
       <Stack.Screen name="onboarding" />
       <Stack.Screen name="index" />
-      <Stack.Screen name="start" />
-      <Stack.Screen name="mode" />
-      <Stack.Screen name="categories" />
       <Stack.Screen name="setting" />
-      <Stack.Screen name="game-setting" />
-      <Stack.Screen name="role-reveal" />
       <Stack.Screen name="how-to-play" />
       <Stack.Screen name="privacy" />
       <Stack.Screen name="contact" />
+      <Stack.Screen name="start" />
+      <Stack.Screen name="mode" />
+      <Stack.Screen name="categories" />
+      <Stack.Screen name="game-setting" />
+      <Stack.Screen name="role-reveal" />
+      <Stack.Screen name="spinner-screen" />
+      <Stack.Screen name="game-play" />
       <Stack.Screen name="test-screen" />
     </Stack>
   );
