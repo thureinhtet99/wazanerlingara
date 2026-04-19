@@ -17,6 +17,7 @@ export const CONFIG = {
   ROLE_REVEAL: "/role-reveal",
   SPINNER_SCREEN: "/spinner-screen",
   GAME_PLAY: "/game-play",
+  VOTE: "/vote",
   PRIVACY: "/privacy",
   CONTACT: "/contact",
   HOW_TO_PLAY: "/how-to-play",

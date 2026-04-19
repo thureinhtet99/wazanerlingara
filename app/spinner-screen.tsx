@@ -124,7 +124,7 @@ export default function SpinnerScreen() {
             />
           </G>
 
-          <Circle cx={dotX} cy={dotY} r="6" fill="#dc2626" />
+          <Circle cx={dotX} cy={dotY} r="10" fill="#dc2626" />
         </Svg>
 
         <View className="absolute top-0 right-0 bottom-0 left-0 items-center justify-center">

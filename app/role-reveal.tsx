@@ -151,7 +151,7 @@ export default function RoleRevel() {
         playersLength={playerCount}
         nextPlayerName={nextPlayer?.name || ""}
         canProceedNext={canProceedNext}
-        handleClickNext={goToNextPlayer}
+        // handleClickNext={goToNextPlayer}
       />
 
       <NotificationModal

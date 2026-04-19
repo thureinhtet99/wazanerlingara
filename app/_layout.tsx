@@ -53,6 +53,7 @@ export default function RootLayout() {
       <Stack.Screen name="role-reveal" />
       <Stack.Screen name="spinner-screen" />
       <Stack.Screen name="game-play" />
+      <Stack.Screen name="vote" />
       <Stack.Screen name="test-screen" />
     </Stack>
   );

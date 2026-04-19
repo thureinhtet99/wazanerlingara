@@ -11,7 +11,7 @@ type Props = {
   playersLength: number;
   nextPlayerName: string;
   canProceedNext: boolean;
-  handleClickNext: () => void;
+  // handleClickNext: () => void;
 };
 
 export default function NextSection({
@@ -19,7 +19,7 @@ export default function NextSection({
   playersLength,
   nextPlayerName,
   canProceedNext,
-  handleClickNext,
+  // handleClickNext,
 }: Props) {
   const isLastPlayer = currentPlayerIndex >= playersLength - 1;
   const buttonLabel = !isLastPlayer ? "နောက်တစ်ယောက်" : "ဂိမ်းစဆော့မယ်";
