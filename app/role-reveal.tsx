@@ -1,31 +1,50 @@
-import { router } from "expo-router";
-import { useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { Link, router } from "expo-router";
+import { useCallback, useState } from "react";
+import { BackHandler } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import NotificationModal from "@/components/ui/modal";
 import { CONFIG } from "@/constants/config";
-import { GAME_CONFIG, GAME_SETTING, PLAYERS } from "@/constants/dummy-data";
-import { svg } from "@/constants/icons";
+import { CATEGORIES } from "@/constants/dummy-data";
 import NextSection from "@/features/role-reveal/components/next-section";
 import Timer from "@/features/role-reveal/components/timer";
 import { useRoleReveal } from "@/features/role-reveal/hooks/use-role-reveal";
-import { shuffleArray } from "@/features/role-reveal/lib/shuffle";
-import { PlayerType } from "@/types/index.types";
+import { useAudioSettings } from "@/hooks/use-audio-settings";
+import { useGameConfig } from "@/hooks/use-game-config";
 
 import RoleCard from "../features/role-reveal/components/role-card";
 
-const CATEGORY = "အစားအသောက်";
+import Loading from "./loading";
 
 export default function RoleRevel() {
-  const [players, setPlayers] = useState<PlayerType[]>(PLAYERS);
+  const { config, loading } = useGameConfig();
+
+  const players = config.players;
+  const { playClickSound } = useAudioSettings();
+
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const { gameMode, word, question, imposterId } = GAME_CONFIG;
+  const playerCount = config.players.length;
+  const gameMode = config.gameMode;
+  const category = config.category;
 
-  const revealContent = gameMode === "word" ? word?.text : question?.text;
-  const revealImageId = gameMode === "word" ? word?.imageId : question?.imageId;
-  const hint = gameMode === "word" ? word?.hint : question?.hint;
+  const categoryTitle =
+    CATEGORIES.find((item) => item.type === category)?.title || category;
+  const imposterId = config.imposterId;
+  const revealContent =
+    gameMode === "word"
+      ? (config.word?.text ?? "")
+      : (config.question?.text ?? "");
+  const revealImageId =
+    gameMode === "word"
+      ? (config.word?.imageId ?? undefined)
+      : (config.question?.imageId ?? undefined);
+  const hint =
+    gameMode === "word"
+      ? (config.word?.hint ?? "")
+      : (config.question?.hint ?? "");
 
   const {
     currentPlayer,
@@ -38,88 +57,89 @@ export default function RoleRevel() {
     isResettingProgressBar,
     handleClickCard,
     handleReveal,
-    handleConfirm,
     goToNextPlayer,
   } = useRoleReveal(players);
 
-  useEffect(() => {
-    const avatarImages = [
-      svg.avatar1Svg,
-      svg.avatar2Svg,
-      svg.avatar3Svg,
-      svg.avatar4Svg,
-      svg.avatar5Svg,
-      svg.avatar6Svg,
-      svg.avatar7Svg,
-      svg.avatar8Svg,
-      svg.avatar9Svg,
-      svg.avatar10Svg,
-      svg.avatar11Svg,
-      svg.avatar12Svg,
-      svg.avatar13Svg,
-      svg.avatar14Svg,
-      svg.avatar15Svg,
-      svg.avatar16Svg,
-      svg.avatar17Svg,
-      svg.avatar18Svg,
-      svg.avatar19Svg,
-      svg.avatar20Svg,
-      svg.avatar21Svg,
-      svg.avatar22Svg,
-      svg.avatar23Svg,
-      svg.avatar24Svg,
-    ];
+  const canProceedNext = timeLeft <= 0 && confirmed;
 
-    const shuffledImages = shuffleArray(avatarImages);
-
-    setPlayers((prev) =>
-      prev.map((p, i) => ({
-        ...p,
-        imageId: shuffledImages[i % shuffledImages.length],
-      })),
-    );
-  }, []);
-
-  const handleSuccessAcknowledge = () => {
+  const handleSuccess = () => {
     setShowModal(false);
-    router.push(CONFIG.GAME_SETTING);
+    router.replace(CONFIG.GAME_SETTING);
   };
 
+  const handleBack = useCallback(() => {
+    setShowModal(true);
+    playClickSound();
+  }, [playClickSound]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const subscription = BackHandler.addEventListener(
+        "hardwareBackPress",
+        () => {
+          if (showModal) {
+            setShowModal(false);
+            return true;
+          }
+
+          handleBack();
+          return true;
+        },
+      );
+
+      return () => subscription.remove();
+    }, [showModal, handleBack]),
+  );
+
+  if (loading) return <Loading />;
+
+  if (!currentPlayer) {
+    return (
+      <ThemedView className="flex-1 items-center justify-center px-6">
+        <ThemedText type="subtitle" className="text-center">
+          ကစားသမား မရှိသေးပါ။{" "}
+          <Link href={CONFIG.HOME} className="underline active:text-red-500">
+            Start screen
+          </Link>{" "}
+          မှာ player တွေထည့်ပြီး ပြန်ဝင်ပါ။
+        </ThemedText>
+      </ThemedView>
+    );
+  }
+
   return (
-    <ThemedView className="flex-1 flex-col gap-8">
+    <ThemedView className="flex-1 flex-col gap-16">
       <Timer
         timeLeft={timeLeft}
         isResettingProgressBar={isResettingProgressBar}
-        handleClickBack={() => setShowModal(true)}
+        handleBack={handleBack}
       />
 
       <ThemedText type="subtitle" className="text-center">
-        အမျိုးအစား: {CATEGORY}
+        အမျိုးအစား: {categoryTitle}
       </ThemedText>
 
       <RoleCard
         currentPlayer={currentPlayer}
+        gameMode={gameMode}
         revealed={revealed}
         showBlur={showBlur}
         confirmed={confirmed}
         timeLeft={timeLeft}
         handleClickCard={handleClickCard}
         handleReveal={handleReveal}
-        revealContent={revealContent ?? ""}
-        revealImageId={revealImageId ?? ""}
+        revealContent={revealContent}
+        revealImageId={revealImageId}
         imposterId={imposterId!}
-        imposterCanGetHint={GAME_SETTING.canImposterGetHint}
-        hint={hint ?? ""}
+        imposterCanGetHint={config.gameSetting.canImposterGetHint}
+        hint={hint}
       />
 
       <NextSection
         currentPlayerIndex={currentPlayerIndex}
-        playersLength={GAME_CONFIG.players.length}
+        playersLength={playerCount}
         nextPlayerName={nextPlayer?.name || ""}
-        confirmed={confirmed}
-        revealed={revealed}
-        timeLeft={timeLeft}
-        handleConfirm={handleConfirm}
+        canProceedNext={canProceedNext}
         handleClickNext={goToNextPlayer}
       />
 
@@ -130,7 +150,7 @@ export default function RoleRevel() {
         message="အခုထွက်လိုက်ရင် ကစားလက်စပွဲစဉ် ပျက်သွားပါလိမ့်မယ်"
         primaryButtonText="ထွက်မယ်"
         secondaryButtonText="ဆက်ကစားမယ်"
-        onPrimaryPress={handleSuccessAcknowledge}
+        onPrimaryPress={handleSuccess}
         onSecondaryPress={() => setShowModal(false)}
       />
     </ThemedView>

@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 
-import { CONFIG } from "@/constants/config";
+import { CONFIG, DEFAULT_GAME_CONFIG } from "@/constants/config";
 import {
   GameConfigContextType,
   GameConfigPatchType,
@@ -17,22 +17,6 @@ import {
 } from "@/types/index.types";
 
 const GAME_CONFIG_KEY = CONFIG.APP_NAME;
-const DEFAULT_GAME_CONFIG: GameConfigType = {
-  id: `${CONFIG.APP_NAME}-game-config`,
-  players: [],
-  gameMode: "word",
-  category: "animals",
-  gameSetting: {
-    imposterCount: 1,
-    turnTimer: 5,
-    durationTimer: 120,
-    canImposterGetHint: false,
-  },
-  word: null,
-  question: null,
-  roundCount: 3,
-  imposterId: "",
-};
 
 const noop = () => undefined;
 

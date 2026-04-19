@@ -10,6 +10,8 @@ import type { ReactNode } from "react";
 
 export type GameType = "word" | "question";
 
+export type TimerModeType = "turn" | "duration";
+
 export type PlayerType = {
   id: string;
   name: string;
@@ -65,6 +67,7 @@ export type SvgAssetType = {
 
 export type RoleCardType = {
   currentPlayer: PlayerType;
+  gameMode: GameType;
   revealContent: string;
   revealImageId?: string;
   imposterId: string;
@@ -105,6 +108,7 @@ export type AudioSettingsContextType = AudioSettingsType & {
 
 export type GameSettingType = {
   imposterCount: number;
+  timerMode: TimerModeType;
   turnTimer: number;
   durationTimer: number;
   canImposterGetHint: boolean;
@@ -134,9 +138,13 @@ export type GameConfigType = {
   question: QuestionType | null;
   roundCount: number;
   imposterId: string;
+  roleRevealTime: number;
 };
 
-export type GameConfigPatchType = Partial<GameConfigType> & {
+export type GameConfigPatchType = Omit<
+  Partial<GameConfigType>,
+  "gameSetting"
+> & {
   gameSetting?: Partial<GameSettingType>;
 };
 

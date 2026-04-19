@@ -12,17 +12,64 @@ import GameInfo from "@/features/game-setting/components/game-info";
 import ImposterCounter from "@/features/game-setting/components/imposter-counter";
 import TimerMode from "@/features/game-setting/components/timer-mode";
 import ToggleImposterHint from "@/features/game-setting/components/toggle-imposter-hint";
+import {
+  getRandomQuestionByCategory,
+  getRandomWordByCategory,
+} from "@/features/game-setting/lib/get-random-item";
+import { AVATAR_IDS } from "@/features/role-reveal/lib/avatar";
+import { shuffleArray } from "@/features/role-reveal/lib/shuffle";
+import { useGameConfig } from "@/hooks/use-game-config";
+
+import Loading from "./loading";
 
 export default function GameSetting() {
+  const { config, loading, updateGameConfig } = useGameConfig();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const openConfirmModal = () => setShowConfirmModal(true);
   const closeConfirmModal = () => setShowConfirmModal(false);
 
   const handleStartGame = () => {
+    if (!config.players.length) {
+      closeConfirmModal();
+      return;
+    }
+
+    const shuffledAvatarIds = shuffleArray([...AVATAR_IDS]);
+    const playersWithAvatars = config.players.map((player, index) => ({
+      ...player,
+      imageId: shuffledAvatarIds[index % shuffledAvatarIds.length],
+    }));
+
+    const randomImposterId =
+      playersWithAvatars[Math.floor(Math.random() * playersWithAvatars.length)]
+        ?.id ?? "";
+
+    const randomWord = getRandomWordByCategory(config.category);
+    const randomQuestion = getRandomQuestionByCategory(config.category);
+
+    if (config.gameMode === "word" && randomWord) {
+      closeConfirmModal();
+      return;
+    }
+
+    if (config.gameMode === "question" && !randomQuestion) {
+      closeConfirmModal();
+      return;
+    }
+
+    updateGameConfig({
+      players: playersWithAvatars,
+      imposterId: randomImposterId,
+      word: config.gameMode === "word" ? randomWord : null,
+      question: config.gameMode === "question" ? randomQuestion : null,
+    });
+
     closeConfirmModal();
-    router.push(CONFIG.ROLE_REVEAL);
+    router.replace(CONFIG.ROLE_REVEAL);
   };
+
+  if (loading) return <Loading />;
 
   return (
     <ThemedView className="flex-1">
