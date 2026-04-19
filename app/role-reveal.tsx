@@ -20,7 +20,6 @@ import Loading from "./loading";
 
 export default function RoleRevel() {
   const { config, loading } = useGameConfig();
-  console.log("config", config);
 
   const players = config.players;
   const { playClickSound } = useAudioSettings();
