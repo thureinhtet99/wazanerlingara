@@ -4,6 +4,7 @@ import { ThemedText } from "@/components/themed-text";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import { SvgKey, svg } from "@/constants/icons";
 import { ThemeTokens } from "@/constants/theme";
+import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { RoleCardType } from "@/types/index.types";
 
 export default function RoleCard({
@@ -21,6 +22,7 @@ export default function RoleCard({
   handleClickCard,
   handleReveal,
 }: RoleCardType) {
+  const { playClickSound } = useAudioSettings();
   const shouldDimCard = timeLeft <= 0 || confirmed;
   const canReveal = timeLeft > 0 && !confirmed;
   const avatarKey = currentPlayer?.imageId as SvgKey | null;
@@ -30,13 +32,12 @@ export default function RoleCard({
   return (
     <View
       key={currentPlayer.id}
-      className={`flex-1 items-center justify-center max-h-[500px] ${shouldDimCard ? "opacity-65" : ""}`}
+      className="flex-1 items-center justify-center max-h-[500px]"
     >
       <View
-        className="flex-1 w-[340px] rounded-3xl border border-white/5 bg-black p-2"
+        className={`flex-1 w-[340px] rounded-3xl border border-white/5 bg-black p-2 ${shouldDimCard ? "opacity-35" : ""}`}
         style={{ shadowColor: "white", elevation: 8 }}
       >
-        {/* TODO */}
         {!revealed ? (
           <Pressable
             tabIndex={0}
@@ -48,6 +49,7 @@ export default function RoleCard({
               }
 
               handleClickCard();
+              playClickSound();
             }}
             className="relative flex-1 items-center justify-between rounded-3xl px-4 py-10 border border-white/40"
           >

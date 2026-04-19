@@ -15,7 +15,11 @@ export const CONFIG = {
   SETTING: "/setting",
   GAME_SETTING: "/game-setting",
   ROLE_REVEAL: "/role-reveal",
-  PLAY: "/play",
+  SPINNER_SCREEN: "/spinner-screen",
+  GAME_PLAY: "/game-play",
+  VOTE: "/vote",
+  PRIVACY: "/privacy",
+  CONTACT: "/contact",
   HOW_TO_PLAY: "/how-to-play",
 } as const;
 

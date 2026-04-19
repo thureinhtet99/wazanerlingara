@@ -17,7 +17,7 @@ export default function InstructionText({
             ကိုယ့်roleကို ကြည့်ဖို့ ကတ်ကို ထိပါ။
           </ThemedText>
           <ThemedText type="description" className="text-center leading-8">
-            အချိန် {changeToMMNumber(DEFAULT_GAME_CONFIG.roleRevealTime)}{" "}
+            အချိန် ({changeToMMNumber(DEFAULT_GAME_CONFIG.roleRevealTime)})
             စက္ကန့်သာ ရပါမယ်။ ပြန်ကြည့်ခွင့်မရှိပါ။
           </ThemedText>
         </>

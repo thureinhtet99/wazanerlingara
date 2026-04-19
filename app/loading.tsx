@@ -21,7 +21,7 @@ export default function Loading() {
     <ThemedView className="flex-1 items-center justify-center">
       <Animated.View>
         <ThemedText type="title" className="text-center">
-          Loading{dots}
+          Loading {dots}
         </ThemedText>
       </Animated.View>
     </ThemedView>

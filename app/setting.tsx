@@ -43,13 +43,13 @@ const SETTING_ITEMS: SettingType[] = [
     id: "privacy",
     label: "ဥပဒေရေးရာနှင့် ကိုယ်ရေးလုံခြုံမှု",
     icon: require("@/assets/svg/incognito-icon.svg"),
-    route: "/privacy",
+    route: CONFIG.PRIVACY,
   },
   {
     id: "chat",
     label: "ဆက်သွယ်ရန်",
     icon: require("@/assets/svg/chat-icon.svg"),
-    route: "/contact",
+    route: CONFIG.CONTACT,
   },
 ];
 

@@ -4,10 +4,13 @@ import { Pressable, View } from "react-native";
 import { ThemedText } from "@/components/themed-text";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import { ThemeTokens } from "@/constants/theme";
+import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { useGameConfig } from "@/hooks/use-game-config";
 
 export default function TimerMode() {
   const { config, updateGameConfig } = useGameConfig();
+  const { playClickSound } = useAudioSettings();
+
   const [pressedButton, setPressedButton] = useState<
     "increase" | "decrease" | null
   >(null);
@@ -49,10 +52,12 @@ export default function TimerMode() {
 
   const increaseTimer = () => {
     if (timerValue < max) setTimer(timerValue + step);
+    playClickSound();
   };
 
   const decreaseTimer = () => {
     if (timerValue > min) setTimer(timerValue - step);
+    playClickSound();
   };
 
   const formatTimerValue = () => {
@@ -76,13 +81,14 @@ export default function TimerMode() {
 
       <View className="mb-6 flex-row items-center gap-1 rounded-2xl border border-white p-1">
         <Pressable
-          onPress={() =>
+          onPress={() => {
             updateGameConfig({
               gameSetting: {
                 timerMode: "turn",
               },
-            })
-          }
+            });
+            playClickSound();
+          }}
           className={`flex-1 px-3 py-4 flex-row items-center justify-center gap-1 rounded-2xl ${isTurn ? "bg-white" : "bg-transparent"}`}
         >
           <SvgAsset
@@ -102,13 +108,14 @@ export default function TimerMode() {
         </Pressable>
 
         <Pressable
-          onPress={() =>
+          onPress={() => {
             updateGameConfig({
               gameSetting: {
                 timerMode: "duration",
               },
-            })
-          }
+            });
+            playClickSound();
+          }}
           className={`flex-1 px-3 py-4 flex-row items-center justify-center gap-3 rounded-2xl ${!isTurn ? "bg-white" : "bg-transparent"}`}
         >
           <SvgAsset
@@ -217,8 +224,8 @@ export default function TimerMode() {
             className="flex-1"
           >
             {isTurn
-              ? "ကစားသမား တစ်ယောက်ချင်းစီအတွက် (ဥပမာ- စက္ကန့်၃၀စီ) ညီတူညီမျှ အချိန်ရပါမယ်။ ကိုယ့်အလှည့်ပြီးရင် နောက်တစ်ယောက်အတွက် Timerအသစ် ပြန်စပါမယ်။"
-              : "ကစားပွဲတစ်ခုလုံးအတွက် အချိန်တစ်ခုပဲ ရှိပါမယ် (ဥပမာ - ၃မိနစ်)။ သတ်မှတ်ထားတဲ့ အချိန်အတွင်းမှာပဲ အားလုံး တလှည့်စီ ကစားရမှာဖြစ်ပြီး၊ အချင်းချင်း ဆွေးနွေးငြင်းခုံချင်တယ်ဆိုရင်တော့ Timer ကိုခေတ္တရပ် (Pause)နိုင်ပါတယ်။"}
+              ? "ကစားသမား တစ်ယောက်ချင်းစီအတွက် (ဥပမာ- စက္ကန့် ၃၀ စီ) ညီတူညီမျှ အချိန်ရပါမယ်။ ကိုယ့်အလှည့်ပြီးရင် နောက်တစ်ယောက်အတွက် Timerအသစ် ပြန်စပါမယ်။"
+              : "ကစားပွဲတစ်ခုလုံးအတွက် အချိန်တစ်ခုပဲ ရှိပါမယ် (ဥပမာ- ၃ မိနစ်)။ သတ်မှတ်ထားတဲ့ အချိန်အတွင်းမှာပဲ အားလုံး တလှည့်စီ ကစားရမှာဖြစ်ပြီး၊ အချင်းချင်း ဆွေးနွေးငြင်းခုံချင်တယ်ဆိုရင်တော့ Timer ကိုခေတ္တရပ် (Pause) နိုင်ပါတယ်။"}
           </ThemedText>
         </View>
       </View>

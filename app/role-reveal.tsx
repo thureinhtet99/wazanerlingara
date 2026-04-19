@@ -1,6 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { Link, router } from "expo-router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BackHandler } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
@@ -13,6 +13,10 @@ import Timer from "@/features/role-reveal/components/timer";
 import { useRoleReveal } from "@/features/role-reveal/hooks/use-role-reveal";
 import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { useGameConfig } from "@/hooks/use-game-config";
+import {
+  registerGoToNextPlayer,
+  resetGoToNextPlayer,
+} from "@/hooks/use-spinner-next-player";
 
 import RoleCard from "../features/role-reveal/components/role-card";
 
@@ -59,6 +63,13 @@ export default function RoleRevel() {
     handleReveal,
     goToNextPlayer,
   } = useRoleReveal(players);
+
+  useEffect(() => {
+    registerGoToNextPlayer(goToNextPlayer);
+    return () => {
+      resetGoToNextPlayer();
+    };
+  }, [goToNextPlayer]);
 
   const canProceedNext = timeLeft <= 0 && confirmed;
 
@@ -140,7 +151,7 @@ export default function RoleRevel() {
         playersLength={playerCount}
         nextPlayerName={nextPlayer?.name || ""}
         canProceedNext={canProceedNext}
-        handleClickNext={goToNextPlayer}
+        // handleClickNext={goToNextPlayer}
       />
 
       <NotificationModal
