@@ -3,10 +3,12 @@ import { Image, Pressable, View } from "react-native";
 import { ThemedText } from "@/components/themed-text";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import { SvgKey, svg } from "@/constants/icons";
+import { ThemeTokens } from "@/constants/theme";
 import { RoleCardType } from "@/types/index.types";
 
 export default function RoleCard({
   currentPlayer,
+  gameMode,
   revealContent,
   revealImageId,
   imposterId,
@@ -28,14 +30,14 @@ export default function RoleCard({
   return (
     <View
       key={currentPlayer.id}
-      className={`flex-1 items-center justify-center max-h-[480px] ${shouldDimCard ? "opacity-55" : ""}`}
+      className={`flex-1 items-center justify-center max-h-[500px] ${shouldDimCard ? "opacity-65" : ""}`}
     >
       <View
         className="flex-1 w-[340px] rounded-3xl border border-white/5 bg-black p-2"
         style={{ shadowColor: "white", elevation: 8 }}
       >
         {/* TODO */}
-        {revealed ? (
+        {!revealed ? (
           <Pressable
             tabIndex={0}
             disabled={!canReveal}
@@ -80,17 +82,21 @@ export default function RoleCard({
             <View className="gap-2">
               {currentPlayer.id !== imposterId && (
                 <ThemedText type="description" className="text-center">
-                  လျှို့ဝှက်စကားလုံး
+                  {gameMode === "question"
+                    ? "လျှို့ဝှက်မေးခွန်း"
+                    : "လျှို့ဝှက်စကားလုံး"}
                 </ThemedText>
               )}
 
               <ThemedText
                 type="title"
-                className={`text-center ${
-                  currentPlayer.id === imposterId
-                    ? "text-red-500"
-                    : "text-white"
-                }`}
+                className="text-center"
+                style={{
+                  color:
+                    currentPlayer.id === imposterId
+                      ? ThemeTokens.ui.danger
+                      : ThemeTokens.ui.white,
+                }}
               >
                 {currentPlayer.id === imposterId
                   ? "Imposter"
@@ -98,8 +104,8 @@ export default function RoleCard({
               </ThemedText>
 
               {currentPlayer.id === imposterId && imposterCanGetHint && hint ? (
-                <ThemedText className="mt-3 text-center text-[16px] text-white/85">
-                  hint - {hint}
+                <ThemedText type="subtitle" className="mt-3 text-center">
+                  Hint: {hint}
                 </ThemedText>
               ) : null}
             </View>

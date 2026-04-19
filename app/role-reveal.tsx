@@ -20,6 +20,8 @@ import Loading from "./loading";
 
 export default function RoleRevel() {
   const { config, loading } = useGameConfig();
+  console.log("config", config);
+
   const players = config.players;
   const { playClickSound } = useAudioSettings();
 
@@ -120,6 +122,7 @@ export default function RoleRevel() {
 
       <RoleCard
         currentPlayer={currentPlayer}
+        gameMode={gameMode}
         revealed={revealed}
         showBlur={showBlur}
         confirmed={confirmed}

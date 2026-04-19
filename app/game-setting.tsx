@@ -12,6 +12,10 @@ import GameInfo from "@/features/game-setting/components/game-info";
 import ImposterCounter from "@/features/game-setting/components/imposter-counter";
 import TimerMode from "@/features/game-setting/components/timer-mode";
 import ToggleImposterHint from "@/features/game-setting/components/toggle-imposter-hint";
+import {
+  getRandomQuestionByCategory,
+  getRandomWordByCategory,
+} from "@/features/game-setting/lib/get-random-item";
 import { AVATAR_IDS } from "@/features/role-reveal/lib/avatar";
 import { shuffleArray } from "@/features/role-reveal/lib/shuffle";
 import { useGameConfig } from "@/hooks/use-game-config";
@@ -41,9 +45,24 @@ export default function GameSetting() {
       playersWithAvatars[Math.floor(Math.random() * playersWithAvatars.length)]
         ?.id ?? "";
 
+    const randomWord = getRandomWordByCategory(config.category);
+    const randomQuestion = getRandomQuestionByCategory(config.category);
+
+    if (config.gameMode === "word" && randomWord) {
+      closeConfirmModal();
+      return;
+    }
+
+    if (config.gameMode === "question" && !randomQuestion) {
+      closeConfirmModal();
+      return;
+    }
+
     updateGameConfig({
       players: playersWithAvatars,
       imposterId: randomImposterId,
+      word: config.gameMode === "word" ? randomWord : null,
+      question: config.gameMode === "question" ? randomQuestion : null,
     });
 
     closeConfirmModal();

@@ -2,8 +2,9 @@ import { Pressable, View } from "react-native";
 
 import Progress from "@/components/ui/progress";
 import { SvgAsset } from "@/components/ui/svg-asset";
+import { DEFAULT_GAME_CONFIG } from "@/constants/config";
 
-const ROLE_REVEAL_TIME_SECONDS = 10;
+const ROLE_REVEAL_TIME_SECONDS = DEFAULT_GAME_CONFIG.roleRevealTime;
 
 export default function Timer({
   timeLeft,
@@ -18,8 +19,6 @@ export default function Timer({
     0,
     Math.min(100, (timeLeft / ROLE_REVEAL_TIME_SECONDS) * 100),
   );
-
-  console.log("progressPercent", progressPercent);
 
   return (
     <View className="w-full">
