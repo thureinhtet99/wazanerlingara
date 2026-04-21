@@ -111,7 +111,6 @@ export default function RoleCard({
                 </ThemedText>
               ) : null}
             </View>
-
             <Image
               source={
                 currentPlayer.id === imposterId

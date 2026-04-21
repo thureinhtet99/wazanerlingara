@@ -12,7 +12,7 @@ export default function InstructionText({
   nextPlayerName,
 }: Props) {
   return (
-    <View className="gap-3">
+    <View className="gap-3 mx-auto max-w-[400px]">
       {!isLastPlayer ? (
         <ThemedText type="description" className="text-center">
           ပြောပြီးတာနဲ့ နောက်တစ်ယောက်အလှည့် ({nextPlayerName}) အတွက် ခလုတ်ကို

@@ -9,7 +9,7 @@ import { CONFIG } from "@/constants/config";
 import { callGoToNextPlayer } from "@/hooks/use-spinner-next-player";
 import { changeToMMNumber } from "@/lib/change-to-mm-number";
 
-const SPINNER_DURATION = 4;
+const SPINNER_DURATION = 3;
 const CIRCLE_RADIUS = 140;
 const CIRCLE_CIRCUMFERENCE = 2 * Math.PI * CIRCLE_RADIUS;
 
@@ -52,7 +52,7 @@ export default function SpinnerScreen() {
       const progress = Math.min(elapsed / SPINNER_DURATION, 1);
 
       setArcProgress(progress);
-      setTimeLeft(Math.max(SPINNER_DURATION - Math.ceil(elapsed), 0));
+      setTimeLeft(Math.max(SPINNER_DURATION - Math.floor(elapsed), 0));
 
       if (progress < 1) {
         animationFrameRef.current = requestAnimationFrame(animate);
@@ -84,7 +84,7 @@ export default function SpinnerScreen() {
   }, [arcProgress, params.mode, router]);
 
   return (
-    <ThemedView className="flex-1 items-center justify-center gap-16">
+    <ThemedView className="flex-1 items-center justify-center gap-10">
       <ThemedText type="subtitle" className="text-center">
         {params.mode === "next-player"
           ? `ဖုန်းကို “${nextPlayerName || "နောက်သူ"}”ဆီ ကမ်းပေးပါ`

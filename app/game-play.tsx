@@ -235,7 +235,7 @@ export default function GamePlay() {
         />
       </View>
 
-      <View className="mt-auto gap-8 w-full">
+      <View className="mt-auto gap-4 w-full">
         {timerMode === "turn" && (
           <InstructionText
             isLastPlayer={isLastPlayer}

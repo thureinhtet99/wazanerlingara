@@ -42,18 +42,20 @@ export default function NextSection({
     <View className="mx-auto gap-8 w-full">
       <InstructionText canProceedNext={canProceedNext} />
 
-      {!isLastPlayer && canProceedNext ? (
-        <ThemedText type="subtitle" className="text-center">
-          နောက်တစ်ယောက် - {nextPlayerName}
-        </ThemedText>
-      ) : null}
+      <View className="gap-2">
+        {!isLastPlayer && canProceedNext ? (
+          <ThemedText type="description" className="text-center">
+            နောက်တစ်ယောက်: {nextPlayerName}
+          </ThemedText>
+        ) : null}
 
-      <Button
-        disabled={!canProceedNext}
-        onPress={!isLastPlayer ? handleNavigateSpinner : handleGamePlay}
-      >
-        <ThemedText type="subtitle">{buttonLabel}</ThemedText>
-      </Button>
+        <Button
+          disabled={!canProceedNext}
+          onPress={!isLastPlayer ? handleNavigateSpinner : handleGamePlay}
+        >
+          <ThemedText type="subtitle">{buttonLabel}</ThemedText>
+        </Button>
+      </View>
     </View>
   );
 }
