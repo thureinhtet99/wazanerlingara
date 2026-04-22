@@ -1,21 +1,16 @@
-import {
-  ImageSourcePropType,
-  type StyleProp,
-  type ViewStyle,
-} from "react-native";
+import { type StyleProp, type ViewStyle } from "react-native";
 
 import type { SvgKey } from "@/constants/icons";
 
 import type { ReactNode } from "react";
 
 export type GameType = "word" | "question";
-
 export type TimerModeType = "turn" | "duration";
 
 export type PlayerType = {
   id: string;
   name: string;
-  imageId: string | null;
+  image: string | null;
 };
 
 export type ModeType = {
@@ -54,7 +49,7 @@ export type CategoryType =
 export type CategoryCardType = {
   type: CategoryType;
   title: string;
-  image: ImageSourcePropType;
+  image: string;
 };
 
 export type SvgAssetType = {
@@ -69,7 +64,7 @@ export type RoleCardType = {
   currentPlayer: PlayerType;
   gameMode: GameType;
   revealContent: string;
-  revealImageId?: string;
+  revealImage?: string;
   imposterId: string;
   imposterCanGetHint: boolean;
   hint: string;
@@ -117,13 +112,13 @@ export type GameSettingType = {
 export type WordType = {
   id: string;
   text: string;
-  imageId: string | null;
+  image: string | null;
   hint: string;
 };
 export type QuestionType = {
   id: string;
   text: string;
-  imageId: string | null;
+  image: string | null;
   hint: string;
 };
 

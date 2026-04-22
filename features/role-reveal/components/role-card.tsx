@@ -2,7 +2,7 @@ import { Image, Pressable, View } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
 import { SvgAsset } from "@/components/ui/svg-asset";
-import { SvgKey, svg } from "@/constants/icons";
+import { ImageKey, images } from "@/constants/icons";
 import { ThemeTokens } from "@/constants/theme";
 import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { RoleCardType } from "@/types/index.types";
@@ -11,7 +11,7 @@ export default function RoleCard({
   currentPlayer,
   gameMode,
   revealContent,
-  revealImageId,
+  revealImage,
   imposterId,
   imposterCanGetHint,
   hint,
@@ -25,9 +25,8 @@ export default function RoleCard({
   const { playClickSound } = useAudioSettings();
   const shouldDimCard = timeLeft <= 0 || confirmed;
   const canReveal = timeLeft > 0 && !confirmed;
-  const avatarKey = currentPlayer?.imageId as SvgKey | null;
-  const playerAvatarSource =
-    avatarKey && avatarKey in svg ? svg[avatarKey] : svg.avatar1;
+  const imageKey = currentPlayer?.image as ImageKey | null;
+  const playerAvatarSource = imageKey ? images[imageKey] : images.avatar1;
 
   return (
     <View
@@ -115,7 +114,7 @@ export default function RoleCard({
               source={
                 currentPlayer.id === imposterId
                   ? require("@/assets/images/avatar/imposter.png")
-                  : revealImageId || playerAvatarSource
+                  : revealImage || playerAvatarSource
               }
               width={300}
               height={330}

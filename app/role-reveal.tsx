@@ -41,10 +41,10 @@ export default function RoleRevel() {
     gameMode === "word"
       ? (config.word?.text ?? "")
       : (config.question?.text ?? "");
-  const revealImageId =
+  const revealImage =
     gameMode === "word"
-      ? (config.word?.imageId ?? undefined)
-      : (config.question?.imageId ?? undefined);
+      ? (config.word?.image ?? undefined)
+      : (config.question?.image ?? undefined);
   const hint =
     gameMode === "word"
       ? (config.word?.hint ?? "")
@@ -140,7 +140,7 @@ export default function RoleRevel() {
         handleClickCard={handleClickCard}
         handleReveal={handleReveal}
         revealContent={revealContent}
-        revealImageId={revealImageId}
+        revealImage={revealImage}
         imposterId={imposterId!}
         imposterCanGetHint={config.gameSetting.canImposterGetHint}
         hint={hint}

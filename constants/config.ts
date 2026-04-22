@@ -18,6 +18,7 @@ export const CONFIG = {
   SPINNER_SCREEN: "/spinner-screen",
   GAME_PLAY: "/game-play",
   VOTE: "/vote",
+  VOTE_RESULT: "/vote-result",
   PRIVACY: "/privacy",
   CONTACT: "/contact",
   HOW_TO_PLAY: "/how-to-play",
