@@ -27,6 +27,7 @@ import country from "@/assets/images/countries.png";
 import food from "@/assets/images/foods.png";
 import history from "@/assets/images/histories.png";
 import imagination from "@/assets/images/imaginations.png";
+import imposterWin from "@/assets/images/imposter-win.png";
 import job from "@/assets/images/jobs.png";
 import movie from "@/assets/images/movies.png";
 import nature from "@/assets/images/natures.png";
@@ -34,6 +35,7 @@ import place from "@/assets/images/places.png";
 import questionMode from "@/assets/images/question-mode.png";
 import sport from "@/assets/images/sports.png";
 import supe from "@/assets/images/supes.png";
+import teammateWin from "@/assets/images/teammates-win.png";
 import tech from "@/assets/images/techs.png";
 import wordMode from "@/assets/images/word-mode.png";
 import backButtonSvg from "@/assets/svg/back-button.svg";
@@ -52,8 +54,25 @@ import speakerSvg from "@/assets/svg/speaker-icon.svg";
 import timerSvg from "@/assets/svg/timer.svg";
 import wazanerlingaraSvg from "@/assets/svg/wazanerlingara.svg";
 
-export const svg = {
-  animals,
+export const svgs = {
+  backButtonSvg,
+  incognitoIconSvg,
+  infoAlertSvg,
+  lightBulbSvg,
+  logoSvg,
+  musicIconSvg,
+  peopleFillSvg,
+  playIconSvg,
+  plusCircleSvg,
+  profileSvg,
+  questionMarkSvg,
+  settingSvg,
+  speakerSvg,
+  timerSvg,
+  wazanerlingaraSvg,
+} as const;
+
+export const images = {
   avatar1,
   avatar2,
   avatar3,
@@ -78,34 +97,23 @@ export const svg = {
   avatar22,
   avatar23,
   avatar24,
-  backButtonSvg,
+  place,
+  nature,
+  wordMode,
+  questionMode,
+  movie,
+  sport,
+  supe,
+  tech,
+  animals,
   country,
   food,
   history,
   imagination,
-  incognitoIconSvg,
-  infoAlertSvg,
   job,
-  lightBulbSvg,
-  place,
-  logoSvg,
-  wordMode,
-  movie,
-  musicIconSvg,
-  nature,
-  peopleFillSvg,
-  playIconSvg,
-  plusCircleSvg,
-  profileSvg,
-  questionMarkSvg,
-  questionMode,
-  settingSvg,
-  speakerSvg,
-  sport,
-  supe,
-  tech,
-  timerSvg,
-  wazanerlingaraSvg,
+  imposterWin,
+  teammateWin,
 } as const;
 
-export type SvgKey = keyof typeof svg;
+export type SvgKey = keyof typeof svgs;
+export type ImageKey = keyof typeof images;

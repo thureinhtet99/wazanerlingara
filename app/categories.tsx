@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import { useState } from "react";
-import { ScrollView, View } from "react-native";
+import { FlatList, View } from "react-native";
 
 import BackButton from "@/components/back-button";
 import { ThemedText } from "@/components/themed-text";
@@ -47,23 +47,24 @@ export default function ChooseCategories() {
         <ThemedText type="title">ရွေးချယ်စရာများ</ThemedText>
       </View>
 
-      <ScrollView
+      <FlatList
         className="flex-1"
         contentContainerClassName="pb-10"
+        data={CATEGORIES}
+        numColumns={2}
+        columnWrapperStyle={{ justifyContent: "space-between" }}
+        keyExtractor={(item) => item.type}
+        renderItem={({ item }) => (
+          <View className="mb-4 w-[48%]">
+            <CategoryCard
+              category={item}
+              isSelected={item.type === category}
+              handleClick={handleClick}
+            />
+          </View>
+        )}
         showsVerticalScrollIndicator={false}
-      >
-        <View className="flex-row flex-wrap justify-between gap-4">
-          {CATEGORIES.map((item) => (
-            <View key={item.type} className="w-[48%]">
-              <CategoryCard
-                category={item}
-                isSelected={item.type === category}
-                handleClick={handleClick}
-              />
-            </View>
-          ))}
-        </View>
-      </ScrollView>
+      />
 
       <View className="mt-auto pt-6">
         <Button onPress={handleGameForward} disabled={!category}>
