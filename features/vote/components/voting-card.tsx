@@ -1,6 +1,7 @@
 import { Image, Pressable } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
+import { ImageKey, images } from "@/constants/icons";
 import { cn } from "@/lib/util";
 import { PlayerType } from "@/types/index.types";
 
@@ -13,18 +14,27 @@ export default function VotingCard({
   isSelected: boolean;
   handleClick: (id: string) => void;
 }) {
+  const imageKey = (player.imageId ?? player.image ?? "") as ImageKey;
+  const playerAvatarSource = images[imageKey] ?? images.avatar1;
+
   return (
     <Pressable
       onPress={() => handleClick(player.id)}
       aria-pressed={isSelected}
       className={cn(
-        "w-full border border-white flex flex-col rounded-2xl items-center justify-center pb-2",
+        "w-full border border-white flex flex-col rounded-2xl items-center justify-center overflow-hidden gap-2 py-4",
         isSelected && "border-4",
       )}
     >
-      <Image source={player.image} width={140} height={140} alt={player.name} />
+      <Image
+        source={playerAvatarSource}
+        width={140}
+        height={140}
+        alt={player.name}
+        resizeMode="contain"
+      />
 
-      <ThemedText type="subtitle">{player.name}</ThemedText>
+      <ThemedText type="description">{player.name}</ThemedText>
     </Pressable>
   );
 }

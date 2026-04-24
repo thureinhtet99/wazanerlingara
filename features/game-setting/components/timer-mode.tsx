@@ -116,7 +116,7 @@ export default function TimerMode() {
             });
             playClickSound();
           }}
-          className={`flex-1 px-3 py-4 flex-row items-center justify-center gap-3 rounded-2xl ${!isTurn ? "bg-white" : "bg-transparent"}`}
+          className={`flex-1 px-3 py-4 flex-row items-center justify-center gap-2 rounded-2xl ${!isTurn ? "bg-white" : "bg-transparent"}`}
         >
           <SvgAsset
             source={require("@/assets/svg/people-fill.svg")}

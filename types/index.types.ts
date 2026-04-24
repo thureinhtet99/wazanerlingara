@@ -10,6 +10,7 @@ export type PlayerType = {
   id: string;
   name: string;
   image: string | null;
+  imageId?: string;
 };
 
 export type ModeType = {
@@ -68,7 +69,7 @@ export type RoleCardType = {
   gameMode: GameType;
   revealContent: string;
   revealImage?: string;
-  imposterId: string;
+  imposterIds: string[];
   imposterCanGetHint: boolean;
   hint: string;
   showBlur: boolean;
@@ -135,7 +136,7 @@ export type GameConfigType = {
   word: WordType | null;
   question: QuestionType | null;
   roundCount: number;
-  imposterId: string;
+  imposterIds: string[];
   roleRevealTime: number;
 };
 

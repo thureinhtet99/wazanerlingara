@@ -1,3 +1,5 @@
+import jimCarreyDance from "@/assets/gif/jim-carrey-dance.gif";
+import laughInEvil from "@/assets/gif/laugh-in-evil.gif";
 import animals from "@/assets/images/animals.png";
 import avatar1 from "@/assets/images/avatar/avatar-1.png";
 import avatar10 from "@/assets/images/avatar/avatar-10.png";
@@ -27,7 +29,6 @@ import country from "@/assets/images/countries.png";
 import food from "@/assets/images/foods.png";
 import history from "@/assets/images/histories.png";
 import imagination from "@/assets/images/imaginations.png";
-import imposterWin from "@/assets/images/imposter-win.png";
 import job from "@/assets/images/jobs.png";
 import movie from "@/assets/images/movies.png";
 import nature from "@/assets/images/natures.png";
@@ -35,7 +36,6 @@ import place from "@/assets/images/places.png";
 import questionMode from "@/assets/images/question-mode.png";
 import sport from "@/assets/images/sports.png";
 import supe from "@/assets/images/supes.png";
-import teammateWin from "@/assets/images/teammates-win.png";
 import tech from "@/assets/images/techs.png";
 import wordMode from "@/assets/images/word-mode.png";
 import backButtonSvg from "@/assets/svg/back-button.svg";
@@ -111,8 +111,8 @@ export const images = {
   history,
   imagination,
   job,
-  imposterWin,
-  teammateWin,
+  laughInEvil,
+  jimCarreyDance,
 } as const;
 
 export type SvgKey = keyof typeof svgs;

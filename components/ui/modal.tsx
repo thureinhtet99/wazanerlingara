@@ -12,7 +12,7 @@ import { cn } from "@/lib/util";
 
 export type AppModalProps = {
   visible: boolean;
-  variant: "success" | "error";
+  variant: "success" | "error" | (string & {});
   title?: string;
   message?: string;
   primaryButtonText?: string;
@@ -34,10 +34,13 @@ export default function Modal({
   modalProps,
 }: AppModalProps) {
   const isSuccess = variant === "success";
+  const isError = variant === "error";
   const borderColor = isSuccess ? "border-green-500" : "border-red-500";
   const titleColor = isSuccess
     ? ThemeTokens.palette.success[500]
-    : ThemeTokens.ui.danger;
+    : isError
+      ? ThemeTokens.ui.danger
+      : ThemeTokens.ui.white;
 
   return (
     <RNModal
@@ -56,9 +59,8 @@ export default function Modal({
           <View className="mb-6 flex-col items-center justify-center gap-2">
             <ThemedText
               type="title"
-              className="text-center"
-              lightColor={titleColor}
-              darkColor={titleColor}
+              className="text-center max-w-[380px]"
+              style={{ color: titleColor }}
             >
               {title}
             </ThemedText>

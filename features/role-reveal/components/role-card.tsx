@@ -5,6 +5,7 @@ import { SvgAsset } from "@/components/ui/svg-asset";
 import { ImageKey, images } from "@/constants/icons";
 import { ThemeTokens } from "@/constants/theme";
 import { useAudioSettings } from "@/hooks/use-audio-settings";
+import { isImposter } from "@/lib/imposter";
 import { RoleCardType } from "@/types/index.types";
 
 export default function RoleCard({
@@ -12,7 +13,7 @@ export default function RoleCard({
   gameMode,
   revealContent,
   revealImage,
-  imposterId,
+  imposterIds,
   imposterCanGetHint,
   hint,
   showBlur,
@@ -27,6 +28,7 @@ export default function RoleCard({
   const canReveal = timeLeft > 0 && !confirmed;
   const imageKey = currentPlayer?.image as ImageKey | null;
   const playerAvatarSource = imageKey ? images[imageKey] : images.avatar1;
+  const playerIsImposter = isImposter(currentPlayer.id, imposterIds);
 
   return (
     <View
@@ -81,7 +83,7 @@ export default function RoleCard({
         ) : (
           <View className="flex-1 flex-col items-center justify-center gap-8 rounded-3xl bg-black px-4">
             <View className="gap-2">
-              {currentPlayer.id !== imposterId && (
+              {!playerIsImposter && (
                 <ThemedText type="description" className="text-center">
                   {gameMode === "question"
                     ? "လျှို့ဝှက်မေးခွန်း"
@@ -93,18 +95,15 @@ export default function RoleCard({
                 type="title"
                 className="text-center"
                 style={{
-                  color:
-                    currentPlayer.id === imposterId
-                      ? ThemeTokens.ui.danger
-                      : ThemeTokens.ui.white,
+                  color: playerIsImposter
+                    ? ThemeTokens.ui.danger
+                    : ThemeTokens.ui.white,
                 }}
               >
-                {currentPlayer.id === imposterId
-                  ? "Imposter"
-                  : revealContent || "Secret"}
+                {playerIsImposter ? "Imposter" : revealContent || "Secret"}
               </ThemedText>
 
-              {currentPlayer.id === imposterId && imposterCanGetHint && hint ? (
+              {playerIsImposter && imposterCanGetHint && hint ? (
                 <ThemedText type="subtitle" className="mt-3 text-center">
                   Hint: {hint}
                 </ThemedText>
@@ -112,7 +111,7 @@ export default function RoleCard({
             </View>
             <Image
               source={
-                currentPlayer.id === imposterId
+                playerIsImposter
                   ? require("@/assets/images/avatar/imposter.png")
                   : revealImage || playerAvatarSource
               }

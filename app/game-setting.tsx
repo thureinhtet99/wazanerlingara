@@ -19,6 +19,7 @@ import {
 import { AVATAR_IDS } from "@/features/role-reveal/lib/avatar";
 import { shuffleArray } from "@/features/role-reveal/lib/shuffle";
 import { useGameConfig } from "@/hooks/use-game-config";
+import { getAllowedImposterCount, pickRandomImposterIds } from "@/lib/imposter";
 
 import Loading from "./loading";
 
@@ -42,9 +43,14 @@ export default function GameSetting() {
       imageId: shuffledAvatarIds[index % shuffledAvatarIds.length],
     }));
 
-    const randomImposterId =
-      playersWithAvatars[Math.floor(Math.random() * playersWithAvatars.length)]
-        ?.id ?? "";
+    const effectiveImposterCount = getAllowedImposterCount(
+      playersWithAvatars.length,
+      config.gameSetting.imposterCount,
+    );
+    const randomImposterIds = pickRandomImposterIds(
+      playersWithAvatars,
+      effectiveImposterCount,
+    );
 
     const randomWord = getRandomWordByCategory(config.category);
     const randomQuestion = getRandomQuestionByCategory(config.category);
@@ -61,7 +67,10 @@ export default function GameSetting() {
 
     updateGameConfig({
       players: playersWithAvatars,
-      imposterId: randomImposterId,
+      imposterIds: randomImposterIds,
+      gameSetting: {
+        imposterCount: effectiveImposterCount,
+      },
       word: config.gameMode === "word" ? randomWord : null,
       question: config.gameMode === "question" ? randomQuestion : null,
     });

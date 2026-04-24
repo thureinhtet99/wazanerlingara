@@ -22,6 +22,7 @@ export const CONFIG = {
   SPINNER_SCREEN: "/spinner-screen",
   GAME_PLAY: "/game-play",
   VOTE: "/vote",
+  VOTE_TRANSITION: "/vote-transition",
   VOTE_RESULT: "/vote-result",
   PRIVACY: "/privacy",
   CONTACT: "/contact",
@@ -47,7 +48,7 @@ export const DEFAULT_GAME_CONFIG: GameConfigType = {
   word: null,
   question: null,
   roundCount: 3,
-  imposterId: "",
+  imposterIds: [],
   roleRevealTime: 10,
 };
 
@@ -55,3 +56,5 @@ export const DEFAULT_AUDIO_SETTING: AudioSettingsType = {
   musicEnabled: true,
   soundEnabled: true,
 };
+
+export const LOCKED_PLAYERS = 7;

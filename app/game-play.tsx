@@ -52,7 +52,8 @@ export default function GamePlay() {
     totalDuration > 0
       ? Math.min(1, 1 - remainingMs / (totalDuration * 1000))
       : 1;
-  const isWarning = timeLeft <= 5;
+  const isWarning =
+    totalDuration > 0 && remainingMs <= totalDuration * 1000 * 0.4;
 
   const canProceedNext = timerMode === "turn" ? timeLeft <= 0 : true;
 

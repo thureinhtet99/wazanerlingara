@@ -18,6 +18,10 @@ import {
 
 const GAME_CONFIG_KEY = CONFIG.APP_NAME;
 
+type LegacyStoredGameConfig = Partial<GameConfigType> & {
+  imposterId?: string;
+};
+
 const noop = () => undefined;
 
 const GameConfigContext = createContext<GameConfigContextType>({
@@ -30,7 +34,7 @@ const GameConfigContext = createContext<GameConfigContextType>({
 });
 
 const normalizeConfig = (
-  storedConfig: Partial<GameConfigType>,
+  storedConfig: LegacyStoredGameConfig,
 ): GameConfigType => ({
   ...DEFAULT_GAME_CONFIG,
   ...storedConfig,
@@ -41,6 +45,11 @@ const normalizeConfig = (
     ...DEFAULT_GAME_CONFIG.gameSetting,
     ...(storedConfig.gameSetting ?? {}),
   },
+  imposterIds: Array.isArray(storedConfig.imposterIds)
+    ? storedConfig.imposterIds.filter(Boolean)
+    : storedConfig.imposterId
+      ? [storedConfig.imposterId]
+      : DEFAULT_GAME_CONFIG.imposterIds,
 });
 
 export function GameConfigProvider({ children }: { children: ReactNode }) {
