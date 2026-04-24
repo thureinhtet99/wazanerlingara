@@ -17,14 +17,15 @@ import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { useGameConfig } from "@/hooks/use-game-config";
 import { changeToMMNumber } from "@/lib/change-to-mm-number";
 import { cn } from "@/lib/util";
-import { PlayerInputType } from "@/types/index.types";
+import { PlayerType } from "@/types/index.types";
 
 const MIN_PLAYERS = 3;
 const MAX_PLAYERS = 10;
 
-const createPlayerInput = (name = ""): PlayerInputType => ({
+const createPlayerInput = (name = ""): PlayerType => ({
   id: Crypto.randomUUID(),
   name,
+  image: "",
 });
 
 export default function Start() {
@@ -32,7 +33,7 @@ export default function Start() {
   const router = useRouter();
   const { playClickSound } = useAudioSettings();
 
-  const [playerInputs, setPlayerInputs] = useState<PlayerInputType[]>([
+  const [playerInputs, setPlayerInputs] = useState<PlayerType[]>([
     createPlayerInput(),
   ]);
 
@@ -45,6 +46,7 @@ export default function Start() {
       config.players.map((player) => ({
         id: player.id,
         name: player.name,
+        image: player.image ?? null,
       })),
     );
   }, [config.players, loading]);
@@ -96,7 +98,7 @@ export default function Start() {
       players: validPlayers.map((name) => ({
         id: Crypto.randomUUID(),
         name,
-        imageId: null,
+        image: null,
       })),
     });
 

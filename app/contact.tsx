@@ -55,7 +55,6 @@ export default function Contact() {
     sendTransition(async () => {
       try {
         // TODO: Mock API call - replace with real endpoint
-        await new Promise((resolve) => setTimeout(resolve, 500));
 
         if (true) {
           setNotificationState({
@@ -106,7 +105,7 @@ export default function Contact() {
         <View className="flex-1">
           <View className="gap-6">
             <View className="gap-2">
-              <ThemedText type="subtitle">အမည်</ThemedText>
+              <ThemedText type="description">အမည်</ThemedText>
               <Controller
                 control={control}
                 name="name"
@@ -122,7 +121,7 @@ export default function Contact() {
             </View>
 
             <View className="gap-2">
-              <ThemedText type="subtitle">အီးမေးလ် လိပ်စာ</ThemedText>
+              <ThemedText type="description">အီးမေးလ် လိပ်စာ</ThemedText>
               <Controller
                 control={control}
                 name="email"
@@ -147,7 +146,7 @@ export default function Contact() {
             </View>
 
             <View className="gap-2">
-              <ThemedText type="subtitle">မက်ဆေ့ချ်</ThemedText>
+              <ThemedText type="description">မက်ဆေ့ချ်</ThemedText>
               <Controller
                 control={control}
                 name="message"

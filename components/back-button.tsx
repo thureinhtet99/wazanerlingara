@@ -20,8 +20,8 @@ export default function BackButton() {
     >
       <SvgAsset
         source={require("@/assets/svg/back-button.svg")}
-        width={38}
-        height={38}
+        width={37}
+        height={37}
       />
     </Pressable>
   );

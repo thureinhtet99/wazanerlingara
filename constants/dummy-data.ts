@@ -6,9 +6,11 @@ import {
   CategoryType,
   ModeType,
   QuestionType,
+  SettingType,
   WordType,
 } from "@/types/index.types";
 
+import { CONFIG } from "./config";
 import { images } from "./icons";
 
 export const ONBOARDING_STEPS = [
@@ -44,6 +46,33 @@ export const MODES: ModeType[] = [
     title: "အမေးအဖြေဂိမ်း",
     desc: "မေးခွန်းမသိဘဲ ဖြေနေတဲ့သူကို ရှာမယ်",
     icon: images.questionMode,
+  },
+];
+
+export const SETTING_ITEMS: SettingType[] = [
+  {
+    id: "music",
+    label: "နောက်ခံသီချင်း",
+    icon: require("@/assets/svg/music-icon.svg"),
+    hasToggle: true,
+  },
+  {
+    id: "sound",
+    label: "အသံ",
+    icon: require("@/assets/svg/speaker-icon.svg"),
+    hasToggle: true,
+  },
+  {
+    id: "privacy",
+    label: "ဥပဒေရေးရာနှင့် ကိုယ်ရေးလုံခြုံမှု",
+    icon: require("@/assets/svg/incognito-icon.svg"),
+    route: CONFIG.PRIVACY,
+  },
+  {
+    id: "chat",
+    label: "ဆက်သွယ်ရန်",
+    icon: require("@/assets/svg/chat-icon.svg"),
+    route: CONFIG.CONTACT,
   },
 ];
 

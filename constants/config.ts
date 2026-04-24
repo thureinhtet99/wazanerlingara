@@ -1,4 +1,5 @@
 import {
+  AudioSettingsType,
   CategoryType,
   GameConfigType,
   GameSettingType,
@@ -6,7 +7,10 @@ import {
 
 export const CONFIG = {
   APP_NAME: "wazanerlingara",
-  VERSION: "0.0.1",
+  VERSION: "1.0.0",
+
+  AUDIO_SETTINGS_KEY: "wazanerlingara-audio-settings",
+  ONBOARDING_KEY: "wazanerlingara-onboarding",
 
   HOME: "/",
   START: "/start",
@@ -45,4 +49,9 @@ export const DEFAULT_GAME_CONFIG: GameConfigType = {
   roundCount: 3,
   imposterId: "",
   roleRevealTime: 10,
+};
+
+export const DEFAULT_AUDIO_SETTING: AudioSettingsType = {
+  musicEnabled: true,
+  soundEnabled: true,
 };

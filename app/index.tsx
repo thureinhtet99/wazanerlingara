@@ -14,23 +14,21 @@ export default function Index() {
 
   return (
     <ThemedView className="flex-1 gap-4">
-      <View className="flex-row items-center justify-end">
-        <Pressable
-          className="w-14 h-16 flex items-center justify-center"
-          onPress={() => {
-            playClickSound();
-            router.push(CONFIG.SETTING);
-          }}
-          accessibilityRole="button"
-          accessibilityLabel="Open settings"
-        >
-          <SvgAsset
-            source={require("@/assets/svg/setting.svg")}
-            width={40}
-            height={40}
-          />
-        </Pressable>
-      </View>
+      <Pressable
+        className="w-16 h-16 items-center justify-center self-end"
+        onPress={() => {
+          playClickSound();
+          router.push(CONFIG.SETTING);
+        }}
+        accessibilityRole="button"
+        accessibilityLabel="Open settings"
+      >
+        <SvgAsset
+          source={require("@/assets/svg/setting.svg")}
+          width={40}
+          height={40}
+        />
+      </Pressable>
 
       <View className="flex-1 items-center justify-end">
         <Image

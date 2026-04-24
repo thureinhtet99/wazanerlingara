@@ -1,8 +1,7 @@
+import { Href } from "expo-router";
 import { type StyleProp, type ViewStyle } from "react-native";
 
 import type { SvgKey } from "@/constants/icons";
-
-import type { ReactNode } from "react";
 
 export type GameType = "word" | "question";
 export type TimerModeType = "turn" | "duration";
@@ -17,20 +16,24 @@ export type ModeType = {
   id: GameType;
   title: string;
   desc: string;
-  icon: any;
+  icon: string | null;
 };
 
-export type SetupSettingItemType = {
-  id: string;
-  label: string;
-  icon: ReactNode;
-  hasToggle?: boolean;
-};
-
-export type PlayerInputType = {
-  id: string;
-  name: string;
-};
+export type SettingType =
+  | {
+      id: string;
+      label: string;
+      icon: any;
+      hasToggle: true;
+      route?: never;
+    }
+  | {
+      id: string;
+      label: string;
+      icon: any;
+      hasToggle?: false;
+      route: Href;
+    };
 
 export type CategoryType =
   | "animals"

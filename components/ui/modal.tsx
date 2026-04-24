@@ -35,6 +35,9 @@ export default function Modal({
 }: AppModalProps) {
   const isSuccess = variant === "success";
   const borderColor = isSuccess ? "border-green-500" : "border-red-500";
+  const titleColor = isSuccess
+    ? ThemeTokens.palette.success[500]
+    : ThemeTokens.ui.danger;
 
   return (
     <RNModal
@@ -51,10 +54,20 @@ export default function Modal({
           style={{ backgroundColor: ThemeTokens.ui.modalBackground }}
         >
           <View className="mb-6 flex-col items-center justify-center gap-2">
-            <ThemedText type="title" className="text-center">
+            <ThemedText
+              type="title"
+              className="text-center"
+              lightColor={titleColor}
+              darkColor={titleColor}
+            >
               {title}
             </ThemedText>
-            <ThemedText type="subtitle">{message}</ThemedText>
+            <ThemedText
+              type="description"
+              className="text-center max-w-[360px]"
+            >
+              {message}
+            </ThemedText>
           </View>
 
           <View className="gap-4">

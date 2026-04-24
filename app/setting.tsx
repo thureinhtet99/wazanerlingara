@@ -1,4 +1,4 @@
-import { Href, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { Pressable, View } from "react-native";
 
 import BackButton from "@/components/back-button";
@@ -7,51 +7,9 @@ import { ThemedView } from "@/components/themed-view";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import Switch from "@/components/ui/switch";
 import { CONFIG } from "@/constants/config";
+import { SETTING_ITEMS } from "@/constants/dummy-data";
 
 import { useAudioSettings } from "../hooks/use-audio-settings";
-
-type SettingType =
-  | {
-      id: string;
-      label: string;
-      icon: any;
-      hasToggle: true;
-      route?: never;
-    }
-  | {
-      id: string;
-      label: string;
-      icon: any;
-      hasToggle?: false;
-      route: Href;
-    };
-
-const SETTING_ITEMS: SettingType[] = [
-  {
-    id: "music",
-    label: "နောက်ခံသီချင်း",
-    icon: require("@/assets/svg/music-icon.svg"),
-    hasToggle: true,
-  },
-  {
-    id: "sound",
-    label: "အသံ",
-    icon: require("@/assets/svg/speaker-icon.svg"),
-    hasToggle: true,
-  },
-  {
-    id: "privacy",
-    label: "ဥပဒေရေးရာနှင့် ကိုယ်ရေးလုံခြုံမှု",
-    icon: require("@/assets/svg/incognito-icon.svg"),
-    route: CONFIG.PRIVACY,
-  },
-  {
-    id: "chat",
-    label: "ဆက်သွယ်ရန်",
-    icon: require("@/assets/svg/chat-icon.svg"),
-    route: CONFIG.CONTACT,
-  },
-];
 
 export default function Setting() {
   const router = useRouter();
@@ -81,7 +39,7 @@ export default function Setting() {
         <ThemedText type="title">Setting</ThemedText>
       </View>
 
-      <View className="flex-1 gap-4">
+      <View className="flex-1 gap-6">
         {SETTING_ITEMS.map((item) => (
           <Pressable
             key={item.id}

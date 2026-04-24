@@ -73,7 +73,7 @@ export const Button = forwardRef<ComponentRef<typeof Pressable>, ButtonProps>(
           )}
           {...props}
         >
-          <View className="absolute top-1 left-4">
+          <View className="absolute top-2 left-4">
             <Svg width={24} height={23} viewBox="0 0 24 23" fill="none">
               <Ellipse
                 cx="15.1509"
@@ -93,7 +93,7 @@ export const Button = forwardRef<ComponentRef<typeof Pressable>, ButtonProps>(
             </Svg>
           </View>
 
-          <View className="absolute bottom-1 right-4">
+          <View className="absolute bottom-2 right-4">
             <Svg width={14} height={12} viewBox="0 0 14 12" fill="none">
               <Ellipse
                 cx="6.75576"
