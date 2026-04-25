@@ -6,18 +6,18 @@ import type { SvgKey } from "@/constants/icons";
 export type GameType = "word" | "question";
 export type TimerModeType = "turn" | "duration";
 
-export type PlayerType = {
-  id: string;
-  name: string;
-  image: string | null;
-  imageId?: string;
-};
-
 export type ModeType = {
   id: GameType;
   title: string;
   desc: string;
   icon: string | null;
+};
+
+export type PlayerType = {
+  id: string;
+  name: string;
+  image: string | null;
+  imageId?: string;
 };
 
 export type SettingType =
