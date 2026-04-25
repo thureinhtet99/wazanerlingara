@@ -1,9 +1,10 @@
+import { Ionicons } from "@expo/vector-icons";
 import { Image, Pressable, View } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
-import { SvgAsset } from "@/components/ui/svg-asset";
 import { ImageKey, images } from "@/constants/icons";
 import { ThemeTokens } from "@/constants/theme";
+import { themeTokens } from "@/constants/theme-tokens";
 import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { isImposter } from "@/lib/imposter";
 import { RoleCardType } from "@/types/index.types";
@@ -52,9 +53,9 @@ export default function RoleCard({
               handleClickCard();
               playClickSound();
             }}
-            className="relative flex-1 items-center justify-between rounded-3xl px-4 py-10 border border-white/40"
+            className="relative flex-1 items-center justify-center rounded-3xl px-4 border border-white/40"
           >
-            <View className="relative h-[330px] w-full max-w-[290px] items-center justify-center overflow-hidden rounded-3xl">
+            <View className="relative h-[300px] w-full max-w-[290px] items-center justify-center overflow-hidden rounded-3xl">
               <Image
                 source={playerAvatarSource}
                 width={300}
@@ -64,12 +65,13 @@ export default function RoleCard({
               />
 
               {showBlur ? (
-                <View className="absolute inset-0 items-center justify-center gap-3 bg-black/65">
-                  <SvgAsset
-                    source={require("@/assets/svg/view-eye.svg")}
-                    width={80}
-                    height={80}
+                <View className="absolute inset-0 items-center justify-center gap-2 bg-black/65">
+                  <Ionicons
+                    name="eye-sharp"
+                    size={34}
+                    color={themeTokens.ui.white}
                   />
+                  <ThemedText type="description">ကြည့်မယ်</ThemedText>
                 </View>
               ) : null}
             </View>

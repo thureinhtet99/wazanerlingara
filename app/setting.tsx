@@ -1,13 +1,14 @@
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Pressable, View } from "react-native";
 
 import BackButton from "@/components/back-button";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { SvgAsset } from "@/components/ui/svg-asset";
 import Switch from "@/components/ui/switch";
 import { CONFIG } from "@/constants/config";
 import { SETTING_ITEMS } from "@/constants/dummy-data";
+import { ThemeTokens } from "@/constants/theme";
 
 import { useAudioSettings } from "../hooks/use-audio-settings";
 
@@ -29,6 +30,29 @@ export default function Setting() {
     if (id === "sound") {
       setSoundEnabled(nextValue);
     }
+  };
+
+  const renderSettingIcon = (icon: {
+    family: "Ionicons" | "MaterialCommunityIcons";
+    name: string;
+  }) => {
+    if (icon.family === "MaterialCommunityIcons") {
+      return (
+        <MaterialCommunityIcons
+          name={icon.name as any}
+          size={36}
+          color={ThemeTokens.ui.white}
+        />
+      );
+    }
+
+    return (
+      <Ionicons
+        name={icon.name as any}
+        size={36}
+        color={ThemeTokens.ui.white}
+      />
+    );
   };
 
   return (
@@ -53,7 +77,7 @@ export default function Setting() {
             disabled={item.hasToggle}
           >
             <View className="flex-row items-center gap-3 pr-3 max-w-xs">
-              <SvgAsset source={item.icon} width={30} height={30} />
+              {renderSettingIcon(item.icon)}
               <ThemedText type="subtitle">{item.label}</ThemedText>
             </View>
 

@@ -1,10 +1,12 @@
+import { LOCKED_PLAYERS } from "@/constants/config";
+
 type PlayerWithId = { id: string };
 
 export function getAllowedImposterCount(
   playerCount: number,
   requestedCount: number,
 ): number {
-  if (playerCount === 10) {
+  if (playerCount === LOCKED_PLAYERS) {
     return requestedCount >= 2 ? 2 : 1;
   }
 

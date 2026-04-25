@@ -119,7 +119,7 @@ export default function RoleRevel() {
   }
 
   return (
-    <ThemedView className="flex-1 flex-col gap-16">
+    <ThemedView className="flex-1 flex-col gap-12">
       <Timer
         timeLeft={timeLeft}
         isResettingProgressBar={isResettingProgressBar}

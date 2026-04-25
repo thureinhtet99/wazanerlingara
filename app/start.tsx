@@ -1,22 +1,22 @@
+import { Feather } from "@expo/vector-icons";
 import * as Crypto from "expo-crypto";
 import { useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
-import { Pressable, ScrollView, View } from "react-native";
-import Svg, { Path } from "react-native-svg";
+import { ScrollView, View } from "react-native";
 
 import Loading from "@/app/loading";
 import BackButton from "@/components/back-button";
+import DeleteButton from "@/components/delete-button";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { SvgAsset } from "@/components/ui/svg-asset";
 import { CONFIG } from "@/constants/config";
 import { ThemeTokens } from "@/constants/theme";
+import { themeTokens } from "@/constants/theme-tokens";
 import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { useGameConfig } from "@/hooks/use-game-config";
 import { changeToMMNumber } from "@/lib/change-to-mm-number";
-import { cn } from "@/lib/util";
 import { PlayerType } from "@/types/index.types";
 
 const MIN_PLAYERS = 3;
@@ -115,21 +115,22 @@ export default function Start() {
         <ThemedText type="title">ဘယ်သူတွေ ကစားမလဲ</ThemedText>
       </View>
 
-      <ThemedText type="description" className="text-center mx-auto max-w-sm">
+      <ThemedText type="description" className="text-center mx-auto max-w-lg">
         ပါဝင်ကစားသွားမှာဖြစ်တဲ့ သူငယ်ချင်းတွေရဲ့ နာမည်တွေကို အောက်မှာ
         ရိုက်ထည့်ပေးပါ။
       </ThemedText>
 
-      <View className="mt-5 flex-1 flex-col gap-3">
+      <View className="mt-4 flex-1 flex-col gap-3">
         <ThemedText
           type="description"
-          className={cn(
-            playerCount >= 3
-              ? "text-success-500"
-              : playerCount === 0
-                ? "text-white"
-                : "text-red-500",
-          )}
+          style={{
+            color:
+              playerCount >= 3
+                ? ThemeTokens.palette.success[500]
+                : playerCount === 0
+                  ? ThemeTokens.ui.white
+                  : ThemeTokens.palette.primary[500],
+          }}
         >
           {changeToMMNumber(playerCount)} / {changeToMMNumber(MAX_PLAYERS)}
         </ThemedText>
@@ -145,20 +146,10 @@ export default function Start() {
               />
 
               {playerCount >= 1 && (
-                <Pressable
-                  onPress={() => handleRemovePlayer(playerInput.id)}
-                  className="absolute right-6 top-1/2 h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border-2 border-neutral-100"
-                  accessibilityLabel="Remove player"
-                >
-                  <Svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <Path
-                      d="M3 3L11 11M11 3L3 11"
-                      stroke={ThemeTokens.ui.iconStroke}
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </Svg>
-                </Pressable>
+                <DeleteButton
+                  handleRemovePlayer={handleRemovePlayer}
+                  playerInput={playerInput}
+                />
               )}
             </View>
           ))}
@@ -168,10 +159,10 @@ export default function Start() {
             disabled={playerInputs.length >= MAX_PLAYERS}
           >
             <View className="flex-row items-center justify-center gap-2">
-              <SvgAsset
-                source={require("@/assets/svg/plus-circle-icon.svg")}
-                width={30}
-                height={30}
+              <Feather
+                name="plus-circle"
+                size={24}
+                color={themeTokens.ui.white}
               />
               <ThemedText type="subtitle">နောက်ထပ်ထည့်မယ်</ThemedText>
             </View>

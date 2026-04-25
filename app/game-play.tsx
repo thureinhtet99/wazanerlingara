@@ -1,14 +1,16 @@
+import { Entypo } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
 import { Link, router } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { BackHandler, Pressable, View } from "react-native";
+import { Animated, BackHandler, Pressable, View } from "react-native";
+import Svg, { Ellipse, Rect } from "react-native-svg";
 
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import Modal from "@/components/ui/modal";
-import { SvgAsset } from "@/components/ui/svg-asset";
 import { CONFIG } from "@/constants/config";
 import { CATEGORIES } from "@/constants/dummy-data";
+import { ThemeTokens } from "@/constants/theme";
 import BottomControls from "@/features/game-play/components/bottom-controls";
 import InstructionText from "@/features/game-play/components/instruction-text";
 import TimerRing from "@/features/game-play/components/timer-ring";
@@ -19,6 +21,7 @@ import { changeToMMNumber } from "@/lib/change-to-mm-number";
 import Loading from "./loading";
 
 export default function GamePlay() {
+  const scaleAnim = useRef(new Animated.Value(1)).current;
   const { config, loading } = useGameConfig();
   const { playClickSound } = useAudioSettings();
 
@@ -36,6 +39,7 @@ export default function GamePlay() {
 
   const lastTickRef = useRef<number | null>(null);
   const wasTimerRunningBeforeExitRef = useRef(false);
+  const hasAutoNavigatedToVoteRef = useRef(false);
 
   const players = config.players;
   const playersLength = players.length;
@@ -63,6 +67,7 @@ export default function GamePlay() {
     setIsTimerRunning(true);
     setIsDiscussPaused(false);
     lastTickRef.current = null;
+    hasAutoNavigatedToVoteRef.current = false;
   }, [timerMode, totalDuration, playersLength]);
 
   useEffect(() => {
@@ -95,6 +100,19 @@ export default function GamePlay() {
       setIsTimerRunning(false);
     }
   }, [remainingMs, isTimerRunning]);
+
+  useEffect(() => {
+    if (timerMode !== "duration") {
+      return;
+    }
+
+    if (remainingMs > 0 || hasAutoNavigatedToVoteRef.current) {
+      return;
+    }
+
+    hasAutoNavigatedToVoteRef.current = true;
+    router.replace(CONFIG.VOTE);
+  }, [timerMode, remainingMs]);
 
   const handleBack = useCallback(() => {
     wasTimerRunningBeforeExitRef.current = isTimerRunning;
@@ -174,7 +192,25 @@ export default function GamePlay() {
   };
 
   const handleVote = () => {
+    if (timerMode === "duration" && remainingMs > 0) {
+      return;
+    }
+
     router.replace(CONFIG.VOTE);
+  };
+
+  const handlePressIn = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 0.95,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+    }).start();
   };
 
   if (loading) return <Loading />;
@@ -196,18 +232,88 @@ export default function GamePlay() {
   return (
     <ThemedView className="flex-1 gap-6">
       <View className="mb-6 mt-1 flex-row items-start justify-end">
-        <Pressable
-          className="h-14 w-14 items-center justify-center"
-          onPress={handleBack}
-          accessibilityRole="button"
-          accessibilityLabel="Exit"
+        <Animated.View
+          className="absolute right-0 top-0 items-center justify-center h-14 w-14"
+          style={{ transform: [{ scale: scaleAnim }] }}
         >
-          <SvgAsset
-            source={require("@/assets/svg/exit.svg")}
-            width={38}
-            height={38}
-          />
-        </Pressable>
+          <Pressable
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
+            onPress={() => {
+              playClickSound();
+              handleBack();
+            }}
+            accessibilityRole="button"
+            accessibilityLabel="Go back"
+            className="h-12 w-12 rounded-2xl items-center justify-center active:bg-background-400"
+          >
+            <Svg width={37} height={37} viewBox="0 0 37 37" fill="none">
+              <Rect width="36.7767" height="36.2333" rx="12" fill="#181818" />
+              <Rect
+                x="0.8"
+                y="0.8"
+                width="35.1767"
+                height="34.6333"
+                rx="11.1"
+                fill="none"
+                stroke="white"
+                strokeOpacity="0.18"
+                strokeWidth="1"
+              />
+              <Rect
+                x="1.6"
+                y="1.6"
+                width="33.5767"
+                height="33.0333"
+                rx="10.3"
+                fill="none"
+                stroke="white"
+                strokeOpacity="0.1"
+                strokeWidth="0.8"
+              />
+              <Rect
+                x="0.2"
+                y="0.2"
+                width="36.3767"
+                height="35.8333"
+                rx="11.8"
+                fill="none"
+                stroke="#B5B5B5"
+                strokeWidth="0.4"
+              />
+
+              <Ellipse
+                cx="6.56376"
+                cy="7.03625"
+                rx="4.1"
+                ry="1.5"
+                transform="rotate(-51 6.56376 7.03625)"
+                fill="white"
+                fillOpacity="0.88"
+              />
+              <Ellipse
+                cx="30.3872"
+                cy="27.7834"
+                rx="3.35"
+                ry="1.25"
+                transform="rotate(-51 30.3872 27.7834)"
+                fill="white"
+                fillOpacity="0.88"
+              />
+              <Ellipse
+                cx="3.5"
+                cy="13"
+                rx="0.5"
+                ry="1"
+                fill="white"
+                fillOpacity="0.88"
+              />
+            </Svg>
+            <Animated.View className="absolute items-center justify-center">
+              <Entypo name="cross" size={30} color={ThemeTokens.ui.white} />
+            </Animated.View>
+          </Pressable>
+        </Animated.View>
       </View>
 
       <View className="gap-3">

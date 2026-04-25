@@ -24,14 +24,20 @@ export type SettingType =
   | {
       id: string;
       label: string;
-      icon: any;
+      icon: {
+        family: "Ionicons" | "MaterialCommunityIcons";
+        name: string;
+      };
       hasToggle: true;
       route?: never;
     }
   | {
       id: string;
       label: string;
-      icon: any;
+      icon: {
+        family: "Ionicons" | "MaterialCommunityIcons";
+        name: string;
+      };
       hasToggle?: false;
       route: Href;
     };

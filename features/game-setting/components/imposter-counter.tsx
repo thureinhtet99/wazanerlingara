@@ -1,10 +1,11 @@
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { Pressable, View } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
-import { SvgAsset } from "@/components/ui/svg-asset";
 import { LOCKED_PLAYERS } from "@/constants/config";
 import { ThemeTokens } from "@/constants/theme";
+import { themeTokens } from "@/constants/theme-tokens";
 import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { useGameConfig } from "@/hooks/use-game-config";
 import { changeToMMNumber } from "@/lib/change-to-mm-number";
@@ -20,7 +21,7 @@ const ImposterCounter = () => {
   const playerCount = config.players.length;
   const currentCount = config.gameSetting.imposterCount;
   const min = 1;
-  const max = playerCount === 10 ? 2 : 1;
+  const max = playerCount === LOCKED_PLAYERS ? 2 : 1;
   const boundedCount = getAllowedImposterCount(playerCount, currentCount);
 
   useEffect(() => {
@@ -67,10 +68,10 @@ const ImposterCounter = () => {
     <View className="rounded-2xl border border-white px-4 py-6 bg-neutral-500/10 gap-4">
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center gap-2">
-          <SvgAsset
-            source={require("@/assets/svg/people-fill.svg")}
-            width={30}
-            height={30}
+          <Ionicons
+            name="people-sharp"
+            size={36}
+            color={themeTokens.ui.white}
           />
           <ThemedText type="description">Imposter အရေအတွက်</ThemedText>
         </View>
@@ -115,7 +116,7 @@ const ImposterCounter = () => {
                   ? ThemeTokens.ui.white
                   : ThemeTokens.ui.black,
                 fontSize: 30,
-                lineHeight: 28,
+                lineHeight: 24,
               }}
             >
               +
@@ -125,10 +126,10 @@ const ImposterCounter = () => {
       </View>
 
       <View className="flex-row items-start gap-2">
-        <SvgAsset
-          source={require("@/assets/svg/info-alert.svg")}
-          width={20}
-          height={20}
+        <MaterialCommunityIcons
+          name="alert-circle-outline"
+          size={22}
+          color={themeTokens.palette.info[400]}
         />
         <ThemedText type="default" className="flex-1">
           {locked

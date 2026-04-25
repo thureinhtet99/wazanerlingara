@@ -18,7 +18,7 @@ export default function HowToPlay() {
         <ThemedText type="title">ဘယ်လိုကစားရမလဲ</ThemedText>
       </View>
 
-      <ScrollView className="flex-1" contentContainerClassName="gap-10">
+      <ScrollView className="flex-1 px-2" contentContainerClassName="gap-10">
         <ThemedText type="subtitle">
           ကစားပွဲတစ်ခု စတင်ရင် &quot;စကစားကြမယ်&quot; ကစားမည့်သူများ၏
           အမည်များကို ထည့်ပါ။ အနည်းဆုံး သုံးယောက်မှ အများဆုံး ဆယ်ယောက်အထိ

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { DEFAULT_GAME_CONFIG } from "@/constants/config";
 import { PlayerType } from "@/types/index.types";
-
-const ROLE_REVEAL_TIME = 10;
 
 export function useRoleReveal(players: PlayerType[]) {
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
@@ -11,7 +10,7 @@ export function useRoleReveal(players: PlayerType[]) {
   const [showBlur, setShowBlur] = useState(false);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  const [timeLeft, setTimeLeft] = useState(ROLE_REVEAL_TIME);
+  const [timeLeft, setTimeLeft] = useState(DEFAULT_GAME_CONFIG.roleRevealTime);
   const [isResettingProgressBar, setIsResettingProgressBar] = useState(false);
 
   const currentPlayer = players[currentPlayerIndex];
@@ -73,7 +72,7 @@ export function useRoleReveal(players: PlayerType[]) {
 
     setCurrentPlayerIndex((i) => i + 1);
 
-    setTimeLeft(ROLE_REVEAL_TIME);
+    setTimeLeft(DEFAULT_GAME_CONFIG.roleRevealTime);
     setRevealed(false);
     setShowBlur(false);
     setConfirmed(false);

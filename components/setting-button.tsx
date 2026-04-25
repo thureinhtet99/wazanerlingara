@@ -4,11 +4,12 @@ import { useRef } from "react";
 import { Animated, Pressable } from "react-native";
 import Svg, { Ellipse, Rect } from "react-native-svg";
 
+import { CONFIG } from "@/constants/config";
 import { ThemeTokens } from "@/constants/theme";
 
 import { useAudioSettings } from "../hooks/use-audio-settings";
 
-export default function BackButton() {
+export default function SettingButton() {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const { playClickSound } = useAudioSettings();
 
@@ -28,7 +29,7 @@ export default function BackButton() {
 
   return (
     <Animated.View
-      className="absolute left-0 top-0 items-center justify-center h-14 w-14"
+      className="absolute top-0 right-0 items-center justify-center h-14 w-14"
       style={{ transform: [{ scale: scaleAnim }] }}
     >
       <Pressable
@@ -36,11 +37,11 @@ export default function BackButton() {
         onPressOut={handlePressOut}
         onPress={() => {
           playClickSound();
-          router.back();
+          router.push(CONFIG.SETTING);
         }}
         accessibilityRole="button"
         accessibilityLabel="Go back"
-        className="h-12 w-12 rounded-2xl items-center justify-center active:bg-background-400"
+        className="h-12 w-12 rounded-2xl items-center justify-center active:bg-background-400 text-white"
       >
         <Svg width={37} height={37} viewBox="0 0 37 37" fill="none">
           <Rect width="36.7767" height="36.2333" rx="12" fill="#181818" />
@@ -106,8 +107,8 @@ export default function BackButton() {
         </Svg>
         <Animated.View className="absolute items-center justify-center">
           <Ionicons
-            name="arrow-back-sharp"
-            size={30}
+            name="settings-sharp"
+            size={20}
             color={ThemeTokens.ui.white}
           />
         </Animated.View>

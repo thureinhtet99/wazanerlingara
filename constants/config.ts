@@ -49,7 +49,7 @@ export const DEFAULT_GAME_CONFIG: GameConfigType = {
   question: null,
   roundCount: 3,
   imposterIds: [],
-  roleRevealTime: 10,
+  roleRevealTime: 5,
 };
 
 export const DEFAULT_AUDIO_SETTING: AudioSettingsType = {

@@ -1,3 +1,4 @@
+import { AntDesign } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useMemo } from "react";
 import { Image, View } from "react-native";
@@ -59,6 +60,7 @@ export default function VoteResult() {
     return safePool[randomIndex]?.text ?? "";
   }, [didCatchImposter, config.gameSetting.canImposterGetHint]);
 
+  const canGetHint = config.gameSetting.canImposterGetHint;
   const hint =
     config.gameMode === "word" ? config.word?.hint : config.question?.hint;
   const keyword =
@@ -87,7 +89,7 @@ export default function VoteResult() {
           {outcomeTitle}
         </ThemedText>
 
-        <ThemedText type="subtitle" className="text-center">
+        <ThemedText type="subtitle" className="text-center" numberOfLines={3}>
           {outcomeQuote}
         </ThemedText>
       </View>
@@ -109,9 +111,11 @@ export default function VoteResult() {
             : `Imposter: ${imposters[0]?.name ?? "Unknown"}`}
         </ThemedText>
 
-        <ThemedText type="description" className="text-center">
-          Imposter hint: {hint}
-        </ThemedText>
+        {canGetHint && (
+          <ThemedText type="description" className="text-center">
+            Imposter hint: {hint}
+          </ThemedText>
+        )}
 
         <ThemedText type="description" className="text-center">
           Keyword: {keyword}
@@ -121,10 +125,10 @@ export default function VoteResult() {
       <View className="mt-auto gap-4">
         <Button onPress={handleRepeatGame}>
           <View className="flex-row items-center justify-center gap-2">
-            <SvgAsset
-              source={require("@/assets/svg/play-icon.svg")}
-              width={30}
-              height={30}
+            <AntDesign
+              name="play-circle"
+              size={24}
+              color={themeTokens.ui.white}
             />
             <ThemedText type="subtitle">နောက်တစ်ပွဲ ဆော့မယ်</ThemedText>
           </View>
