@@ -5,7 +5,9 @@ import { ThemedView } from "../themed-view";
 
 export default function MainLayout({ children }: { children: ReactNode }) {
   // const { resetGameConfig } = useGameConfig();
+  // const { reset } = useOnboarding();
   // resetGameConfig();
+  // reset();
 
   return (
     <ThemedView className="flex-1">

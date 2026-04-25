@@ -1,36 +1,46 @@
+import { Href } from "expo-router";
 import { type StyleProp, type ViewStyle } from "react-native";
 
 import type { SvgKey } from "@/constants/icons";
 
-import type { ReactNode } from "react";
-
 export type GameType = "word" | "question";
 export type TimerModeType = "turn" | "duration";
-
-export type PlayerType = {
-  id: string;
-  name: string;
-  image: string | null;
-};
 
 export type ModeType = {
   id: GameType;
   title: string;
   desc: string;
-  icon: any;
+  icon: string | null;
 };
 
-export type SetupSettingItemType = {
-  id: string;
-  label: string;
-  icon: ReactNode;
-  hasToggle?: boolean;
-};
-
-export type PlayerInputType = {
+export type PlayerType = {
   id: string;
   name: string;
+  image: string | null;
+  imageId?: string;
 };
+
+export type SettingType =
+  | {
+      id: string;
+      label: string;
+      icon: {
+        family: "Ionicons" | "MaterialCommunityIcons";
+        name: string;
+      };
+      hasToggle: true;
+      route?: never;
+    }
+  | {
+      id: string;
+      label: string;
+      icon: {
+        family: "Ionicons" | "MaterialCommunityIcons";
+        name: string;
+      };
+      hasToggle?: false;
+      route: Href;
+    };
 
 export type CategoryType =
   | "animals"
@@ -65,7 +75,7 @@ export type RoleCardType = {
   gameMode: GameType;
   revealContent: string;
   revealImage?: string;
-  imposterId: string;
+  imposterIds: string[];
   imposterCanGetHint: boolean;
   hint: string;
   showBlur: boolean;
@@ -132,7 +142,7 @@ export type GameConfigType = {
   word: WordType | null;
   question: QuestionType | null;
   roundCount: number;
-  imposterId: string;
+  imposterIds: string[];
   roleRevealTime: number;
 };
 

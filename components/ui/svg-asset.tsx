@@ -2,7 +2,7 @@ import { Asset } from "expo-asset";
 import { memo, useMemo } from "react";
 import { SvgUri } from "react-native-svg";
 
-import { svg } from "@/constants/icons";
+import { svgs } from "@/constants/icons";
 import { ThemeTokens } from "@/constants/theme";
 import { SvgAssetType } from "@/types/index.types";
 
@@ -18,7 +18,7 @@ function getCachedUri(moduleSource: number) {
 }
 
 function SvgAssetBase({ source, width, height, color, style }: SvgAssetType) {
-  const moduleSource = typeof source === "number" ? source : svg[source];
+  const moduleSource = typeof source === "number" ? source : svgs[source];
   const uri = useMemo(() => getCachedUri(moduleSource), [moduleSource]);
 
   return (

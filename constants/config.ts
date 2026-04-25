@@ -1,4 +1,5 @@
 import {
+  AudioSettingsType,
   CategoryType,
   GameConfigType,
   GameSettingType,
@@ -6,7 +7,10 @@ import {
 
 export const CONFIG = {
   APP_NAME: "wazanerlingara",
-  VERSION: "0.0.1",
+  VERSION: "1.0.0",
+
+  AUDIO_SETTINGS_KEY: "wazanerlingara-audio-settings",
+  ONBOARDING_KEY: "wazanerlingara-onboarding",
 
   HOME: "/",
   START: "/start",
@@ -18,6 +22,7 @@ export const CONFIG = {
   SPINNER_SCREEN: "/spinner-screen",
   GAME_PLAY: "/game-play",
   VOTE: "/vote",
+  VOTE_TRANSITION: "/vote-transition",
   VOTE_RESULT: "/vote-result",
   PRIVACY: "/privacy",
   CONTACT: "/contact",
@@ -43,6 +48,13 @@ export const DEFAULT_GAME_CONFIG: GameConfigType = {
   word: null,
   question: null,
   roundCount: 3,
-  imposterId: "",
-  roleRevealTime: 10,
+  imposterIds: [],
+  roleRevealTime: 5,
 };
+
+export const DEFAULT_AUDIO_SETTING: AudioSettingsType = {
+  musicEnabled: true,
+  soundEnabled: true,
+};
+
+export const LOCKED_PLAYERS = 7;

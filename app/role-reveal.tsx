@@ -36,7 +36,7 @@ export default function RoleRevel() {
 
   const categoryTitle =
     CATEGORIES.find((item) => item.type === category)?.title || category;
-  const imposterId = config.imposterId;
+  const imposterIds = config.imposterIds;
   const revealContent =
     gameMode === "word"
       ? (config.word?.text ?? "")
@@ -119,7 +119,7 @@ export default function RoleRevel() {
   }
 
   return (
-    <ThemedView className="flex-1 flex-col gap-16">
+    <ThemedView className="flex-1 flex-col gap-12">
       <Timer
         timeLeft={timeLeft}
         isResettingProgressBar={isResettingProgressBar}
@@ -141,7 +141,7 @@ export default function RoleRevel() {
         handleReveal={handleReveal}
         revealContent={revealContent}
         revealImage={revealImage}
-        imposterId={imposterId!}
+        imposterIds={imposterIds}
         imposterCanGetHint={config.gameSetting.canImposterGetHint}
         hint={hint}
       />

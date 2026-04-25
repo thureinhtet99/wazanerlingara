@@ -1,3 +1,4 @@
+import { AntDesign } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useMemo } from "react";
 import { Image, View } from "react-native";
@@ -14,25 +15,34 @@ import {
 import { images } from "@/constants/icons";
 import { themeTokens } from "@/constants/theme-tokens";
 import { useGameConfig } from "@/hooks/use-game-config";
+import {
+  getAllowedImposterCount,
+  isExactIdSetMatch,
+  parseIdsParam,
+} from "@/lib/imposter";
 
 export default function VoteResult() {
   const { config } = useGameConfig();
 
   const params = useLocalSearchParams<{
-    votedPlayerId?: string | string[];
+    votedPlayerIds?: string | string[];
   }>();
 
-  const votedPlayerId = Array.isArray(params.votedPlayerId)
-    ? params.votedPlayerId[0]
-    : params.votedPlayerId;
+  const votedPlayerIds = parseIdsParam(params.votedPlayerIds);
+  const expectedImposterCount = getAllowedImposterCount(
+    config.players.length,
+    config.gameSetting.imposterCount,
+  );
+  const imposterIds = config.imposterIds.slice(0, expectedImposterCount);
+  const isDoubleImposterMode = imposterIds.length === 2;
 
-  const votedPlayer = config.players.find(
-    (player) => player.id === votedPlayerId,
+  const votedPlayers = config.players.filter((player) =>
+    votedPlayerIds.includes(player.id),
   );
-  const imposter = config.players.find(
-    (player) => player.id === config.imposterId,
+  const imposters = config.players.filter((player) =>
+    imposterIds.includes(player.id),
   );
-  const didCatchImposter = votedPlayerId === config.imposterId;
+  const didCatchImposter = isExactIdSetMatch(votedPlayerIds, imposterIds);
 
   const outcomeTitle = didCatchImposter ? "Teammates Win!" : "Imposter Win!";
 
@@ -50,13 +60,14 @@ export default function VoteResult() {
     return safePool[randomIndex]?.text ?? "";
   }, [didCatchImposter, config.gameSetting.canImposterGetHint]);
 
+  const canGetHint = config.gameSetting.canImposterGetHint;
   const hint =
     config.gameMode === "word" ? config.word?.hint : config.question?.hint;
   const keyword =
     config.gameMode === "word" ? config.word?.text : config.question?.text;
 
   const handleRepeatGame = () => {
-    router.replace(CONFIG.GAME_SETTING);
+    router.replace(CONFIG.START);
   };
 
   const handleExit = () => {
@@ -78,16 +89,16 @@ export default function VoteResult() {
           {outcomeTitle}
         </ThemedText>
 
-        <ThemedText type="description" className="text-center">
+        <ThemedText type="subtitle" className="text-center" numberOfLines={3}>
           {outcomeQuote}
         </ThemedText>
       </View>
 
       <View className="flex-1 items-center justify-center">
         <Image
-          source={didCatchImposter ? images.teammateWin : images.imposterWin}
-          alt={votedPlayer?.name}
-          resizeMode="contain"
+          source={didCatchImposter ? images.jimCarreyDance : images.laughInEvil}
+          alt={votedPlayers[0]?.name}
+          resizeMode="cover"
           borderRadius={10}
           className="w-[340px] h-[340px]"
         />
@@ -95,11 +106,16 @@ export default function VoteResult() {
 
       <View className="gap-2">
         <ThemedText type="description" className="text-center">
-          Imposter: {imposter?.name ?? "Unknown"}
+          {isDoubleImposterMode
+            ? `Imposters: ${imposters.map((player) => player.name).join(", ") || "Unknown"}`
+            : `Imposter: ${imposters[0]?.name ?? "Unknown"}`}
         </ThemedText>
-        <ThemedText type="description" className="text-center">
-          Imposter hint: {hint}
-        </ThemedText>
+
+        {canGetHint && (
+          <ThemedText type="description" className="text-center">
+            Imposter hint: {hint}
+          </ThemedText>
+        )}
 
         <ThemedText type="description" className="text-center">
           Keyword: {keyword}
@@ -109,10 +125,10 @@ export default function VoteResult() {
       <View className="mt-auto gap-4">
         <Button onPress={handleRepeatGame}>
           <View className="flex-row items-center justify-center gap-2">
-            <SvgAsset
-              source={require("@/assets/svg/play-icon.svg")}
-              width={30}
-              height={30}
+            <AntDesign
+              name="play-circle"
+              size={24}
+              color={themeTokens.ui.white}
             />
             <ThemedText type="subtitle">နောက်တစ်ပွဲ ဆော့မယ်</ThemedText>
           </View>

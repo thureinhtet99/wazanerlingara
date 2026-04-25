@@ -10,17 +10,41 @@ import { CONFIG } from "@/constants/config";
 import VotingCard from "@/features/vote/components/voting-card";
 import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { useGameConfig } from "@/hooks/use-game-config";
+import { getAllowedImposterCount, serializeIds } from "@/lib/imposter";
 
 export default function Vote() {
-  const [selectedPlayerId, setSelectedPlayerId] = useState<string | null>(null);
+  const [selectedPlayerIds, setSelectedPlayerIds] = useState<string[]>([]);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const { playClickSound } = useAudioSettings();
   const { config } = useGameConfig();
   const players = config.players;
 
+  const requiredSelectionCount = getAllowedImposterCount(
+    players.length,
+    config.gameSetting.imposterCount,
+  );
+  const isDoubleVoteMode = requiredSelectionCount === 2;
+
   const handleClick = (id: string) => {
-    setSelectedPlayerId(id);
+    if (!isDoubleVoteMode) {
+      setSelectedPlayerIds([id]);
+      playClickSound();
+      return;
+    }
+
+    setSelectedPlayerIds((current) => {
+      if (current.includes(id)) {
+        return current.filter((item) => item !== id);
+      }
+
+      if (current.length >= requiredSelectionCount) {
+        return current;
+      }
+
+      return [...current, id];
+    });
+
     playClickSound();
   };
 
@@ -29,7 +53,7 @@ export default function Vote() {
   };
 
   const handleVote = () => {
-    if (!selectedPlayerId) {
+    if (selectedPlayerIds.length !== requiredSelectionCount) {
       return;
     }
 
@@ -37,14 +61,14 @@ export default function Vote() {
   };
 
   const handleConfirmVote = () => {
-    if (!selectedPlayerId) {
+    if (selectedPlayerIds.length !== requiredSelectionCount) {
       return;
     }
 
     router.replace({
-      pathname: CONFIG.VOTE_RESULT,
+      pathname: CONFIG.VOTE_TRANSITION,
       params: {
-        votedPlayerId: selectedPlayerId,
+        votedPlayerIds: serializeIds(selectedPlayerIds),
       },
     });
   };
@@ -54,7 +78,9 @@ export default function Vote() {
       <View className="gap-6 items-center py-8">
         <ThemedText type="title">ဘယ်သူက Imposterလဲ</ThemedText>
         <ThemedText type="description">
-          သံသယအရှိဆုံး တစ်ယောက်ကို ရွေးပါ။
+          {isDoubleVoteMode
+            ? "သံသယအရှိဆုံး နှစ်ယောက်ကို ရွေးပါ။"
+            : "သံသယအရှိဆုံး တစ်ယောက်ကို ရွေးပါ။"}
         </ThemedText>
       </View>
 
@@ -68,7 +94,7 @@ export default function Vote() {
             <View key={player.id} className="w-[48%]">
               <VotingCard
                 player={player}
-                isSelected={selectedPlayerId === player.id}
+                isSelected={selectedPlayerIds.includes(player.id)}
                 handleClick={handleClick}
               />
             </View>
@@ -77,7 +103,10 @@ export default function Vote() {
       </ScrollView>
 
       <View className="mt-auto">
-        <Button onPress={handleVote} disabled={!selectedPlayerId}>
+        <Button
+          onPress={handleVote}
+          disabled={selectedPlayerIds.length !== requiredSelectionCount}
+        >
           <ThemedText type="subtitle">မဲပေးမယ်</ThemedText>
         </Button>
       </View>
@@ -85,7 +114,11 @@ export default function Vote() {
       <Modal
         visible={showConfirmModal}
         variant="error"
-        title="ဒီတစ်ယောက်က Imposter ဆိုတာ သေချာပြီလား"
+        title={
+          isDoubleVoteMode
+            ? "ဒီနှစ်ယောက်က Imposter ဆိုတာ သေချာပြီလား"
+            : "ဒီတစ်ယောက်က Imposter ဆိုတာ သေချာပြီလား"
+        }
         message="မဲပေးပြီးသွားရင် ပြန်ပြင်လို့ မရတော့ပါဘူး။"
         primaryButtonText="သေချာတယ်"
         secondaryButtonText="ပြန်ရွေးမယ်"

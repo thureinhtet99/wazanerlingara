@@ -1,9 +1,10 @@
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { Pressable, View } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
-import { SvgAsset } from "@/components/ui/svg-asset";
 import { ThemeTokens } from "@/constants/theme";
+import { themeTokens } from "@/constants/theme-tokens";
 import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { useGameConfig } from "@/hooks/use-game-config";
 
@@ -71,10 +72,10 @@ export default function TimerMode() {
   return (
     <View className="rounded-3xl border border-white p-4 bg-neutral-500/10">
       <View className="mb-6 flex-row items-center gap-2">
-        <SvgAsset
-          source={require("@/assets/svg/timer.svg")}
-          width={30}
-          height={30}
+        <MaterialCommunityIcons
+          name="timer-outline"
+          size={34}
+          color={themeTokens.ui.white}
         />
         <ThemedText type="description">Timing Modeကို ရွေးချယ်ပါ</ThemedText>
       </View>
@@ -91,12 +92,12 @@ export default function TimerMode() {
           }}
           className={`flex-1 px-3 py-4 flex-row items-center justify-center gap-1 rounded-2xl ${isTurn ? "bg-white" : "bg-transparent"}`}
         >
-          <SvgAsset
-            source={require("@/assets/svg/profile.svg")}
-            width={22}
-            height={22}
-            color={isTurn ? ThemeTokens.ui.black : ThemeTokens.ui.white}
+          <Ionicons
+            name="person-sharp"
+            size={32}
+            color={isTurn ? themeTokens.ui.black : themeTokens.ui.white}
           />
+
           <ThemedText
             type="description"
             style={{
@@ -116,13 +117,12 @@ export default function TimerMode() {
             });
             playClickSound();
           }}
-          className={`flex-1 px-3 py-4 flex-row items-center justify-center gap-3 rounded-2xl ${!isTurn ? "bg-white" : "bg-transparent"}`}
+          className={`flex-1 px-3 py-4 flex-row items-center justify-center gap-2 rounded-2xl ${!isTurn ? "bg-white" : "bg-transparent"}`}
         >
-          <SvgAsset
-            source={require("@/assets/svg/people-fill.svg")}
-            width={30}
-            height={30}
-            color={!isTurn ? ThemeTokens.ui.black : ThemeTokens.ui.white}
+          <Ionicons
+            name="people-sharp"
+            size={34}
+            color={!isTurn ? themeTokens.ui.black : themeTokens.ui.white}
           />
           <ThemedText
             type="description"
@@ -204,7 +204,7 @@ export default function TimerMode() {
                   ? ThemeTokens.ui.white
                   : ThemeTokens.ui.black,
                 fontSize: 30,
-                lineHeight: 28,
+                lineHeight: 24,
               }}
             >
               +
@@ -213,10 +213,10 @@ export default function TimerMode() {
         </View>
 
         <View className="flex-row items-start my-4 gap-2">
-          <SvgAsset
-            source={require("@/assets/svg/info-alert.svg")}
-            width={24}
-            height={24}
+          <MaterialCommunityIcons
+            name="alert-circle-outline"
+            size={22}
+            color={themeTokens.palette.info[400]}
           />
           <ThemedText
             type="default"

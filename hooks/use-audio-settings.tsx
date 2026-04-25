@@ -8,24 +8,19 @@ import {
   useState,
 } from "react";
 
+import { CONFIG, DEFAULT_AUDIO_SETTING } from "@/constants/config";
 import {
   AudioSettingsContextType,
   AudioSettingsType,
 } from "@/types/index.types";
 
-const AUDIO_SETTINGS_KEY = "audio-settings";
 const CLICK_SOUND = require("@/assets/audio/click.mp3");
 const BACKGROUND_MUSIC = require("@/assets/audio/cotton-toys.mp3");
-
-const defaultAudioSettings: AudioSettingsType = {
-  musicEnabled: true,
-  soundEnabled: true,
-};
 
 const noop = () => undefined;
 
 const defaultAudioSettingsContextValue: AudioSettingsContextType = {
-  ...defaultAudioSettings,
+  ...DEFAULT_AUDIO_SETTING,
   loading: false,
   setMusicEnabled: noop,
   setSoundEnabled: noop,
@@ -38,10 +33,10 @@ const AudioSettingsContext = createContext(defaultAudioSettingsContextValue);
 
 export function AudioSettingsProvider({ children }: { children: ReactNode }) {
   const [musicEnabled, setMusicEnabled] = useState(
-    defaultAudioSettings.musicEnabled,
+    DEFAULT_AUDIO_SETTING.musicEnabled,
   );
   const [soundEnabled, setSoundEnabled] = useState(
-    defaultAudioSettings.soundEnabled,
+    DEFAULT_AUDIO_SETTING.soundEnabled,
   );
   const [loading, setLoading] = useState(true);
 
@@ -49,7 +44,7 @@ export function AudioSettingsProvider({ children }: { children: ReactNode }) {
   const clickSoundPlayer = useAudioPlayer(CLICK_SOUND);
 
   useEffect(() => {
-    void setAudioModeAsync({
+    setAudioModeAsync({
       playsInSilentMode: true,
       // shouldPlayInBackground: true,
     });
@@ -60,7 +55,9 @@ export function AudioSettingsProvider({ children }: { children: ReactNode }) {
 
     const loadAudioSettings = async () => {
       try {
-        const storedSettings = await AsyncStorage.getItem(AUDIO_SETTINGS_KEY);
+        const storedSettings = await AsyncStorage.getItem(
+          CONFIG.AUDIO_SETTINGS_KEY,
+        );
 
         if (storedSettings) {
           const parsedSettings = JSON.parse(
@@ -76,8 +73,8 @@ export function AudioSettingsProvider({ children }: { children: ReactNode }) {
           }
         }
       } catch {
-        setMusicEnabled(defaultAudioSettings.musicEnabled);
-        setSoundEnabled(defaultAudioSettings.soundEnabled);
+        setMusicEnabled(DEFAULT_AUDIO_SETTING.musicEnabled);
+        setSoundEnabled(DEFAULT_AUDIO_SETTING.soundEnabled);
       } finally {
         if (isMounted) {
           setLoading(false);
@@ -85,7 +82,7 @@ export function AudioSettingsProvider({ children }: { children: ReactNode }) {
       }
     };
 
-    void loadAudioSettings();
+    loadAudioSettings();
 
     return () => {
       isMounted = false;
@@ -97,8 +94,8 @@ export function AudioSettingsProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    void AsyncStorage.setItem(
-      AUDIO_SETTINGS_KEY,
+    AsyncStorage.setItem(
+      CONFIG.AUDIO_SETTINGS_KEY,
       JSON.stringify({ musicEnabled, soundEnabled }),
     );
   }, [loading, musicEnabled, soundEnabled]);
@@ -123,7 +120,7 @@ export function AudioSettingsProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    void clickSoundPlayer
+    clickSoundPlayer
       .seekTo(0)
       .catch(() => undefined)
       .finally(() => {

@@ -39,7 +39,7 @@ export default function NextSection({
   };
 
   return (
-    <View className="mx-auto gap-8 w-full">
+    <View className="mx-auto gap-8 w-full mt-auto">
       <InstructionText canProceedNext={canProceedNext} />
 
       <View className="gap-2">

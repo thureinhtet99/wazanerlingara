@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 
-const ONBOARDING_KEY = "onboarding";
+import { CONFIG } from "@/constants/config";
 
 export const useOnboarding = () => {
   const [completed, setCompleted] = useState(false);
@@ -12,7 +12,7 @@ export const useOnboarding = () => {
 
     const loadCompletionState = async () => {
       try {
-        const value = await AsyncStorage.getItem(ONBOARDING_KEY);
+        const value = await AsyncStorage.getItem(CONFIG.ONBOARDING_KEY);
         if (isMounted) setCompleted(value === "completed");
       } finally {
         if (isMounted) {
@@ -21,7 +21,7 @@ export const useOnboarding = () => {
       }
     };
 
-    void loadCompletionState();
+    loadCompletionState();
 
     return () => {
       isMounted = false;
@@ -29,12 +29,12 @@ export const useOnboarding = () => {
   }, []);
 
   const finish = async () => {
-    await AsyncStorage.setItem(ONBOARDING_KEY, "completed");
+    await AsyncStorage.setItem(CONFIG.ONBOARDING_KEY, "completed");
     setCompleted(true);
   };
 
   const reset = async () => {
-    await AsyncStorage.removeItem(ONBOARDING_KEY);
+    await AsyncStorage.removeItem(CONFIG.ONBOARDING_KEY);
     setCompleted(false);
   };
 

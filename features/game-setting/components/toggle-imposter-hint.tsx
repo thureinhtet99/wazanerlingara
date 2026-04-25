@@ -1,8 +1,9 @@
+import { Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
-import { SvgAsset } from "@/components/ui/svg-asset";
 import Switch from "@/components/ui/switch";
+import { themeTokens } from "@/constants/theme-tokens";
 import { useGameConfig } from "@/hooks/use-game-config";
 
 export default function ToggleImposterHint() {
@@ -22,11 +23,7 @@ export default function ToggleImposterHint() {
   return (
     <View className="flex-row items-center justify-between rounded-2xl border border-white px-4 py-6 bg-neutral-500/10">
       <View className="flex-row items-center gap-2">
-        <SvgAsset
-          source={require("@/assets/svg/light-bulb.svg")}
-          width={30}
-          height={30}
-        />
+        <Ionicons name="bulb-sharp" size={34} color={themeTokens.ui.white} />
         <ThemedText type="description">
           Imposterကို အရိပ်အမြွက်ပေးမလား
         </ThemedText>
