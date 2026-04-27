@@ -15,9 +15,8 @@
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "backgroundColor": "#f63b3b",
-        "foregroundImage": "./assets/images/splash-logo.png",
-        "backgroundImage": "./assets/images/splash-logo.png",
-        "monochromeImage": "./assets/images/splash-logo.png"
+        "foregroundImage": "./assets/images/foreground.png",
+        "monochromeImage": "./assets/images/mono.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
@@ -33,7 +32,7 @@
         "expo-font",
         {
           "fonts": [
-            "./assets/fonts/handwrittenFont.ttf"
+            "./assets/fonts/handwrittenFont.ttpf"
           ]
         }
       ],
