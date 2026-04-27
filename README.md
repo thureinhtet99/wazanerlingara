@@ -1,8 +1,36 @@
-# Welcome to your Expo app 👋
+# Wazanerlingara (mobile version)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Wazanerlingara is a party game mobile app built with Expo and React Native. It is designed for **group play** around hidden roles, secret words, and voting rounds where players try to identify the imposter.
 
-## Get started
+The app uses Expo Router for navigation, NativeWind for styling, local game data for categories and prompts, and audio support to make the gameplay feel more interactive.
+
+## Features
+
+- **Burmese-first** UI copy across the game experience
+- Onboarding flow for first-time players
+- Two game modes: word-based and question-based play
+- Category selection for different themes such as animals, food, places, movies, sports, and more
+- Role reveal screens for teammates and imposters
+- Voting flow with transition and result screens
+- Settings for background music, sound, privacy, and contact
+
+## Screenshots
+
+![Home screen]()
+
+![Game setup screen]()
+
+![Role reveal screen]()
+
+![Voting screen]()
+
+## Requirements
+
+- Node.js
+- npm
+- Expo Go, an Android emulator, an iOS simulator, or a development build
+
+## Getting Started
 
 1. Install dependencies
 
@@ -10,41 +38,58 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm install
    ```
 
-2. Start the app
+2. Start the development server
 
    ```bash
-   npx expo start
+   npm start
    ```
 
-In the output, you'll find options to open the app in a
+3. Open the app on your preferred platform
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   ```bash
+   npm run android
+   npm run ios
+   npm run web
+   ```
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+If you want to launch directly from Expo CLI, you can also use:
 
 ```bash
-npm run reset-project
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Available Scripts
 
-## Learn more
+- `npm start` - start the Expo development server
+- `npm run android` - open the app on Android
+- `npm run ios` - open the app on iOS
+- `npm run web` - run the app in a browser
+- `npm run lint` - run the Expo lint rules
+- `npm run reset-project` - reset the starter scaffold if needed
 
-To learn more about developing your project with Expo, look at the following resources:
+## Project Structure
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- `app/` - Expo Router screens and route flow
+- `components/` - shared UI and layout components
+- `features/` - feature-specific logic and reusable game UI
+- `constants/` - app configuration, themes, and bundled game data
+- `hooks/` - shared React hooks
+- `lib/` - helper utilities
+- `assets/` - images, fonts, audio, and SVG assets
+- `data-collection.json` - bundled word & question data
 
-## Join the community
+## Tech Stack
 
-Join our community of developers creating universal apps.
+- Expo SDK 54
+- React Native 0.81
+- Expo Router
+- TypeScript
+- NativeWind and Tailwind CSS
+- React Hook Form and Zod
+- Expo Audio, Haptics, Asset, Font, and Image modules
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Notes
+
+- The app is configured for portrait orientation.
+- Android uses the package name `com.thurein_htet99.wazanerlingara`.
+- The app includes permissions for audio settings to support gameplay features.

@@ -19,7 +19,12 @@
         "monochromeImage": "./assets/images/mono.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "package": "com.thurein_htet99.wazanerlingara"
     },
     "web": {
       "output": "static",
@@ -48,11 +53,19 @@
           }
         }
       ],
-      "expo-audio"
+      "expo-audio",
+      "expo-asset",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "14ecb0c1-3771-41ec-8b3e-b9d167e6c79a"
+      }
     }
   }
 }
