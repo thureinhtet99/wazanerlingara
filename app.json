@@ -64,8 +64,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "14ecb0c1-3771-41ec-8b3e-b9d167e6c79a"
+        "projectId": "87e528ec-f63e-4e63-8d1b-f140c8bee6b1"
       }
-    }
+    },
+    "owner": "thurein_htet99"
   }
 }
