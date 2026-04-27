@@ -37,7 +37,7 @@
         "expo-font",
         {
           "fonts": [
-            "./assets/fonts/handwrittenFont.ttpf"
+            "./assets/fonts/handwrittenFont.ttf"
           ]
         }
       ],
