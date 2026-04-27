@@ -9,6 +9,7 @@ import {
 } from "react";
 
 import { CONFIG, DEFAULT_GAME_CONFIG } from "@/constants/config";
+import { AVATAR_IDS, type AvatarId } from "@/features/role-reveal/lib/avatar";
 import {
   GameConfigContextType,
   GameConfigPatchType,
@@ -20,6 +21,40 @@ const GAME_CONFIG_KEY = CONFIG.APP_NAME;
 
 type LegacyStoredGameConfig = Partial<GameConfigType> & {
   imposterId?: string;
+  players?: (Partial<PlayerType> & {
+    image?: string | null;
+    imageId?: string | null;
+  })[];
+};
+
+const isAvatarId = (value: string): value is AvatarId =>
+  AVATAR_IDS.includes(value as AvatarId);
+
+const sanitizePlayers = (
+  players: LegacyStoredGameConfig["players"],
+): PlayerType[] => {
+  if (!Array.isArray(players)) {
+    return DEFAULT_GAME_CONFIG.players;
+  }
+
+  return players.map((player, index) => {
+    const resolvedImageId =
+      typeof player.imageId === "string" && isAvatarId(player.imageId)
+        ? player.imageId
+        : AVATAR_IDS[index % AVATAR_IDS.length];
+
+    return {
+      id:
+        typeof player.id === "string" && player.id.length > 0
+          ? player.id
+          : `player-${index + 1}`,
+      name:
+        typeof player.name === "string" && player.name.trim().length > 0
+          ? player.name
+          : `Player ${index + 1}`,
+      imageId: resolvedImageId,
+    };
+  });
 };
 
 const noop = () => undefined;
@@ -38,9 +73,7 @@ const normalizeConfig = (
 ): GameConfigType => ({
   ...DEFAULT_GAME_CONFIG,
   ...storedConfig,
-  players: Array.isArray(storedConfig.players)
-    ? storedConfig.players
-    : DEFAULT_GAME_CONFIG.players,
+  players: sanitizePlayers(storedConfig.players),
   gameSetting: {
     ...DEFAULT_GAME_CONFIG.gameSetting,
     ...(storedConfig.gameSetting ?? {}),
@@ -96,6 +129,10 @@ export function GameConfigProvider({ children }: { children: ReactNode }) {
     setConfig((currentConfig) => ({
       ...currentConfig,
       ...patch,
+      players:
+        patch.players !== undefined
+          ? sanitizePlayers(patch.players as LegacyStoredGameConfig["players"])
+          : currentConfig.players,
       gameSetting: patch.gameSetting
         ? { ...currentConfig.gameSetting, ...patch.gameSetting }
         : currentConfig.gameSetting,
@@ -103,7 +140,10 @@ export function GameConfigProvider({ children }: { children: ReactNode }) {
   };
 
   const setPlayers = (players: PlayerType[]) => {
-    setConfig((currentConfig) => ({ ...currentConfig, players }));
+    setConfig((currentConfig) => ({
+      ...currentConfig,
+      players: sanitizePlayers(players),
+    }));
   };
 
   const resetGameConfig = () => {

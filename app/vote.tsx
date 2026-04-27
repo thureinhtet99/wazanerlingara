@@ -18,6 +18,7 @@ export default function Vote() {
 
   const { playClickSound } = useAudioSettings();
   const { config } = useGameConfig();
+
   const players = config.players;
 
   const requiredSelectionCount = getAllowedImposterCount(

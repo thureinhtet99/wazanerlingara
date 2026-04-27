@@ -8,7 +8,6 @@ import { ThemedView } from "@/components/themed-view";
 import { Button } from "@/components/ui/button";
 import { CONFIG } from "@/constants/config";
 import { ONBOARDING_STEPS } from "@/constants/dummy-data";
-import { IntroScreen } from "@/features/onboarding/components/intro";
 import { useOnboarding } from "@/features/onboarding/hooks/use-onboarding";
 
 import Loading from "./loading";
@@ -16,7 +15,7 @@ import Loading from "./loading";
 const STEPS = [1, 2, 3];
 
 export default function Onboarding() {
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(1);
   const { completed, loading, finish } = useOnboarding();
 
   const currentScreen = ONBOARDING_STEPS[current - 1];
@@ -28,7 +27,7 @@ export default function Onboarding() {
     }
   }, [completed]);
 
-  if (loading) return <Loading />;
+  if (loading || completed) return <Loading />;
 
   const handleComplete = async () => {
     await finish();
@@ -43,10 +42,6 @@ export default function Onboarding() {
     }
   };
 
-  if (current === 0) {
-    return <IntroScreen onNext={handleNext} />;
-  }
-
   return (
     <ThemedView className="flex-1">
       <SafeAreaView className="flex-1 overflow-x-hidden">
@@ -58,7 +53,7 @@ export default function Onboarding() {
           >
             {({ pressed }) => (
               <ThemedText
-                type="subtitle"
+                type="description"
                 className={`underline ${pressed ? "opacity-60" : "text-white"}`}
               >
                 ကျော်သွားမယ်

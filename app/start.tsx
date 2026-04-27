@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { CONFIG } from "@/constants/config";
 import { ThemeTokens } from "@/constants/theme";
 import { themeTokens } from "@/constants/theme-tokens";
+import { AVATAR_IDS } from "@/features/role-reveal/lib/avatar";
 import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { useGameConfig } from "@/hooks/use-game-config";
 import { changeToMMNumber } from "@/lib/change-to-mm-number";
@@ -22,10 +23,11 @@ import { PlayerType } from "@/types/index.types";
 const MIN_PLAYERS = 3;
 const MAX_PLAYERS = 10;
 
-const createPlayerInput = (name = ""): PlayerType => ({
+type PlayerInputType = Pick<PlayerType, "id" | "name">;
+
+const createPlayerInput = (name = ""): PlayerInputType => ({
   id: Crypto.randomUUID(),
   name,
-  image: "",
 });
 
 export default function Start() {
@@ -33,7 +35,7 @@ export default function Start() {
   const router = useRouter();
   const { playClickSound } = useAudioSettings();
 
-  const [playerInputs, setPlayerInputs] = useState<PlayerType[]>([
+  const [playerInputs, setPlayerInputs] = useState<PlayerInputType[]>([
     createPlayerInput(),
   ]);
 
@@ -46,7 +48,6 @@ export default function Start() {
       config.players.map((player) => ({
         id: player.id,
         name: player.name,
-        image: player.image ?? null,
       })),
     );
   }, [config.players, loading]);
@@ -95,10 +96,10 @@ export default function Start() {
     }
 
     updateGameConfig({
-      players: validPlayers.map((name) => ({
+      players: validPlayers.map((name, index) => ({
         id: Crypto.randomUUID(),
         name,
-        image: null,
+        imageId: AVATAR_IDS[index % AVATAR_IDS.length],
       })),
     });
 

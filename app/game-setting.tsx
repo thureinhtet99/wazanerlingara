@@ -108,7 +108,6 @@ export default function GameSetting() {
 
       <Modal
         visible={showConfirmModal}
-        variant="error"
         title="ဂိမ်းစမှာ သေချာပြီလား"
         message="ဆက်တင်တွေကို စစ်ပြီးပြီဆိုရင် ဂိမ်းကို စတင်နိုင်ပါတယ်။"
         primaryButtonText="စတင်မယ်"

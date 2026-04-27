@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "wazanerlingara",
+    "name": "Wazanerlingara",
     "slug": "wazanerlingara",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/svg/logo.svg",
+    "icon": "./assets/images/logo.png",
     "scheme": "wazanerlingara",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -15,16 +15,15 @@
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "backgroundColor": "#f63b3b",
-        "foregroundImage": "./assets/images/splash-logo.png",
-        "backgroundImage": "./assets/images/splash-logo.png",
-        "monochromeImage": "./assets/images/splash-logo.png"
+        "foregroundImage": "./assets/images/foreground.png",
+        "monochromeImage": "./assets/images/mono.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/svg/logo.svg",
+      "favicon": "./assets/images/logo.png",
       "bundler": "metro"
     },
     "plugins": [
@@ -40,9 +39,9 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/svg/logo.svg",
+          "image": "./assets/images/logo.png",
           "imageWidth": 200,
-          "resizeMode": "contain",
+          "resizeMode": "cover",
           "backgroundColor": "#f63b3b",
           "dark": {
             "backgroundColor": "#f63b3b"

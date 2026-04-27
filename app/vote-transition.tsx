@@ -1,4 +1,4 @@
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Animated, Image } from "react-native";
 
@@ -11,6 +11,9 @@ const VOTE_AUTO_HIDE_MS = 3000;
 
 export default function VoteTransition() {
   const [dotCount, setDotCount] = useState(0);
+  const params = useLocalSearchParams<{
+    votedPlayerIds?: string | string[];
+  }>();
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -22,11 +25,16 @@ export default function VoteTransition() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.replace(CONFIG.VOTE_RESULT);
+      router.replace({
+        pathname: CONFIG.VOTE_RESULT,
+        params: {
+          votedPlayerIds: params.votedPlayerIds,
+        },
+      });
     }, VOTE_AUTO_HIDE_MS);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [params.votedPlayerIds]);
 
   const dots = ".".repeat(dotCount);
 
@@ -37,6 +45,7 @@ export default function VoteTransition() {
         resizeMode="cover"
         height={100}
         width={100}
+        className="size-80"
       />
 
       <Animated.View>

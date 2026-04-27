@@ -2,6 +2,7 @@ import { Href } from "expo-router";
 import { type StyleProp, type ViewStyle } from "react-native";
 
 import type { SvgKey } from "@/constants/icons";
+import type { AvatarId } from "@/features/role-reveal/lib/avatar";
 
 export type GameType = "word" | "question";
 export type TimerModeType = "turn" | "duration";
@@ -16,8 +17,7 @@ export type ModeType = {
 export type PlayerType = {
   id: string;
   name: string;
-  image: string | null;
-  imageId?: string;
+  imageId: AvatarId;
 };
 
 export type SettingType =
@@ -74,7 +74,6 @@ export type RoleCardType = {
   currentPlayer: PlayerType;
   gameMode: GameType;
   revealContent: string;
-  revealImage?: string;
   imposterIds: string[];
   imposterCanGetHint: boolean;
   hint: string;
@@ -104,6 +103,7 @@ export type AudioSettingsType = {
 
 export type AudioSettingsContextType = AudioSettingsType & {
   loading: boolean;
+  ready: boolean;
   setMusicEnabled: (enabled: boolean) => void;
   setSoundEnabled: (enabled: boolean) => void;
   toggleMusic: () => void;

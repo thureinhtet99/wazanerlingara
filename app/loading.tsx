@@ -20,7 +20,7 @@ export default function Loading() {
   return (
     <ThemedView className="flex-1 items-center justify-center">
       <Animated.View>
-        <ThemedText type="title" className="text-center">
+        <ThemedText type="description" className="text-center">
           Loading {dots}
         </ThemedText>
       </Animated.View>
