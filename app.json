@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "wazanerlingara",
+    "name": "Wazanerlingara",
     "slug": "wazanerlingara",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/svg/logo.svg",
+    "icon": "./assets/images/logo.png",
     "scheme": "wazanerlingara",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -19,11 +19,16 @@
         "monochromeImage": "./assets/images/mono.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "package": "com.thurein_htet99.wazanerlingara"
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/svg/logo.svg",
+      "favicon": "./assets/images/logo.png",
       "bundler": "metro"
     },
     "plugins": [
@@ -39,20 +44,28 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/svg/logo.svg",
+          "image": "./assets/images/logo.png",
           "imageWidth": 200,
-          "resizeMode": "contain",
+          "resizeMode": "cover",
           "backgroundColor": "#f63b3b",
           "dark": {
             "backgroundColor": "#f63b3b"
           }
         }
       ],
-      "expo-audio"
+      "expo-audio",
+      "expo-asset",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "14ecb0c1-3771-41ec-8b3e-b9d167e6c79a"
+      }
     }
   }
 }

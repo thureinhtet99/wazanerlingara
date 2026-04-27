@@ -13,7 +13,6 @@ export default function RoleCard({
   currentPlayer,
   gameMode,
   revealContent,
-  revealImage,
   imposterIds,
   imposterCanGetHint,
   hint,
@@ -27,8 +26,8 @@ export default function RoleCard({
   const { playClickSound } = useAudioSettings();
   const shouldDimCard = timeLeft <= 0 || confirmed;
   const canReveal = timeLeft > 0 && !confirmed;
-  const imageKey = currentPlayer?.image as ImageKey | null;
-  const playerAvatarSource = imageKey ? images[imageKey] : images.avatar1;
+  const imageKey = currentPlayer.imageId as ImageKey;
+  const playerAvatarSource = images[imageKey] ?? images.avatar1;
   const playerIsImposter = isImposter(currentPlayer.id, imposterIds);
 
   return (
@@ -111,16 +110,15 @@ export default function RoleCard({
                 </ThemedText>
               ) : null}
             </View>
-            <Image
-              source={
-                playerIsImposter
-                  ? require("@/assets/images/avatar/imposter.png")
-                  : revealImage || playerAvatarSource
-              }
-              width={300}
-              height={330}
-              resizeMode="contain"
-            />
+
+            {playerIsImposter ? (
+              <Image
+                source={require("@/assets/images/avatar/imposter.png")}
+                width={300}
+                height={330}
+                resizeMode="contain"
+              />
+            ) : null}
           </View>
         )}
       </View>

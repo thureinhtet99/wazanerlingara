@@ -12,7 +12,7 @@ import { cn } from "@/lib/util";
 
 export type AppModalProps = {
   visible: boolean;
-  variant: "success" | "error" | (string & {});
+  variant?: "success" | "error" | (string & {});
   title?: string;
   message?: string;
   primaryButtonText?: string;

@@ -1,76 +1,117 @@
-import { Asset } from "expo-asset";
+import { Asset, useAssets } from "expo-asset";
 import { useFonts } from "expo-font";
 import { Stack, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import MainLayout from "@/components/layout/main-layout";
-import { svgs } from "@/constants/icons";
+import { images, svgs } from "@/constants/icons";
+import { useOnboarding } from "@/features/onboarding/hooks/use-onboarding";
 import "@/global.css";
+import {
+  AudioSettingsProvider,
+  useAudioSettings,
+} from "@/hooks/use-audio-settings";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { GameConfigProvider } from "@/hooks/use-game-config";
 
-import { AudioSettingsProvider } from "../hooks/use-audio-settings";
+import Loading from "./loading";
 
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+const CRITICAL_ASSET_MODULES = [svgs.logoSvg, svgs.wazanerlingaraSvg];
+const NON_CRITICAL_ASSET_MODULES = Object.values(images);
+
+function AppRoutes() {
   const colorScheme = useColorScheme();
   const segments = useSegments();
+  const [loadedAssets, assetsError] = useAssets(CRITICAL_ASSET_MODULES);
+  const { completed, loading: onboardingLoading } = useOnboarding();
+  const { ready: audioReady } = useAudioSettings();
+  const [didStartNonCriticalWarmup, setDidStartNonCriticalWarmup] =
+    useState(false);
 
   const isOnboardingRoute = segments[0] === "onboarding";
   const [fontLoaded, error] = useFonts({
     "hand-written": require("@/assets/fonts/handwrittenFont.ttf"),
   });
 
-  useEffect(() => {
-    Asset.loadAsync(Object.values(svgs)).catch(() => undefined);
-  }, []);
+  const criticalAssetsReady = Boolean(loadedAssets) || Boolean(assetsError);
+  const startupReady =
+    (fontLoaded || Boolean(error)) &&
+    criticalAssetsReady &&
+    !onboardingLoading &&
+    audioReady;
 
   useEffect(() => {
-    if (fontLoaded || error) SplashScreen.hideAsync();
-  }, [fontLoaded, error]);
+    if (!startupReady || didStartNonCriticalWarmup) {
+      return;
+    }
 
-  if (!fontLoaded && !error) return null;
+    setDidStartNonCriticalWarmup(true);
+    void Asset.loadAsync(NON_CRITICAL_ASSET_MODULES);
+  }, [startupReady, didStartNonCriticalWarmup]);
 
-  const routes = (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="onboarding" />
-      <Stack.Screen name="index" />
-      <Stack.Screen name="setting" />
-      <Stack.Screen name="how-to-play" />
-      <Stack.Screen name="privacy" />
-      <Stack.Screen name="contact" />
-      <Stack.Screen name="start" />
-      <Stack.Screen name="mode" />
-      <Stack.Screen name="categories" />
-      <Stack.Screen name="game-setting" />
-      <Stack.Screen name="role-reveal" />
-      <Stack.Screen name="spinner-screen" />
-      <Stack.Screen name="game-play" />
-      <Stack.Screen name="vote" />
-      <Stack.Screen name="vote-transition" />
-      <Stack.Screen name="vote-result" />
-    </Stack>
+  useEffect(() => {
+    if (!startupReady) {
+      return;
+    }
+
+    void SplashScreen.hideAsync();
+  }, [startupReady]);
+
+  const routes = useMemo(
+    () => (
+      <Stack
+        initialRouteName={completed ? "index" : "onboarding"}
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="onboarding" />
+        <Stack.Screen name="index" />
+        <Stack.Screen name="setting" />
+        <Stack.Screen name="how-to-play" />
+        <Stack.Screen name="privacy" />
+        <Stack.Screen name="contact" />
+        <Stack.Screen name="start" />
+        <Stack.Screen name="mode" />
+        <Stack.Screen name="categories" />
+        <Stack.Screen name="game-setting" />
+        <Stack.Screen name="role-reveal" />
+        <Stack.Screen name="spinner-screen" />
+        <Stack.Screen name="game-play" />
+        <Stack.Screen name="vote" />
+        <Stack.Screen name="vote-transition" />
+        <Stack.Screen name="vote-result" />
+      </Stack>
+    ),
+    [completed],
   );
+
+  if (!startupReady) {
+    return <Loading />;
+  }
 
   return (
     <>
-      <AudioSettingsProvider>
-        <GameConfigProvider>
-          {isOnboardingRoute ? routes : <MainLayout>{routes}</MainLayout>}
-        </GameConfigProvider>
-      </AudioSettingsProvider>
+      {isOnboardingRoute ? routes : <MainLayout>{routes}</MainLayout>}
       <StatusBar
         translucent
         backgroundColor="transparent"
         style={colorScheme === "dark" ? "light" : "dark"}
       />
     </>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <AudioSettingsProvider>
+      <GameConfigProvider>
+        <AppRoutes />
+      </GameConfigProvider>
+    </AudioSettingsProvider>
   );
 }

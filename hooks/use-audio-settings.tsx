@@ -22,6 +22,7 @@ const noop = () => undefined;
 const defaultAudioSettingsContextValue: AudioSettingsContextType = {
   ...DEFAULT_AUDIO_SETTING,
   loading: false,
+  ready: false,
   setMusicEnabled: noop,
   setSoundEnabled: noop,
   toggleMusic: noop,
@@ -39,6 +40,8 @@ export function AudioSettingsProvider({ children }: { children: ReactNode }) {
     DEFAULT_AUDIO_SETTING.soundEnabled,
   );
   const [loading, setLoading] = useState(true);
+  const [audioModeReady, setAudioModeReady] = useState(false);
+  const [playersPrimed, setPlayersPrimed] = useState(false);
 
   const backgroundMusicPlayer = useAudioPlayer(BACKGROUND_MUSIC);
   const clickSoundPlayer = useAudioPlayer(CLICK_SOUND);
@@ -47,7 +50,9 @@ export function AudioSettingsProvider({ children }: { children: ReactNode }) {
     setAudioModeAsync({
       playsInSilentMode: true,
       // shouldPlayInBackground: true,
-    });
+    })
+      .catch(() => undefined)
+      .finally(() => setAudioModeReady(true));
   }, []);
 
   useEffect(() => {
@@ -94,6 +99,21 @@ export function AudioSettingsProvider({ children }: { children: ReactNode }) {
       return;
     }
 
+    Promise.allSettled([
+      clickSoundPlayer.seekTo(0),
+      backgroundMusicPlayer.seekTo(0),
+    ]).finally(() => {
+      setPlayersPrimed(true);
+    });
+  }, [backgroundMusicPlayer, clickSoundPlayer, loading]);
+
+  const ready = !loading && audioModeReady && playersPrimed;
+
+  useEffect(() => {
+    if (loading) {
+      return;
+    }
+
     AsyncStorage.setItem(
       CONFIG.AUDIO_SETTINGS_KEY,
       JSON.stringify({ musicEnabled, soundEnabled }),
@@ -101,7 +121,7 @@ export function AudioSettingsProvider({ children }: { children: ReactNode }) {
   }, [loading, musicEnabled, soundEnabled]);
 
   useEffect(() => {
-    if (loading) {
+    if (!ready) {
       return;
     }
 
@@ -113,10 +133,10 @@ export function AudioSettingsProvider({ children }: { children: ReactNode }) {
     }
 
     backgroundMusicPlayer.pause();
-  }, [backgroundMusicPlayer, loading, musicEnabled]);
+  }, [backgroundMusicPlayer, ready, musicEnabled]);
 
   const playClickSound = () => {
-    if (loading || !soundEnabled) {
+    if (!ready || !soundEnabled) {
       return;
     }
 
@@ -132,6 +152,7 @@ export function AudioSettingsProvider({ children }: { children: ReactNode }) {
     musicEnabled,
     soundEnabled,
     loading,
+    ready,
     setMusicEnabled,
     setSoundEnabled,
     toggleMusic: () => setMusicEnabled((current) => !current),

@@ -59,7 +59,7 @@ export default function GamePlay() {
   const isWarning =
     totalDuration > 0 && remainingMs <= totalDuration * 1000 * 0.4;
 
-  const canProceedNext = timerMode === "turn" ? timeLeft <= 0 : true;
+  // const canProceedNext = timerMode === "turn" ? timeLeft <= 0 : true;
 
   useEffect(() => {
     setCurrentPlayerIndex(0);
@@ -159,7 +159,7 @@ export default function GamePlay() {
   const handlePrimaryAction = () => {
     if (!currentPlayer) return;
 
-    if (timerMode === "turn" && !canProceedNext) return;
+    // if (timerMode === "turn" && !canProceedNext) return;
 
     if (isLastPlayer) {
       handleVote();
@@ -192,7 +192,7 @@ export default function GamePlay() {
   };
 
   const handleVote = () => {
-    if (timerMode === "duration" && remainingMs > 0) {
+    if (timerMode === "duration" && remainingMs > 0 && !isDiscussPaused) {
       return;
     }
 
@@ -353,7 +353,7 @@ export default function GamePlay() {
         <BottomControls
           timerMode={timerMode}
           isLastPlayer={isLastPlayer}
-          disabledPrimary={!canProceedNext}
+          // disabledPrimary={!canProceedNext}
           isDiscussPaused={isDiscussPaused}
           onPrimaryPress={handlePrimaryAction}
           onPausePress={handlePauseDuration}

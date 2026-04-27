@@ -14,8 +14,6 @@ export default function DeleteButton({
   playerInput: {
     id: string;
     name: string;
-    image: string | null;
-    imageId?: string | undefined;
   };
 }) {
   const scaleAnim = useRef(new Animated.Value(1)).current;

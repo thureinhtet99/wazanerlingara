@@ -14,7 +14,7 @@ export default function VotingCard({
   isSelected: boolean;
   handleClick: (id: string) => void;
 }) {
-  const imageKey = (player.imageId ?? player.image ?? "") as ImageKey;
+  const imageKey = player.imageId as ImageKey;
   const playerAvatarSource = images[imageKey] ?? images.avatar1;
 
   return (
