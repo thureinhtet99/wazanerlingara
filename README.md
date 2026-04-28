@@ -16,13 +16,20 @@ The app uses Expo Router for navigation, NativeWind for styling, local game data
 
 ## Screenshots
 
-![Home screen]()
+<div align="center">
+<table>
+   <tr>
+      <td><img src="./assets/screenshots/home-screen.png" alt="Home screen" width="300" style="border-radius:8px;"/></td>
+      <td><img src="./assets/screenshots/game-setting.png" alt="Game setting screen" width="300" style="border-radius:8px;"/></td>
+   </tr>
+   <tr>
+      <td><img src="./assets/screenshots/role-reveal-screen.png" alt="Role reveal screen" width="300" style="border-radius:8px;"/></td>
+      <td><img src="./assets/screenshots/vote-screen.png" alt="Vote screen" width="300" style="border-radius:8px;"/></td>
+   </tr>
+</table>
+</div>
 
-![Game setup screen]()
-
-![Role reveal screen]()
-
-![Voting screen]()
+_More features are included in projects_
 
 ## Requirements
 
