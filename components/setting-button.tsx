@@ -5,13 +5,16 @@ import { Animated, Pressable } from "react-native";
 import Svg, { Ellipse, Rect } from "react-native-svg";
 
 import { CONFIG } from "@/constants/config";
-import { ThemeTokens } from "@/constants/theme";
+import { useThemeColor } from "@/hooks/use-theme-color";
 
 import { useAudioSettings } from "../hooks/use-audio-settings";
 
 export default function SettingButton() {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const { playClickSound } = useAudioSettings();
+  const iconColor = useThemeColor({}, "icon");
+  const surfaceColor = useThemeColor({}, "surface");
+  const borderStrongColor = useThemeColor({}, "borderStrong");
 
   const handlePressIn = () => {
     Animated.spring(scaleAnim, {
@@ -41,10 +44,10 @@ export default function SettingButton() {
         }}
         accessibilityRole="button"
         accessibilityLabel="Go back"
-        className="h-12 w-12 rounded-2xl items-center justify-center active:bg-background-400 text-white"
+        className="h-12 w-12 rounded-2xl items-center justify-center active:bg-background-400"
       >
         <Svg width={37} height={37} viewBox="0 0 37 37" fill="none">
-          <Rect width="36.7767" height="36.2333" rx="12" fill="#181818" />
+          <Rect width="36.7767" height="36.2333" rx="12" fill={surfaceColor} />
           <Rect
             x="0.8"
             y="0.8"
@@ -74,7 +77,7 @@ export default function SettingButton() {
             height="35.8333"
             rx="11.8"
             fill="none"
-            stroke="#B5B5B5"
+            stroke={borderStrongColor}
             strokeWidth="0.4"
           />
 
@@ -106,11 +109,7 @@ export default function SettingButton() {
           />
         </Svg>
         <Animated.View className="absolute items-center justify-center">
-          <Ionicons
-            name="settings-sharp"
-            size={20}
-            color={ThemeTokens.ui.white}
-          />
+          <Ionicons name="settings-sharp" size={20} color={iconColor} />
         </Animated.View>
       </Pressable>
     </Animated.View>

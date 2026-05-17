@@ -3,6 +3,7 @@ import { Animated, Pressable } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
 import { ThemeTokens } from "@/constants/theme";
+import { useThemeColor } from "@/hooks/use-theme-color";
 
 import { useAudioSettings } from "../hooks/use-audio-settings";
 
@@ -18,6 +19,8 @@ export default function DeleteButton({
 }) {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const { playClickSound } = useAudioSettings();
+  const borderColor = useThemeColor({}, "border");
+  const iconStrokeColor = useThemeColor({}, "iconStroke");
 
   const handlePressIn = () => {
     Animated.spring(scaleAnim, {
@@ -47,12 +50,13 @@ export default function DeleteButton({
         }}
         accessibilityRole="button"
         accessibilityLabel="Remove player"
-        className="h-8 w-8 items-center justify-center active:bg-background-400 rounded-full border-2 border-white"
+        className="h-8 w-8 items-center justify-center active:bg-background-400 rounded-full border-2"
+        style={{ borderColor }}
       >
         <Svg width="18" height="18" viewBox="0 0 14 14" fill="none">
           <Path
             d="M3 3L11 11M11 3L3 11"
-            stroke={ThemeTokens.ui.iconStroke}
+            stroke={iconStrokeColor || ThemeTokens.ui.iconStroke}
             strokeWidth="2"
             strokeLinecap="round"
           />

@@ -1,6 +1,7 @@
-import { StyleSheet, Text, useColorScheme, type TextProps } from "react-native";
+import { StyleSheet, Text, type TextProps } from "react-native";
 
-import { Colors, ThemeTokens, Typography } from "@/constants/theme";
+import { Typography } from "@/constants/theme";
+import { useThemeColor } from "@/hooks/use-theme-color";
 import { cn } from "@/lib/util";
 
 type ThemedTextProps = TextProps & {
@@ -25,17 +26,20 @@ export function ThemedText({
   className,
   ...rest
 }: ThemedTextProps) {
-  const colorScheme = useColorScheme() ?? "light";
-  const resolvedColor = colorScheme === "dark" ? darkColor : lightColor;
+  const primaryTextColor = useThemeColor({}, "textPrimary");
+  const linkColor = useThemeColor({}, "textSecondary");
+  const resolvedColor = useThemeColor(
+    { light: lightColor, dark: darkColor },
+    type === "link" ? "textSecondary" : "textPrimary",
+  );
 
   return (
     <Text
-      className={cn("text-white", className)}
+      className={cn(className)}
       style={[
         {
           color:
-            resolvedColor ??
-            (type === "link" ? Colors.light.tint : ThemeTokens.ui.white),
+            resolvedColor ?? (type === "link" ? linkColor : primaryTextColor),
         },
         type === "default" ? styles.default : undefined,
         type === "title" ? styles.title : undefined,
@@ -86,7 +90,6 @@ const styles = StyleSheet.create({
   link: {
     fontSize: Typography.fontSize.default,
     lineHeight: Typography.lineHeight.default,
-    color: Colors.light.tint,
     fontFamily: Typography.fontFamily.primary,
   },
 });

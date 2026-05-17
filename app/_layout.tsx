@@ -13,7 +13,6 @@ import {
   AudioSettingsProvider,
   useAudioSettings,
 } from "@/hooks/use-audio-settings";
-import { useColorScheme } from "@/hooks/use-color-scheme";
 import { GameConfigProvider } from "@/hooks/use-game-config";
 
 import Loading from "./loading";
@@ -24,7 +23,6 @@ const CRITICAL_ASSET_MODULES = [svgs.logoSvg, svgs.wazanerlingaraSvg];
 const NON_CRITICAL_ASSET_MODULES = Object.values(images);
 
 function AppRoutes() {
-  const colorScheme = useColorScheme();
   const segments = useSegments();
   const [loadedAssets, assetsError] = useAssets(CRITICAL_ASSET_MODULES);
   const { completed, loading: onboardingLoading } = useOnboarding();
@@ -97,11 +95,7 @@ function AppRoutes() {
   return (
     <>
       {isOnboardingRoute ? routes : <MainLayout>{routes}</MainLayout>}
-      <StatusBar
-        translucent
-        backgroundColor="transparent"
-        style={colorScheme === "dark" ? "light" : "dark"}
-      />
+      <StatusBar translucent backgroundColor="transparent" style="light" />
     </>
   );
 }
