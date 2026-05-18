@@ -136,16 +136,16 @@ export function AudioSettingsProvider({ children }: { children: ReactNode }) {
   }, [backgroundMusicPlayer, ready, musicEnabled]);
 
   const playClickSound = () => {
-    if (!ready || !soundEnabled) {
+    if (!ready || !soundEnabled || !clickSoundPlayer) {
       return;
     }
 
-    clickSoundPlayer
-      .seekTo(0)
-      .catch(() => undefined)
-      .finally(() => {
-        clickSoundPlayer.play();
-      });
+    try {
+      clickSoundPlayer.seekTo(0).catch(() => undefined);
+      clickSoundPlayer.play();
+    } catch {
+      // Silently handle any audio errors
+    }
   };
 
   const value: AudioSettingsContextType = {

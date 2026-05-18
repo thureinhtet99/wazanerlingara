@@ -47,7 +47,6 @@ export const DEFAULT_GAME_CONFIG: GameConfigType = {
   gameSetting: GAME_SETTING,
   word: null,
   question: null,
-  roundCount: 3,
   imposterIds: [],
   roleRevealTime: 5,
 };
@@ -56,5 +55,3 @@ export const DEFAULT_AUDIO_SETTING: AudioSettingsType = {
   musicEnabled: true,
   soundEnabled: true,
 };
-
-export const LOCKED_PLAYERS = 7;

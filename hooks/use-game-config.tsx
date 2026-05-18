@@ -149,7 +149,7 @@ export function GameConfigProvider({ children }: { children: ReactNode }) {
   const resetGameConfig = () => {
     setConfig(DEFAULT_GAME_CONFIG);
 
-    void AsyncStorage.removeItem(GAME_CONFIG_KEY);
+    AsyncStorage.removeItem(GAME_CONFIG_KEY);
   };
 
   const value = useMemo(

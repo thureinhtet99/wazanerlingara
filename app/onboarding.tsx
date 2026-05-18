@@ -22,9 +22,7 @@ export default function Onboarding() {
   const totalScreen = ONBOARDING_STEPS.length;
 
   useEffect(() => {
-    if (completed) {
-      router.replace(CONFIG.HOME);
-    }
+    if (completed) router.replace(CONFIG.HOME);
   }, [completed]);
 
   if (loading || completed) return <Loading />;

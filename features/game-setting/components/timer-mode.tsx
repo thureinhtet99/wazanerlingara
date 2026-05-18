@@ -18,7 +18,7 @@ export default function TimerMode() {
 
   const timerMode = config?.gameSetting.timerMode ?? "turn";
   const isTurn = timerMode === "turn";
-  const turnTimer = config?.gameSetting.turnTimer || 5;
+  const turnTimer = config?.gameSetting.turnTimer || 10;
   const durationTimer = config?.gameSetting.durationTimer || 120;
 
   const timerValue = isTurn ? turnTimer : durationTimer;

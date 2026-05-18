@@ -4,6 +4,7 @@ import { Stack, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useMemo, useState } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import MainLayout from "@/components/layout/main-layout";
 import { images, svgs } from "@/constants/icons";
@@ -48,7 +49,7 @@ function AppRoutes() {
     }
 
     setDidStartNonCriticalWarmup(true);
-    void Asset.loadAsync(NON_CRITICAL_ASSET_MODULES);
+    Asset.loadAsync(NON_CRITICAL_ASSET_MODULES);
   }, [startupReady, didStartNonCriticalWarmup]);
 
   useEffect(() => {
@@ -56,7 +57,7 @@ function AppRoutes() {
       return;
     }
 
-    void SplashScreen.hideAsync();
+    SplashScreen.hideAsync();
   }, [startupReady]);
 
   const routes = useMemo(
@@ -88,9 +89,7 @@ function AppRoutes() {
     [completed],
   );
 
-  if (!startupReady) {
-    return <Loading />;
-  }
+  if (!startupReady) return <Loading />;
 
   return (
     <>
@@ -102,10 +101,12 @@ function AppRoutes() {
 
 export default function RootLayout() {
   return (
-    <AudioSettingsProvider>
-      <GameConfigProvider>
-        <AppRoutes />
-      </GameConfigProvider>
-    </AudioSettingsProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AudioSettingsProvider>
+        <GameConfigProvider>
+          <AppRoutes />
+        </GameConfigProvider>
+      </AudioSettingsProvider>
+    </GestureHandlerRootView>
   );
 }

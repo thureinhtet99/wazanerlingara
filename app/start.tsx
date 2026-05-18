@@ -15,6 +15,7 @@ import { CONFIG } from "@/constants/config";
 import { ThemeTokens } from "@/constants/theme";
 import { themeTokens } from "@/constants/theme-tokens";
 import { AVATAR_IDS } from "@/features/role-reveal/lib/avatar";
+import { shuffleArray } from "@/features/role-reveal/lib/shuffle";
 import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { useGameConfig } from "@/hooks/use-game-config";
 import { changeToMMNumber } from "@/lib/change-to-mm-number";
@@ -23,26 +24,23 @@ import { PlayerType } from "@/types/index.types";
 const MIN_PLAYERS = 3;
 const MAX_PLAYERS = 10;
 
-type PlayerInputType = Pick<PlayerType, "id" | "name">;
-
-const createPlayerInput = (name = ""): PlayerInputType => ({
+const createPlayerInput = (name = ""): Pick<PlayerType, "id" | "name"> => ({
   id: Crypto.randomUUID(),
   name,
 });
 
 export default function Start() {
   const { config, loading, updateGameConfig } = useGameConfig();
+
   const router = useRouter();
   const { playClickSound } = useAudioSettings();
 
-  const [playerInputs, setPlayerInputs] = useState<PlayerInputType[]>([
-    createPlayerInput(),
-  ]);
+  const [playerInputs, setPlayerInputs] = useState<
+    Pick<PlayerType, "id" | "name">[]
+  >([createPlayerInput()]);
 
   useEffect(() => {
-    if (loading || config.players.length === 0) {
-      return;
-    }
+    if (loading || config.players.length === 0) return;
 
     setPlayerInputs(
       config.players.map((player) => ({
@@ -91,15 +89,15 @@ export default function Start() {
   };
 
   const handleStartGame = () => {
-    if (!canStartGame) {
-      return;
-    }
+    if (!canStartGame) return;
+
+    const shuffledAvatarIds = shuffleArray([...AVATAR_IDS]);
 
     updateGameConfig({
       players: validPlayers.map((name, index) => ({
         id: Crypto.randomUUID(),
         name,
-        imageId: AVATAR_IDS[index % AVATAR_IDS.length],
+        imageId: shuffledAvatarIds[index % shuffledAvatarIds.length],
       })),
     });
 

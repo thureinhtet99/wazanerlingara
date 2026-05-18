@@ -15,9 +15,7 @@ export const useOnboarding = () => {
         const value = await AsyncStorage.getItem(CONFIG.ONBOARDING_KEY);
         if (isMounted) setCompleted(value === "completed");
       } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
+        if (isMounted) setLoading(false);
       }
     };
 

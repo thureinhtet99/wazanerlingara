@@ -1,5 +1,9 @@
 import { Href } from "expo-router";
-import { type StyleProp, type ViewStyle } from "react-native";
+import {
+  ImageSourcePropType,
+  type StyleProp,
+  type ViewStyle,
+} from "react-native";
 
 import type { SvgKey } from "@/constants/icons";
 import type { AvatarId } from "@/features/role-reveal/lib/avatar";
@@ -11,7 +15,7 @@ export type ModeType = {
   id: GameType;
   title: string;
   desc: string;
-  icon: string | null;
+  icon: ImageSourcePropType;
 };
 
 export type PlayerType = {
@@ -141,7 +145,6 @@ export type GameConfigType = {
   gameSetting: GameSettingType;
   word: WordType | null;
   question: QuestionType | null;
-  roundCount: number;
   imposterIds: string[];
   roleRevealTime: number;
 };

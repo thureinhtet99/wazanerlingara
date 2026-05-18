@@ -1,9 +1,8 @@
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { Pressable, View } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
-import { LOCKED_PLAYERS } from "@/constants/config";
 import { ThemeTokens } from "@/constants/theme";
 import { themeTokens } from "@/constants/theme-tokens";
 import { useAudioSettings } from "@/hooks/use-audio-settings";
@@ -21,7 +20,7 @@ const ImposterCounter = () => {
   const playerCount = config.players.length;
   const currentCount = config.gameSetting.imposterCount;
   const min = 1;
-  const max = playerCount === LOCKED_PLAYERS ? 2 : 1;
+  const max = Math.max(1, Math.floor(playerCount / 2));
   const boundedCount = getAllowedImposterCount(playerCount, currentCount);
 
   useEffect(() => {
@@ -47,22 +46,16 @@ const ImposterCounter = () => {
   };
 
   const increaseCount = () => {
-    if (boundedCount < max) {
-      setCount(boundedCount + 1);
-    }
+    if (boundedCount < max) setCount(boundedCount + 1);
 
     playClickSound();
   };
 
   const decreaseCount = () => {
-    if (boundedCount > min) {
-      setCount(boundedCount - 1);
-    }
+    if (boundedCount > min) setCount(boundedCount - 1);
 
     playClickSound();
   };
-
-  const locked = playerCount < LOCKED_PLAYERS;
 
   return (
     <View className="rounded-2xl border border-white px-4 py-6 bg-neutral-500/10 gap-4">
@@ -123,19 +116,6 @@ const ImposterCounter = () => {
             </ThemedText>
           </Pressable>
         </View>
-      </View>
-
-      <View className="flex-row items-start gap-2">
-        <MaterialCommunityIcons
-          name="alert-circle-outline"
-          size={22}
-          color={themeTokens.palette.info[400]}
-        />
-        <ThemedText type="default" className="flex-1">
-          {locked
-            ? "ကစားသမား ၇ ယောက်မပြည့်လို့ Imposter ကို ၁ ယောက်ပဲသတ်မှတ်ထားပါတယ်။"
-            : "ကစားသမား ၇ ယောက်ပြည့်လို့ Imposter ၁ ယောက် (သို့) ၂ ယောက် ရွေးနိုင်ပါတယ်။"}
-        </ThemedText>
       </View>
     </View>
   );

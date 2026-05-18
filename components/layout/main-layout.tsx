@@ -1,9 +1,18 @@
 import { ReactNode } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { useGameConfig } from "@/hooks/use-game-config";
+
 import { ThemedView } from "../themed-view";
 
 export default function MainLayout({ children }: { children: ReactNode }) {
+  const { config, resetGameConfig } = useGameConfig();
+  console.log(config);
+
+  // useEffect(() => {
+  //   resetGameConfig();
+  // }, []);
+
   return (
     <ThemedView className="flex-1">
       <SafeAreaView className="flex-1 overflow-x-hidden">

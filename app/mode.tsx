@@ -16,7 +16,6 @@ import Loading from "./loading";
 
 export default function Mode() {
   const { config, loading, updateGameConfig } = useGameConfig();
-
   const [mode, setMode] = useState<GameType | undefined>(config?.gameMode);
   const { playClickSound } = useAudioSettings();
 

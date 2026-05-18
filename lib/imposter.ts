@@ -1,16 +1,12 @@
-import { LOCKED_PLAYERS } from "@/constants/config";
-
 type PlayerWithId = { id: string };
 
 export function getAllowedImposterCount(
   playerCount: number,
   requestedCount: number,
 ): number {
-  if (playerCount === LOCKED_PLAYERS) {
-    return requestedCount >= 2 ? 2 : 1;
-  }
+  const maxAllowedCount = Math.max(1, Math.floor(playerCount / 2));
 
-  return 1;
+  return Math.min(Math.max(requestedCount, 1), maxAllowedCount);
 }
 
 export function pickRandomImposterIds(

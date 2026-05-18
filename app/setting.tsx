@@ -60,7 +60,7 @@ export default function Setting() {
       <View className="mb-6 mt-1 flex-row items-start justify-center">
         <BackButton />
 
-        <ThemedText type="title">Setting</ThemedText>
+        <ThemedText type="title">Settings</ThemedText>
       </View>
 
       <View className="flex-1 gap-6">

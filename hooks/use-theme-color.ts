@@ -16,13 +16,10 @@ export function useThemeColor(
   const theme = useColorScheme() ?? "light";
   const colorFromProps = props[theme];
 
-  if (colorFromProps) {
-    return colorFromProps;
-  }
+  if (colorFromProps) return colorFromProps;
 
-  if (colorName in ThemeTokens.ui.light) {
+  if (colorName in ThemeTokens.ui.light)
     return ThemeTokens.ui[theme][colorName as SemanticColorName];
-  }
 
   return Colors[theme][colorName as RuntimeColorName];
 }
