@@ -1,70 +1,81 @@
 {
-	"expo": {
-		"name": "Wazanerlingara",
-		"slug": "wazanerlingara",
-		"version": "1.0.0",
-		"orientation": "portrait",
-		"icon": "./assets/images/logo.png",
-		"scheme": "wazanerlingara",
-		"userInterfaceStyle": "automatic",
-		"newArchEnabled": true,
-		"ios": {
-			"supportsTablet": true
-		},
-		"android": {
-			"softwareKeyboardLayoutMode": "pan",
-			"adaptiveIcon": {
-				"backgroundColor": "#f63b3b",
-				"foregroundImage": "./assets/images/foreground.png",
-				"monochromeImage": "./assets/images/mono.png"
-			},
-			"edgeToEdgeEnabled": true,
-			"predictiveBackGestureEnabled": false,
-			"permissions": [
-				"android.permission.RECORD_AUDIO",
-				"android.permission.MODIFY_AUDIO_SETTINGS"
-			],
-			"package": "com.thurein_htet99.wazanerlingara"
-		},
-		"web": {
-			"output": "static",
-			"favicon": "./assets/images/logo.png",
-			"bundler": "metro"
-		},
-		"plugins": [
-			"expo-router",
-			[
-				"expo-font",
-				{
-					"fonts": ["./assets/fonts/handwrittenFont.ttf"]
-				}
-			],
-			[
-				"expo-splash-screen",
-				{
-					"image": "./assets/images/logo.png",
-					"imageWidth": 200,
-					"resizeMode": "cover",
-					"backgroundColor": "#f63b3b",
-					"dark": {
-						"backgroundColor": "#f63b3b"
-					}
-				}
-			],
-			"expo-audio",
-			"expo-asset",
-			"expo-web-browser"
-		],
-		"experiments": {
-			"typedRoutes": true,
-			"reactCompiler": true
-		},
-		"extra": {
-			"router": {},
-			"eas": {
-				"projectId": "3bd212f5-291c-427b-9233-f10b058cb119"
-			}
-		},
-		"owner": "thurein_htet99"
-	}
+  "expo": {
+    "name": "Wazanerlingara",
+    "slug": "wazanerlingara",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/logo.png",
+    "scheme": "wazanerlingara",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "softwareKeyboardLayoutMode": "pan",
+      "adaptiveIcon": {
+        "backgroundColor": "#f63b3b",
+        "foregroundImage": "./assets/images/foreground.png",
+        "monochromeImage": "./assets/images/mono.png"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "package": "com.thurein_htet99.wazanerlingara"
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/logo.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/handwrittenFont.ttf"
+          ]
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/logo.png",
+          "imageWidth": 200,
+          "resizeMode": "cover",
+          "backgroundColor": "#f63b3b",
+          "dark": {
+            "backgroundColor": "#f63b3b"
+          }
+        }
+      ],
+      "expo-audio",
+      "expo-asset",
+      "expo-web-browser",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableMinifyInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "3bd212f5-291c-427b-9233-f10b058cb119"
+      }
+    },
+    "owner": "thurein_htet99"
+  }
 }
