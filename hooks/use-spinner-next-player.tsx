@@ -4,15 +4,15 @@
 let goToNextPlayerRef: (() => void) | null = null;
 
 export const registerGoToNextPlayer = (fn: () => void) => {
-  goToNextPlayerRef = fn;
+	goToNextPlayerRef = fn;
 };
 
 export const callGoToNextPlayer = () => {
-  if (goToNextPlayerRef) {
-    goToNextPlayerRef();
-  }
+	if (goToNextPlayerRef) {
+		goToNextPlayerRef();
+	}
 };
 
 export const resetGoToNextPlayer = () => {
-  goToNextPlayerRef = null;
+	goToNextPlayerRef = null;
 };

@@ -9,226 +9,226 @@ import { useAudioSettings } from "@/hooks/use-audio-settings";
 import { useGameConfig } from "@/hooks/use-game-config";
 
 export default function TimerMode() {
-  const { config, updateGameConfig } = useGameConfig();
-  const { playClickSound } = useAudioSettings();
+	const { config, updateGameConfig } = useGameConfig();
+	const { playClickSound } = useAudioSettings();
 
-  const [pressedButton, setPressedButton] = useState<
-    "increase" | "decrease" | null
-  >(null);
+	const [pressedButton, setPressedButton] = useState<
+		"increase" | "decrease" | null
+	>(null);
 
-  const timerMode = config?.gameSetting.timerMode ?? "turn";
-  const isTurn = timerMode === "turn";
-  const turnTimer = config?.gameSetting.turnTimer || 10;
-  const durationTimer = config?.gameSetting.durationTimer || 120;
+	const timerMode = config?.gameSetting.timerMode ?? "turn";
+	const isTurn = timerMode === "turn";
+	const turnTimer = config?.gameSetting.turnTimer || 10;
+	const durationTimer = config?.gameSetting.durationTimer || 120;
 
-  const timerValue = isTurn ? turnTimer : durationTimer;
-  const min = isTurn ? 5 : 60;
-  const max = isTurn ? 60 : 600;
-  const step = isTurn ? 5 : 60;
-  const progressPercent = ((timerValue - min) / (max - min)) * 100;
+	const timerValue = isTurn ? turnTimer : durationTimer;
+	const min = isTurn ? 5 : 60;
+	const max = isTurn ? 60 : 600;
+	const step = isTurn ? 5 : 60;
+	const progressPercent = ((timerValue - min) / (max - min)) * 100;
 
-  const setTimer = (value: number) => {
-    const nextValue = Math.min(max, Math.max(min, value));
-    if (!config) return;
+	const setTimer = (value: number) => {
+		const nextValue = Math.min(max, Math.max(min, value));
+		if (!config) return;
 
-    if (isTurn) {
-      updateGameConfig({
-        gameSetting: {
-          ...config.gameSetting,
-          turnTimer: nextValue,
-        },
-      });
-      return;
-    }
+		if (isTurn) {
+			updateGameConfig({
+				gameSetting: {
+					...config.gameSetting,
+					turnTimer: nextValue,
+				},
+			});
+			return;
+		}
 
-    updateGameConfig({
-      gameSetting: {
-        ...config.gameSetting,
-        durationTimer: nextValue,
-      },
-    });
-  };
+		updateGameConfig({
+			gameSetting: {
+				...config.gameSetting,
+				durationTimer: nextValue,
+			},
+		});
+	};
 
-  const isPressed = (type: "increase" | "decrease") => pressedButton === type;
+	const isPressed = (type: "increase" | "decrease") => pressedButton === type;
 
-  const increaseTimer = () => {
-    if (timerValue < max) setTimer(timerValue + step);
-    playClickSound();
-  };
+	const increaseTimer = () => {
+		if (timerValue < max) setTimer(timerValue + step);
+		playClickSound();
+	};
 
-  const decreaseTimer = () => {
-    if (timerValue > min) setTimer(timerValue - step);
-    playClickSound();
-  };
+	const decreaseTimer = () => {
+		if (timerValue > min) setTimer(timerValue - step);
+		playClickSound();
+	};
 
-  const formatTimerValue = () => {
-    if (isTurn) {
-      return `00:${String(timerValue).padStart(2, "0")}`;
-    }
+	const formatTimerValue = () => {
+		if (isTurn) {
+			return `00:${String(timerValue).padStart(2, "0")}`;
+		}
 
-    return `${String(Math.floor(timerValue / 60)).padStart(2, "0")}:${String(timerValue % 60).padStart(2, "0")}`;
-  };
+		return `${String(Math.floor(timerValue / 60)).padStart(2, "0")}:${String(timerValue % 60).padStart(2, "0")}`;
+	};
 
-  return (
-    <View className="rounded-3xl border border-white p-4 bg-neutral-500/10">
-      <View className="mb-6 flex-row items-center gap-2">
-        <MaterialCommunityIcons
-          name="timer-outline"
-          size={34}
-          color={themeTokens.ui.white}
-        />
-        <ThemedText type="description">Timing Modeကို ရွေးချယ်ပါ</ThemedText>
-      </View>
+	return (
+		<View className="rounded-3xl border border-white p-4 bg-neutral-500/10">
+			<View className="mb-6 flex-row items-center gap-2">
+				<MaterialCommunityIcons
+					name="timer-outline"
+					size={34}
+					color={themeTokens.ui.white}
+				/>
+				<ThemedText type="description">Timing Modeကို ရွေးချယ်ပါ</ThemedText>
+			</View>
 
-      <View className="mb-6 flex-row items-center gap-1 rounded-2xl border border-white p-1">
-        <Pressable
-          onPress={() => {
-            updateGameConfig({
-              gameSetting: {
-                timerMode: "turn",
-              },
-            });
-            playClickSound();
-          }}
-          className={`flex-1 px-3 py-4 flex-row items-center justify-center gap-1 rounded-2xl ${isTurn ? "bg-white" : "bg-transparent"}`}
-        >
-          <Ionicons
-            name="person-sharp"
-            size={32}
-            color={isTurn ? themeTokens.ui.black : themeTokens.ui.white}
-          />
+			<View className="mb-6 flex-row items-center gap-1 rounded-2xl border border-white p-1">
+				<Pressable
+					onPress={() => {
+						updateGameConfig({
+							gameSetting: {
+								timerMode: "turn",
+							},
+						});
+						playClickSound();
+					}}
+					className={`flex-1 px-3 py-4 flex-row items-center justify-center gap-1 rounded-2xl ${isTurn ? "bg-white" : "bg-transparent"}`}
+				>
+					<Ionicons
+						name="person-sharp"
+						size={32}
+						color={isTurn ? themeTokens.ui.black : themeTokens.ui.white}
+					/>
 
-          <ThemedText
-            type="description"
-            style={{
-              color: isTurn ? ThemeTokens.ui.black : ThemeTokens.ui.white,
-            }}
-          >
-            Turn Timer
-          </ThemedText>
-        </Pressable>
+					<ThemedText
+						type="description"
+						style={{
+							color: isTurn ? ThemeTokens.ui.black : ThemeTokens.ui.white,
+						}}
+					>
+						Turn Timer
+					</ThemedText>
+				</Pressable>
 
-        <Pressable
-          onPress={() => {
-            updateGameConfig({
-              gameSetting: {
-                timerMode: "duration",
-              },
-            });
-            playClickSound();
-          }}
-          className={`flex-1 px-3 py-4 flex-row items-center justify-center gap-2 rounded-2xl ${!isTurn ? "bg-white" : "bg-transparent"}`}
-        >
-          <Ionicons
-            name="people-sharp"
-            size={34}
-            color={!isTurn ? themeTokens.ui.black : themeTokens.ui.white}
-          />
-          <ThemedText
-            type="description"
-            style={{
-              color: !isTurn ? ThemeTokens.ui.black : ThemeTokens.ui.white,
-            }}
-          >
-            Duration Timer
-          </ThemedText>
-        </Pressable>
-      </View>
+				<Pressable
+					onPress={() => {
+						updateGameConfig({
+							gameSetting: {
+								timerMode: "duration",
+							},
+						});
+						playClickSound();
+					}}
+					className={`flex-1 px-3 py-4 flex-row items-center justify-center gap-2 rounded-2xl ${!isTurn ? "bg-white" : "bg-transparent"}`}
+				>
+					<Ionicons
+						name="people-sharp"
+						size={34}
+						color={!isTurn ? themeTokens.ui.black : themeTokens.ui.white}
+					/>
+					<ThemedText
+						type="description"
+						style={{
+							color: !isTurn ? ThemeTokens.ui.black : ThemeTokens.ui.white,
+						}}
+					>
+						Duration Timer
+					</ThemedText>
+				</Pressable>
+			</View>
 
-      <View className="items-center">
-        <ThemedText type="title">{formatTimerValue()}</ThemedText>
-        <ThemedText type="description" className="mb-6">
-          {isTurn ? "seconds per turn" : "seconds per round"}
-        </ThemedText>
+			<View className="items-center">
+				<ThemedText type="title">{formatTimerValue()}</ThemedText>
+				<ThemedText type="description" className="mb-6">
+					{isTurn ? "seconds per turn" : "seconds per round"}
+				</ThemedText>
 
-        <View className="mb-6 w-full flex-row items-start gap-4">
-          <Pressable
-            onPress={decreaseTimer}
-            onPressIn={() => setPressedButton("decrease")}
-            onPressOut={() => setPressedButton(null)}
-            className={`rounded-full w-8 h-8 flex items-center justify-center ${isPressed("decrease") ? "bg-red-500" : "bg-white"}`}
-          >
-            <ThemedText
-              type="defaultSemiBold"
-              style={{
-                color: isPressed("decrease")
-                  ? ThemeTokens.ui.white
-                  : ThemeTokens.ui.black,
-                fontSize: 30,
-                lineHeight: 28,
-              }}
-            >
-              −
-            </ThemedText>
-          </Pressable>
+				<View className="mb-6 w-full flex-row items-start gap-4">
+					<Pressable
+						onPress={decreaseTimer}
+						onPressIn={() => setPressedButton("decrease")}
+						onPressOut={() => setPressedButton(null)}
+						className={`rounded-full w-8 h-8 flex items-center justify-center ${isPressed("decrease") ? "bg-red-500" : "bg-white"}`}
+					>
+						<ThemedText
+							type="defaultSemiBold"
+							style={{
+								color: isPressed("decrease")
+									? ThemeTokens.ui.white
+									: ThemeTokens.ui.black,
+								fontSize: 30,
+								lineHeight: 28,
+							}}
+						>
+							−
+						</ThemedText>
+					</Pressable>
 
-          <View className="flex-1 mt-1.5">
-            <View className="relative h-4 justify-center">
-              <View
-                className="h-1.5 w-full rounded-full border-b border-white"
-                style={{ backgroundColor: ThemeTokens.ui.timerTrack }}
-              />
-              <View
-                className="absolute left-0 h-1 rounded-full"
-                style={{
-                  backgroundColor: ThemeTokens.ui.timerProgress,
-                  width: `${progressPercent}%`,
-                }}
-              />
-              <View
-                className="absolute h-5 w-5 rounded-full bg-white"
-                style={{ left: `${progressPercent}%`, marginLeft: -8 }}
-              />
-            </View>
+					<View className="flex-1 mt-1.5">
+						<View className="relative h-4 justify-center">
+							<View
+								className="h-1.5 w-full rounded-full border-b border-white"
+								style={{ backgroundColor: ThemeTokens.ui.timerTrack }}
+							/>
+							<View
+								className="absolute left-0 h-1 rounded-full"
+								style={{
+									backgroundColor: ThemeTokens.ui.timerProgress,
+									width: `${progressPercent}%`,
+								}}
+							/>
+							<View
+								className="absolute h-5 w-5 rounded-full bg-white"
+								style={{ left: `${progressPercent}%`, marginLeft: -8 }}
+							/>
+						</View>
 
-            <View className="mt-1 flex-row justify-between">
-              <ThemedText type="default">
-                {isTurn ? `${min}s` : `${Math.floor(min / 60)}min`}
-              </ThemedText>
-              <ThemedText type="default">
-                {isTurn ? `${max}s` : `${Math.floor(max / 60)}mins`}
-              </ThemedText>
-            </View>
-          </View>
+						<View className="mt-1 flex-row justify-between">
+							<ThemedText type="default">
+								{isTurn ? `${min}s` : `${Math.floor(min / 60)}min`}
+							</ThemedText>
+							<ThemedText type="default">
+								{isTurn ? `${max}s` : `${Math.floor(max / 60)}mins`}
+							</ThemedText>
+						</View>
+					</View>
 
-          <Pressable
-            onPress={increaseTimer}
-            onPressIn={() => setPressedButton("increase")}
-            onPressOut={() => setPressedButton(null)}
-            className={`rounded-full w-8 h-8 flex items-center justify-center ${isPressed("increase") ? "bg-red-500" : "bg-white"}`}
-          >
-            <ThemedText
-              type="defaultSemiBold"
-              style={{
-                color: isPressed("increase")
-                  ? ThemeTokens.ui.white
-                  : ThemeTokens.ui.black,
-                fontSize: 30,
-                lineHeight: 24,
-              }}
-            >
-              +
-            </ThemedText>
-          </Pressable>
-        </View>
+					<Pressable
+						onPress={increaseTimer}
+						onPressIn={() => setPressedButton("increase")}
+						onPressOut={() => setPressedButton(null)}
+						className={`rounded-full w-8 h-8 flex items-center justify-center ${isPressed("increase") ? "bg-red-500" : "bg-white"}`}
+					>
+						<ThemedText
+							type="defaultSemiBold"
+							style={{
+								color: isPressed("increase")
+									? ThemeTokens.ui.white
+									: ThemeTokens.ui.black,
+								fontSize: 30,
+								lineHeight: 24,
+							}}
+						>
+							+
+						</ThemedText>
+					</Pressable>
+				</View>
 
-        <View className="flex-row items-start my-4 gap-2">
-          <MaterialCommunityIcons
-            name="alert-circle-outline"
-            size={22}
-            color={themeTokens.palette.info[400]}
-          />
-          <ThemedText
-            type="default"
-            style={{ color: ThemeTokens.ui.white }}
-            className="flex-1"
-          >
-            {isTurn
-              ? "ကစားသမား တစ်ယောက်ချင်းစီအတွက် (ဥပမာ- စက္ကန့် ၃၀ စီ) ညီတူညီမျှ အချိန်ရပါမယ်။ ကိုယ့်အလှည့်ပြီးရင် နောက်တစ်ယောက်အတွက် Timerအသစ် ပြန်စပါမယ်။"
-              : "ကစားပွဲတစ်ခုလုံးအတွက် အချိန်တစ်ခုပဲ ရှိပါမယ် (ဥပမာ- ၃ မိနစ်)။ သတ်မှတ်ထားတဲ့ အချိန်အတွင်းမှာပဲ အားလုံး တလှည့်စီ ကစားရမှာဖြစ်ပြီး၊ အချင်းချင်း ဆွေးနွေးငြင်းခုံချင်တယ်ဆိုရင်တော့ Timer ကိုခေတ္တရပ် (Pause) နိုင်ပါတယ်။"}
-          </ThemedText>
-        </View>
-      </View>
-    </View>
-  );
+				<View className="flex-row items-start my-4 gap-2">
+					<MaterialCommunityIcons
+						name="alert-circle-outline"
+						size={22}
+						color={themeTokens.palette.info[400]}
+					/>
+					<ThemedText
+						type="default"
+						style={{ color: ThemeTokens.ui.white }}
+						className="flex-1"
+					>
+						{isTurn
+							? "ကစားသမား တစ်ယောက်ချင်းစီအတွက် (ဥပမာ- စက္ကန့် ၃၀ စီ) ညီတူညီမျှ အချိန်ရပါမယ်။ ကိုယ့်အလှည့်ပြီးရင် နောက်တစ်ယောက်အတွက် Timerအသစ် ပြန်စပါမယ်။"
+							: "ကစားပွဲတစ်ခုလုံးအတွက် အချိန်တစ်ခုပဲ ရှိပါမယ် (ဥပမာ- ၃ မိနစ်)။ သတ်မှတ်ထားတဲ့ အချိန်အတွင်းမှာပဲ အားလုံး တလှည့်စီ ကစားရမှာဖြစ်ပြီး၊ အချင်းချင်း ဆွေးနွေးငြင်းခုံချင်တယ်ဆိုရင်တော့ Timer ကိုခေတ္တရပ် (Pause) နိုင်ပါတယ်။"}
+					</ThemedText>
+				</View>
+			</View>
+		</View>
+	);
 }

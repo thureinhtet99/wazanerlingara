@@ -21,6 +21,21 @@ const lineHeight = Object.fromEntries(
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  extends: ["stylelint-config-standard"],
+  rules: {
+    "at-rule-no-unknown": [
+      true,
+      {
+        ignoreAtRules: [
+          "tailwind",
+          "apply",
+          "variants",
+          "responsive",
+          "screen",
+        ],
+      },
+    ],
+  },
   content: [
     "./app/**/*.{js,jsx,ts,tsx}",
     "./components/**/*.{js,jsx,ts,tsx}",

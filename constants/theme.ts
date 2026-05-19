@@ -12,9 +12,9 @@ export const Colors = themeTokens.runtime;
 export const ThemeTokens = themeTokens;
 
 export const Typography = {
-  fontFamily: themeTokens.fontFamily,
-  fontSize: themeTokens.fontSize,
-  lineHeight: themeTokens.lineHeight,
+	fontFamily: themeTokens.fontFamily,
+	fontSize: themeTokens.fontSize,
+	lineHeight: themeTokens.lineHeight,
 };
 
 // export const Fonts = Platform.select({

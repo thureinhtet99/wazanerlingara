@@ -1,98 +1,98 @@
 import { useEffect, useState } from "react";
 
 import { DEFAULT_GAME_CONFIG } from "@/constants/config";
-import { PlayerType } from "@/types/index.types";
+import type { PlayerType } from "@/types/index.types";
 
 export function useRoleReveal(players: PlayerType[]) {
-  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
-  const [revealed, setRevealed] = useState(false);
-  const [confirmed, setConfirmed] = useState(false);
-  const [showBlur, setShowBlur] = useState(false);
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
+	const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+	const [revealed, setRevealed] = useState(false);
+	const [confirmed, setConfirmed] = useState(false);
+	const [showBlur, setShowBlur] = useState(false);
+	const [isTimerRunning, setIsTimerRunning] = useState(false);
 
-  const [timeLeft, setTimeLeft] = useState(DEFAULT_GAME_CONFIG.roleRevealTime);
-  const [isResettingProgressBar, setIsResettingProgressBar] = useState(false);
+	const [timeLeft, setTimeLeft] = useState(DEFAULT_GAME_CONFIG.roleRevealTime);
+	const [isResettingProgressBar, setIsResettingProgressBar] = useState(false);
 
-  const currentPlayer = players[currentPlayerIndex];
-  const nextPlayer = players[currentPlayerIndex + 1];
+	const currentPlayer = players[currentPlayerIndex];
+	const nextPlayer = players[currentPlayerIndex + 1];
 
-  useEffect(() => {
-    if (!isTimerRunning) {
-      return;
-    }
+	useEffect(() => {
+		if (!isTimerRunning) {
+			return;
+		}
 
-    if (timeLeft <= 0) {
-      setIsTimerRunning(false);
+		if (timeLeft <= 0) {
+			setIsTimerRunning(false);
 
-      if (!confirmed) {
-        setConfirmed(true);
-        setRevealed(false);
-        setShowBlur(false);
-      }
+			if (!confirmed) {
+				setConfirmed(true);
+				setRevealed(false);
+				setShowBlur(false);
+			}
 
-      return;
-    }
+			return;
+		}
 
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
-    }, 1000);
+		const timer = setInterval(() => {
+			setTimeLeft((prev) => prev - 1);
+		}, 1000);
 
-    return () => clearInterval(timer);
-  }, [timeLeft, confirmed, isTimerRunning]);
+		return () => clearInterval(timer);
+	}, [timeLeft, confirmed, isTimerRunning]);
 
-  const handleClickCard = () => {
-    if (timeLeft <= 0 || revealed || showBlur || confirmed) {
-      return;
-    }
+	const handleClickCard = () => {
+		if (timeLeft <= 0 || revealed || showBlur || confirmed) {
+			return;
+		}
 
-    setShowBlur(true);
-  };
+		setShowBlur(true);
+	};
 
-  const handleReveal = () => {
-    if (!showBlur || revealed || confirmed) {
-      return;
-    }
+	const handleReveal = () => {
+		if (!showBlur || revealed || confirmed) {
+			return;
+		}
 
-    setShowBlur(false);
-    setRevealed(true);
+		setShowBlur(false);
+		setRevealed(true);
 
-    setIsTimerRunning(true);
-  };
+		setIsTimerRunning(true);
+	};
 
-  const goToNextPlayer = () => {
-    if (timeLeft > 0 || !confirmed) {
-      return;
-    }
+	const goToNextPlayer = () => {
+		if (timeLeft > 0 || !confirmed) {
+			return;
+		}
 
-    if (currentPlayerIndex >= players.length - 1) {
-      return;
-    }
+		if (currentPlayerIndex >= players.length - 1) {
+			return;
+		}
 
-    setIsResettingProgressBar(true);
+		setIsResettingProgressBar(true);
 
-    setCurrentPlayerIndex((i) => i + 1);
+		setCurrentPlayerIndex((i) => i + 1);
 
-    setTimeLeft(DEFAULT_GAME_CONFIG.roleRevealTime);
-    setRevealed(false);
-    setShowBlur(false);
-    setConfirmed(false);
-    setIsTimerRunning(false);
+		setTimeLeft(DEFAULT_GAME_CONFIG.roleRevealTime);
+		setRevealed(false);
+		setShowBlur(false);
+		setConfirmed(false);
+		setIsTimerRunning(false);
 
-    setTimeout(() => setIsResettingProgressBar(false), 50);
-  };
+		setTimeout(() => setIsResettingProgressBar(false), 50);
+	};
 
-  return {
-    currentPlayer,
-    nextPlayer,
-    currentPlayerIndex,
-    revealed,
-    confirmed,
-    showBlur,
-    timeLeft,
-    isResettingProgressBar,
+	return {
+		currentPlayer,
+		nextPlayer,
+		currentPlayerIndex,
+		revealed,
+		confirmed,
+		showBlur,
+		timeLeft,
+		isResettingProgressBar,
 
-    handleClickCard,
-    handleReveal,
-    goToNextPlayer,
-  };
+		handleClickCard,
+		handleReveal,
+		goToNextPlayer,
+	};
 }

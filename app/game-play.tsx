@@ -21,357 +21,355 @@ import { changeToMMNumber } from "@/lib/change-to-mm-number";
 import Loading from "./loading";
 
 export default function GamePlay() {
-  const scaleAnim = useRef(new Animated.Value(1)).current;
-  const { config, loading } = useGameConfig();
-  const { playClickSound } = useAudioSettings();
+	const scaleAnim = useRef(new Animated.Value(1)).current;
+	const { config, loading } = useGameConfig();
+	const { playClickSound } = useAudioSettings();
 
-  const timerMode = config.gameSetting.timerMode;
-  const totalDuration =
-    timerMode === "turn"
-      ? config.gameSetting.turnTimer
-      : config.gameSetting.durationTimer;
+	const timerMode = config.gameSetting.timerMode;
+	const totalDuration =
+		timerMode === "turn"
+			? config.gameSetting.turnTimer
+			: config.gameSetting.durationTimer;
 
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
-  const [remainingMs, setRemainingMs] = useState(totalDuration * 1000);
-  const [isTimerRunning, setIsTimerRunning] = useState(true);
-  const [isDiscussPaused, setIsDiscussPaused] = useState(false);
+	const [showConfirmModal, setShowConfirmModal] = useState(false);
+	const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+	const [remainingMs, setRemainingMs] = useState(totalDuration * 1000);
+	const [isTimerRunning, setIsTimerRunning] = useState(true);
+	const [isDiscussPaused, setIsDiscussPaused] = useState(false);
 
-  const lastTickRef = useRef<number | null>(null);
-  const wasTimerRunningBeforeExitRef = useRef(false);
-  const hasAutoNavigatedToVoteRef = useRef(false);
+	const lastTickRef = useRef<number | null>(null);
+	const wasTimerRunningBeforeExitRef = useRef(false);
+	const hasAutoNavigatedToVoteRef = useRef(false);
 
-  const players = config.players;
-  const playersLength = players.length;
-  const currentPlayer = players[currentPlayerIndex];
-  const nextPlayer = players[currentPlayerIndex + 1];
+	const players = config.players;
+	const playersLength = players.length;
+	const currentPlayer = players[currentPlayerIndex];
+	const nextPlayer = players[currentPlayerIndex + 1];
 
-  const categoryTitle =
-    CATEGORIES.find((item) => item.type === config.category)?.title ||
-    config.category;
+	const categoryTitle =
+		CATEGORIES.find((item) => item.type === config.category)?.title ||
+		config.category;
 
-  const isLastPlayer = currentPlayerIndex >= playersLength - 1;
-  const timeLeft = Math.max(Math.ceil(remainingMs / 1000), 0);
-  const arcProgress =
-    totalDuration > 0
-      ? Math.min(1, 1 - remainingMs / (totalDuration * 1000))
-      : 1;
-  const isWarning =
-    totalDuration > 0 && remainingMs <= totalDuration * 1000 * 0.4;
+	const isLastPlayer = currentPlayerIndex >= playersLength - 1;
+	const timeLeft = Math.max(Math.ceil(remainingMs / 1000), 0);
+	const arcProgress =
+		totalDuration > 0
+			? Math.min(1, 1 - remainingMs / (totalDuration * 1000))
+			: 1;
+	const isWarning =
+		totalDuration > 0 && remainingMs <= totalDuration * 1000 * 0.4;
 
-  // const canProceedNext = timerMode === "turn" ? timeLeft <= 0 : true;
+	useEffect(() => {
+		setCurrentPlayerIndex(0);
+		setRemainingMs(totalDuration * 1000);
+		setIsTimerRunning(true);
+		setIsDiscussPaused(false);
+		lastTickRef.current = null;
+		hasAutoNavigatedToVoteRef.current = false;
+	}, [totalDuration]);
 
-  useEffect(() => {
-    setCurrentPlayerIndex(0);
-    setRemainingMs(totalDuration * 1000);
-    setIsTimerRunning(true);
-    setIsDiscussPaused(false);
-    lastTickRef.current = null;
-    hasAutoNavigatedToVoteRef.current = false;
-  }, [timerMode, totalDuration, playersLength]);
+	useEffect(() => {
+		if (!isTimerRunning) {
+			lastTickRef.current = null;
+			return;
+		}
 
-  useEffect(() => {
-    if (!isTimerRunning) {
-      lastTickRef.current = null;
-      return;
-    }
+		let frameId = 0;
 
-    let frameId = 0;
+		const tick = (now: number) => {
+			if (lastTickRef.current === null) {
+				lastTickRef.current = now;
+			}
 
-    const tick = (now: number) => {
-      if (lastTickRef.current === null) {
-        lastTickRef.current = now;
-      }
+			const delta = now - lastTickRef.current;
+			lastTickRef.current = now;
 
-      const delta = now - lastTickRef.current;
-      lastTickRef.current = now;
+			setRemainingMs((prev) => Math.max(prev - delta, 0));
+			frameId = requestAnimationFrame(tick);
+		};
 
-      setRemainingMs((prev) => Math.max(prev - delta, 0));
-      frameId = requestAnimationFrame(tick);
-    };
+		frameId = requestAnimationFrame(tick);
 
-    frameId = requestAnimationFrame(tick);
+		return () => cancelAnimationFrame(frameId);
+	}, [isTimerRunning]);
 
-    return () => cancelAnimationFrame(frameId);
-  }, [isTimerRunning]);
+	useEffect(() => {
+		if (remainingMs <= 0 && isTimerRunning) {
+			setIsTimerRunning(false);
+		}
+	}, [remainingMs, isTimerRunning]);
 
-  useEffect(() => {
-    if (remainingMs <= 0 && isTimerRunning) {
-      setIsTimerRunning(false);
-    }
-  }, [remainingMs, isTimerRunning]);
+	useEffect(() => {
+		if (timerMode !== "duration") {
+			return;
+		}
 
-  useEffect(() => {
-    if (timerMode !== "duration") {
-      return;
-    }
+		if (remainingMs > 0 || hasAutoNavigatedToVoteRef.current) {
+			return;
+		}
 
-    if (remainingMs > 0 || hasAutoNavigatedToVoteRef.current) {
-      return;
-    }
+		hasAutoNavigatedToVoteRef.current = true;
+		router.replace(CONFIG.VOTE);
+	}, [timerMode, remainingMs]);
 
-    hasAutoNavigatedToVoteRef.current = true;
-    router.replace(CONFIG.VOTE);
-  }, [timerMode, remainingMs]);
+	const handleBack = useCallback(() => {
+		wasTimerRunningBeforeExitRef.current = isTimerRunning;
+		setIsTimerRunning(false);
+		setShowConfirmModal(true);
+		playClickSound();
+	}, [isTimerRunning, playClickSound]);
 
-  const handleBack = useCallback(() => {
-    wasTimerRunningBeforeExitRef.current = isTimerRunning;
-    setIsTimerRunning(false);
-    setShowConfirmModal(true);
-    playClickSound();
-  }, [isTimerRunning, playClickSound]);
+	const closeConfirmModal = useCallback(() => {
+		setShowConfirmModal(false);
 
-  const closeConfirmModal = useCallback(() => {
-    setShowConfirmModal(false);
+		if (
+			wasTimerRunningBeforeExitRef.current &&
+			remainingMs > 0 &&
+			!isDiscussPaused
+		) {
+			setIsTimerRunning(true);
+		}
+	}, [isDiscussPaused, remainingMs]);
 
-    if (
-      wasTimerRunningBeforeExitRef.current &&
-      remainingMs > 0 &&
-      !isDiscussPaused
-    ) {
-      setIsTimerRunning(true);
-    }
-  }, [isDiscussPaused, remainingMs]);
+	useFocusEffect(
+		useCallback(() => {
+			const subscription = BackHandler.addEventListener(
+				"hardwareBackPress",
+				() => {
+					if (showConfirmModal) {
+						closeConfirmModal();
+						return true;
+					}
 
-  useFocusEffect(
-    useCallback(() => {
-      const subscription = BackHandler.addEventListener(
-        "hardwareBackPress",
-        () => {
-          if (showConfirmModal) {
-            closeConfirmModal();
-            return true;
-          }
+					handleBack();
+					return true;
+				},
+			);
 
-          handleBack();
-          return true;
-        },
-      );
+			return () => subscription.remove();
+		}, [showConfirmModal, closeConfirmModal, handleBack]),
+	);
 
-      return () => subscription.remove();
-    }, [showConfirmModal, closeConfirmModal, handleBack]),
-  );
+	const handleExit = () => {
+		router.replace(CONFIG.GAME_SETTING);
+	};
 
-  const handleExit = () => {
-    router.replace(CONFIG.GAME_SETTING);
-  };
+	const handlePrimaryAction = () => {
+		if (!currentPlayer) return;
 
-  const handlePrimaryAction = () => {
-    if (!currentPlayer) return;
+		// if (timerMode === "turn" && !canProceedNext) return;
 
-    // if (timerMode === "turn" && !canProceedNext) return;
+		if (isLastPlayer) {
+			handleVote();
+			return;
+		}
 
-    if (isLastPlayer) {
-      handleVote();
-      return;
-    }
+		setCurrentPlayerIndex((prev) => Math.min(prev + 1, playersLength - 1));
 
-    setCurrentPlayerIndex((prev) => Math.min(prev + 1, playersLength - 1));
+		if (timerMode === "turn") {
+			setRemainingMs(totalDuration * 1000);
+			setIsTimerRunning(true);
+			lastTickRef.current = null;
+		}
+	};
 
-    if (timerMode === "turn") {
-      setRemainingMs(totalDuration * 1000);
-      setIsTimerRunning(true);
-      lastTickRef.current = null;
-    }
-  };
+	const handlePauseDuration = () => {
+		if (timerMode !== "duration") return;
 
-  const handlePauseDuration = () => {
-    if (timerMode !== "duration") return;
+		setIsTimerRunning(false);
+		setIsDiscussPaused(true);
+	};
 
-    setIsTimerRunning(false);
-    setIsDiscussPaused(true);
-  };
+	const handleContinue = () => {
+		if (timerMode !== "duration") return;
 
-  const handleContinue = () => {
-    if (timerMode !== "duration") return;
+		setIsDiscussPaused(false);
+		if (remainingMs > 0) {
+			setIsTimerRunning(true);
+		}
+	};
 
-    setIsDiscussPaused(false);
-    if (remainingMs > 0) {
-      setIsTimerRunning(true);
-    }
-  };
+	const handleVote = () => {
+		if (timerMode === "duration" && remainingMs > 0 && !isDiscussPaused) {
+			return;
+		}
 
-  const handleVote = () => {
-    if (timerMode === "duration" && remainingMs > 0 && !isDiscussPaused) {
-      return;
-    }
+		router.replace(CONFIG.VOTE);
+	};
 
-    router.replace(CONFIG.VOTE);
-  };
+	const handlePressIn = () => {
+		Animated.spring(scaleAnim, {
+			toValue: 0.95,
+			useNativeDriver: true,
+		}).start();
+	};
 
-  const handlePressIn = () => {
-    Animated.spring(scaleAnim, {
-      toValue: 0.95,
-      useNativeDriver: true,
-    }).start();
-  };
+	const handlePressOut = () => {
+		Animated.spring(scaleAnim, {
+			toValue: 1,
+			useNativeDriver: true,
+		}).start();
+	};
 
-  const handlePressOut = () => {
-    Animated.spring(scaleAnim, {
-      toValue: 1,
-      useNativeDriver: true,
-    }).start();
-  };
+	if (loading) return <Loading />;
 
-  if (loading) return <Loading />;
+	if (!currentPlayer) {
+		return (
+			<ThemedView className="flex-1 items-center justify-center px-6">
+				<ThemedText type="subtitle" className="text-center">
+					ကစားသမား မရှိသေးပါ။{" "}
+					<Link href={CONFIG.HOME} className="underline active:text-red-500">
+						Start screen
+					</Link>{" "}
+					မှာ player တွေထည့်ပြီး ပြန်ဝင်ပါ။
+				</ThemedText>
+			</ThemedView>
+		);
+	}
 
-  if (!currentPlayer) {
-    return (
-      <ThemedView className="flex-1 items-center justify-center px-6">
-        <ThemedText type="subtitle" className="text-center">
-          ကစားသမား မရှိသေးပါ။{" "}
-          <Link href={CONFIG.HOME} className="underline active:text-red-500">
-            Start screen
-          </Link>{" "}
-          မှာ player တွေထည့်ပြီး ပြန်ဝင်ပါ။
-        </ThemedText>
-      </ThemedView>
-    );
-  }
+	return (
+		<ThemedView className="flex-1 gap-6">
+			<View className="mb-6 mt-1 flex-row items-start justify-end">
+				<Animated.View
+					className="absolute right-0 top-0 items-center justify-center h-14 w-14"
+					style={{ transform: [{ scale: scaleAnim }] }}
+				>
+					<Pressable
+						onPressIn={handlePressIn}
+						onPressOut={handlePressOut}
+						onPress={() => {
+							playClickSound();
+							handleBack();
+						}}
+						accessibilityRole="button"
+						accessibilityLabel="Go back"
+						className="h-12 w-12 rounded-2xl items-center justify-center active:bg-background-400"
+					>
+						<Svg width={37} height={37} viewBox="0 0 37 37" fill="none">
+							<Rect width="36.7767" height="36.2333" rx="12" fill="#181818" />
+							<Rect
+								x="0.8"
+								y="0.8"
+								width="35.1767"
+								height="34.6333"
+								rx="11.1"
+								fill="none"
+								stroke="white"
+								strokeOpacity="0.18"
+								strokeWidth="1"
+							/>
+							<Rect
+								x="1.6"
+								y="1.6"
+								width="33.5767"
+								height="33.0333"
+								rx="10.3"
+								fill="none"
+								stroke="white"
+								strokeOpacity="0.1"
+								strokeWidth="0.8"
+							/>
+							<Rect
+								x="0.2"
+								y="0.2"
+								width="36.3767"
+								height="35.8333"
+								rx="11.8"
+								fill="none"
+								stroke="#B5B5B5"
+								strokeWidth="0.4"
+							/>
 
-  return (
-    <ThemedView className="flex-1 gap-6">
-      <View className="mb-6 mt-1 flex-row items-start justify-end">
-        <Animated.View
-          className="absolute right-0 top-0 items-center justify-center h-14 w-14"
-          style={{ transform: [{ scale: scaleAnim }] }}
-        >
-          <Pressable
-            onPressIn={handlePressIn}
-            onPressOut={handlePressOut}
-            onPress={() => {
-              playClickSound();
-              handleBack();
-            }}
-            accessibilityRole="button"
-            accessibilityLabel="Go back"
-            className="h-12 w-12 rounded-2xl items-center justify-center active:bg-background-400"
-          >
-            <Svg width={37} height={37} viewBox="0 0 37 37" fill="none">
-              <Rect width="36.7767" height="36.2333" rx="12" fill="#181818" />
-              <Rect
-                x="0.8"
-                y="0.8"
-                width="35.1767"
-                height="34.6333"
-                rx="11.1"
-                fill="none"
-                stroke="white"
-                strokeOpacity="0.18"
-                strokeWidth="1"
-              />
-              <Rect
-                x="1.6"
-                y="1.6"
-                width="33.5767"
-                height="33.0333"
-                rx="10.3"
-                fill="none"
-                stroke="white"
-                strokeOpacity="0.1"
-                strokeWidth="0.8"
-              />
-              <Rect
-                x="0.2"
-                y="0.2"
-                width="36.3767"
-                height="35.8333"
-                rx="11.8"
-                fill="none"
-                stroke="#B5B5B5"
-                strokeWidth="0.4"
-              />
+							<Ellipse
+								cx="6.56376"
+								cy="7.03625"
+								rx="4.1"
+								ry="1.5"
+								transform="rotate(-51 6.56376 7.03625)"
+								fill="white"
+								fillOpacity="0.88"
+							/>
+							<Ellipse
+								cx="30.3872"
+								cy="27.7834"
+								rx="3.35"
+								ry="1.25"
+								transform="rotate(-51 30.3872 27.7834)"
+								fill="white"
+								fillOpacity="0.88"
+							/>
+							<Ellipse
+								cx="3.5"
+								cy="13"
+								rx="0.5"
+								ry="1"
+								fill="white"
+								fillOpacity="0.88"
+							/>
+						</Svg>
+						<Animated.View className="absolute items-center justify-center">
+							<Entypo name="cross" size={30} color={ThemeTokens.ui.white} />
+						</Animated.View>
+					</Pressable>
+				</Animated.View>
+			</View>
 
-              <Ellipse
-                cx="6.56376"
-                cy="7.03625"
-                rx="4.1"
-                ry="1.5"
-                transform="rotate(-51 6.56376 7.03625)"
-                fill="white"
-                fillOpacity="0.88"
-              />
-              <Ellipse
-                cx="30.3872"
-                cy="27.7834"
-                rx="3.35"
-                ry="1.25"
-                transform="rotate(-51 30.3872 27.7834)"
-                fill="white"
-                fillOpacity="0.88"
-              />
-              <Ellipse
-                cx="3.5"
-                cy="13"
-                rx="0.5"
-                ry="1"
-                fill="white"
-                fillOpacity="0.88"
-              />
-            </Svg>
-            <Animated.View className="absolute items-center justify-center">
-              <Entypo name="cross" size={30} color={ThemeTokens.ui.white} />
-            </Animated.View>
-          </Pressable>
-        </Animated.View>
-      </View>
+			<View className="gap-3">
+				<ThemedText type="description" className="text-center">
+					အမျိုးအစား: {categoryTitle}
+				</ThemedText>
 
-      <View className="gap-3">
-        <ThemedText type="description" className="text-center">
-          အမျိုးအစား: {categoryTitle}
-        </ThemedText>
+				<ThemedText type="description" className="text-center">
+					Imposter အရေအတွက်: ({changeToMMNumber(config.gameSetting.imposterCount)}
+					) ယောက်
+				</ThemedText>
+			</View>
 
-        <ThemedText type="description" className="text-center">
-          Imposter အရေအတွက်: (
-          {changeToMMNumber(config.gameSetting.imposterCount)}) ယောက်
-        </ThemedText>
-      </View>
+			{timerMode === "turn" && (
+				<ThemedText type="title" className="text-center my-6">
+					လက်ရှိ အလှည့်ကျသူ: {currentPlayer.name}
+				</ThemedText>
+			)}
 
-      {timerMode === "turn" && (
-        <ThemedText type="title" className="text-center my-6">
-          လက်ရှိ အလှည့်ကျသူ: {currentPlayer.name}
-        </ThemedText>
-      )}
+			<View className="items-center justify-center my-6">
+				<TimerRing
+					timeLeft={timeLeft}
+					arcProgress={arcProgress}
+					isPaused={timerMode === "duration" && isDiscussPaused}
+					isWarning={isWarning}
+				/>
+			</View>
 
-      <View className="items-center justify-center my-6">
-        <TimerRing
-          timeLeft={timeLeft}
-          arcProgress={arcProgress}
-          isPaused={timerMode === "duration" && isDiscussPaused}
-          isWarning={isWarning}
-        />
-      </View>
+			<View className="mt-auto gap-4 w-full">
+				{timerMode === "turn" && (
+					<InstructionText
+						isLastPlayer={isLastPlayer}
+						nextPlayerName={nextPlayer?.name || "-"}
+					/>
+				)}
 
-      <View className="mt-auto gap-4 w-full">
-        {timerMode === "turn" && (
-          <InstructionText
-            isLastPlayer={isLastPlayer}
-            nextPlayerName={nextPlayer?.name || "-"}
-          />
-        )}
+				<BottomControls
+					timerMode={timerMode}
+					isLastPlayer={isLastPlayer}
+					// disabledPrimary={!canProceedNext}
+					isDiscussPaused={isDiscussPaused}
+					onPrimaryPress={handlePrimaryAction}
+					onPausePress={handlePauseDuration}
+					onContinuePress={handleContinue}
+					onVote={handleVote}
+				/>
+			</View>
 
-        <BottomControls
-          timerMode={timerMode}
-          isLastPlayer={isLastPlayer}
-          // disabledPrimary={!canProceedNext}
-          isDiscussPaused={isDiscussPaused}
-          onPrimaryPress={handlePrimaryAction}
-          onPausePress={handlePauseDuration}
-          onContinuePress={handleContinue}
-          onVote={handleVote}
-        />
-      </View>
-
-      <Modal
-        visible={showConfirmModal}
-        variant="error"
-        title="ဂိမ်းကိုရပ်မှာ သေချာပြီလား"
-        message="အခုထွက်လိုက်ရင် ကစားလက်စ ပွဲစဉ် ပျက်သွားပါလိမ့်မယ်။"
-        primaryButtonText="ထွက်မယ်"
-        secondaryButtonText="ဆက်ကစားမယ်"
-        onPrimaryPress={handleExit}
-        onSecondaryPress={closeConfirmModal}
-      />
-    </ThemedView>
-  );
+			<Modal
+				visible={showConfirmModal}
+				variant="error"
+				title="ဂိမ်းကိုရပ်မှာ သေချာပြီလား"
+				message="အခုထွက်လိုက်ရင် ကစားလက်စ ပွဲစဉ် ပျက်သွားပါလိမ့်မယ်။"
+				primaryButtonText="ထွက်မယ်"
+				secondaryButtonText="ဆက်ကစားမယ်"
+				onPrimaryPress={handleExit}
+				onSecondaryPress={closeConfirmModal}
+			/>
+		</ThemedView>
+	);
 }

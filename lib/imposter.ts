@@ -1,72 +1,72 @@
 type PlayerWithId = { id: string };
 
 export function getAllowedImposterCount(
-  playerCount: number,
-  requestedCount: number,
+	playerCount: number,
+	requestedCount: number,
 ): number {
-  const maxAllowedCount = Math.max(1, Math.floor(playerCount / 2));
+	const maxAllowedCount = Math.max(1, Math.floor(playerCount / 2));
 
-  return Math.min(Math.max(requestedCount, 1), maxAllowedCount);
+	return Math.min(Math.max(requestedCount, 1), maxAllowedCount);
 }
 
 export function pickRandomImposterIds(
-  players: PlayerWithId[],
-  requestedCount: number,
+	players: PlayerWithId[],
+	requestedCount: number,
 ): string[] {
-  const allowedCount = Math.min(
-    getAllowedImposterCount(players.length, requestedCount),
-    players.length,
-  );
+	const allowedCount = Math.min(
+		getAllowedImposterCount(players.length, requestedCount),
+		players.length,
+	);
 
-  if (allowedCount <= 0) {
-    return [];
-  }
+	if (allowedCount <= 0) {
+		return [];
+	}
 
-  const shuffled = [...players];
+	const shuffled = [...players];
 
-  for (let i = shuffled.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
+	for (let i = shuffled.length - 1; i > 0; i -= 1) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+	}
 
-  return shuffled.slice(0, allowedCount).map((player) => player.id);
+	return shuffled.slice(0, allowedCount).map((player) => player.id);
 }
 
 export function isImposter(playerId: string, imposterIds: string[]): boolean {
-  return imposterIds.includes(playerId);
+	return imposterIds.includes(playerId);
 }
 
 function toUniqueIds(ids: string[]): string[] {
-  return Array.from(new Set(ids.filter(Boolean)));
+	return Array.from(new Set(ids.filter(Boolean)));
 }
 
 export function isExactIdSetMatch(left: string[], right: string[]): boolean {
-  const leftUnique = toUniqueIds(left);
-  const rightUnique = toUniqueIds(right);
+	const leftUnique = toUniqueIds(left);
+	const rightUnique = toUniqueIds(right);
 
-  if (leftUnique.length !== rightUnique.length) {
-    return false;
-  }
+	if (leftUnique.length !== rightUnique.length) {
+		return false;
+	}
 
-  const rightSet = new Set(rightUnique);
-  return leftUnique.every((id) => rightSet.has(id));
+	const rightSet = new Set(rightUnique);
+	return leftUnique.every((id) => rightSet.has(id));
 }
 
 export function serializeIds(ids: string[]): string {
-  return toUniqueIds(ids).join(",");
+	return toUniqueIds(ids).join(",");
 }
 
 export function parseIdsParam(param?: string | string[]): string[] {
-  if (!param) {
-    return [];
-  }
+	if (!param) {
+		return [];
+	}
 
-  const raw = Array.isArray(param) ? param.join(",") : param;
+	const raw = Array.isArray(param) ? param.join(",") : param;
 
-  return toUniqueIds(
-    raw
-      .split(",")
-      .map((id) => id.trim())
-      .filter(Boolean),
-  );
+	return toUniqueIds(
+		raw
+			.split(",")
+			.map((id) => id.trim())
+			.filter(Boolean),
+	);
 }
