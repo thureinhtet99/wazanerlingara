@@ -9,21 +9,20 @@ import { Button } from "@/components/ui/button";
 import { SvgAsset } from "@/components/ui/svg-asset";
 import { CONFIG } from "@/constants/config";
 import {
-	IMPOSTER_WIN_QUOTES,
-	TEAMMATES_WIN_QUOTES,
+    IMPOSTER_WIN_QUOTES,
+    TEAMMATES_WIN_QUOTES,
 } from "@/constants/dummy-data";
 import { images } from "@/constants/icons";
 import { themeTokens } from "@/constants/theme-tokens";
 import { useGameConfig } from "@/hooks/use-game-config";
 import {
-	getAllowedImposterCount,
-	isExactIdSetMatch,
-	parseIdsParam,
+    getAllowedImposterCount,
+    isExactIdSetMatch,
+    parseIdsParam,
 } from "@/lib/imposter";
 
 export default function VoteResult() {
 	const { config } = useGameConfig();
-
 	const params = useLocalSearchParams<{
 		votedPlayerIds?: string | string[];
 	}>();

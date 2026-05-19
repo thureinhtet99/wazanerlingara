@@ -1,21 +1,21 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
-	createContext,
-	type ReactNode,
-	useCallback,
-	useContext,
-	useEffect,
-	useMemo,
-	useState,
+    createContext,
+    type ReactNode,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
 } from "react";
 
 import { CONFIG, DEFAULT_GAME_CONFIG } from "@/constants/config";
 import { AVATAR_IDS, type AvatarId } from "@/features/role-reveal/lib/avatar";
 import type {
-	GameConfigContextType,
-	GameConfigPatchType,
-	GameConfigType,
-	PlayerType,
+    GameConfigContextType,
+    GameConfigPatchType,
+    GameConfigType,
+    PlayerType,
 } from "@/types/index.types";
 
 const GAME_CONFIG_KEY = CONFIG.APP_NAME;
@@ -133,6 +133,9 @@ export function GameConfigProvider({ children }: { children: ReactNode }) {
 				? { ...currentConfig.gameSetting, ...patch.gameSetting }
 				: currentConfig.gameSetting,
 			players: patch.players ?? currentConfig.players,
+			imposterIds: patch.imposterIds ?? currentConfig.imposterIds,
+			word: patch.word !== undefined ? patch.word : currentConfig.word,
+			question: patch.question !== undefined ? patch.question : currentConfig.question,
 		}));
 	}, []);
 

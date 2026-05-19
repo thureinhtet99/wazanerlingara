@@ -11,8 +11,8 @@ import { images, svgs } from "@/constants/icons";
 import { useOnboarding } from "@/features/onboarding/hooks/use-onboarding";
 import "@/global.css";
 import {
-	AudioSettingsProvider,
-	useAudioSettings,
+    AudioSettingsProvider,
+    useAudioSettings,
 } from "@/hooks/use-audio-settings";
 import { GameConfigProvider } from "@/hooks/use-game-config";
 
@@ -20,12 +20,15 @@ import Loading from "./loading";
 
 SplashScreen.preventAutoHideAsync();
 
-const CRITICAL_ASSET_MODULES = [svgs.logoSvg, svgs.wazanerlingaraSvg];
-const NON_CRITICAL_ASSET_MODULES = Object.values(images);
+// Extract the actual asset IDs from your svg objects
+const CRITICAL_ASSET_IDS = [svgs.logoSvg, svgs.wazanerlingaraSvg];
+const NON_CRITICAL_ASSET_IDS = Object.values(images);
 
 function AppRoutes() {
 	const segments = useSegments();
-	const [loadedAssets, assetsError] = useAssets(CRITICAL_ASSET_MODULES);
+	
+	const [loadedAssets, assetsError] = useAssets(CRITICAL_ASSET_IDS);
+
 	const { completed, loading: onboardingLoading } = useOnboarding();
 	const { ready: audioReady } = useAudioSettings();
 	const [didStartNonCriticalWarmup, setDidStartNonCriticalWarmup] =
@@ -49,7 +52,7 @@ function AppRoutes() {
 		}
 
 		setDidStartNonCriticalWarmup(true);
-		Asset.loadAsync(NON_CRITICAL_ASSET_MODULES);
+		Asset.loadAsync(NON_CRITICAL_ASSET_IDS);
 	}, [startupReady, didStartNonCriticalWarmup]);
 
 	useEffect(() => {
